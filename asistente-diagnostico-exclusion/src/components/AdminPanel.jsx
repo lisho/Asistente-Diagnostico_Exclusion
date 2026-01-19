@@ -3,13 +3,14 @@ import {
     ChevronRight, ChevronDown, Layers, FolderTree, FileText,
     AlertTriangle, Settings, Hash, ToggleLeft, List, Type,
     ArrowLeft, Copy, Check, Link2, Eye, EyeOff, Edit3, X,
-    Save, Trash2, Plus, Move, RotateCcw, ChevronUp, GripVertical
+    Save, Trash2, Plus, Move, RotateCcw, ChevronUp, GripVertical, Wrench, ToggleRight
 } from 'lucide-react';
 import {
     getDimensionsConfig, saveDimensionsConfig, resetDimensionsConfig,
     updateIndicator, moveIndicator, deleteIndicator, addIndicator,
     duplicateIndicator, getAllSubdimensions, getDimensionIndicators
 } from '../data/dimensionsService';
+import { ToolsManager } from './ToolsManager';
 
 export function AdminPanel({ onBack }) {
     const [dimensions, setDimensions] = useState(() => getDimensionsConfig());
@@ -20,6 +21,7 @@ export function AdminPanel({ onBack }) {
     const [showDependencies, setShowDependencies] = useState(true);
     const [editingIndicator, setEditingIndicator] = useState(null);
     const [showResetConfirm, setShowResetConfirm] = useState(false);
+    const [activeTab, setActiveTab] = useState('dimensions'); // 'dimensions' or 'tools'
 
     // Refresh dimensions from storage
     const refreshDimensions = () => setDimensions(getDimensionsConfig());
@@ -437,239 +439,276 @@ export function AdminPanel({ onBack }) {
                 <div className="flex items-center gap-4 mb-6">
                     <button
                         onClick={onBack}
-                        className="p-2 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                        className="p-2 rounded-lg text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-colors"
                     >
                         <ArrowLeft size={20} />
                     </button>
                     <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                            <Settings size={20} className="text-indigo-500" />
-                            <span className="px-2 py-0.5 text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 rounded-full">
+                            <Settings size={20} style={{ color: '#00A8A8' }} />
+                            <span className="px-2 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full"
+                                style={{ background: 'rgba(0, 168, 168, 0.15)', color: '#03444A' }}>
                                 Administración
                             </span>
                         </div>
-                        <h1 className="text-3xl font-extrabold text-slate-900">Árbol de Dimensiones</h1>
+                        <h1 className="text-3xl font-extrabold text-slate-900">Panel de Administración</h1>
                     </div>
-                    <button
-                        onClick={() => setShowResetConfirm(true)}
-                        className="btn btn-secondary text-amber-600 border-amber-200 hover:bg-amber-50"
-                    >
-                        <RotateCcw size={18} />
-                        Restablecer
-                    </button>
                 </div>
-                <p className="text-slate-500 max-w-2xl">
-                    Gestiona la estructura de dimensiones, subdimensiones e indicadores. Los cambios se guardan automáticamente.
-                </p>
-            </header>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                <div className="card text-center">
-                    <div className="text-3xl font-black text-indigo-600">{Object.keys(dimensions).length}</div>
-                    <div className="text-sm font-medium text-slate-500">Dimensiones</div>
-                </div>
-                <div className="card text-center">
-                    <div className="text-3xl font-black text-blue-600">{totalSubdimensions}</div>
-                    <div className="text-sm font-medium text-slate-500">Subdimensiones</div>
-                </div>
-                <div className="card text-center">
-                    <div className="text-3xl font-black text-emerald-600">{totalIndicators}</div>
-                    <div className="text-sm font-medium text-slate-500">Indicadores</div>
-                </div>
-                <div className="card text-center">
-                    <div className="text-3xl font-black text-purple-600">{totalDependentIndicators}</div>
-                    <div className="text-sm font-medium text-slate-500">Con dependencia</div>
-                </div>
-                <div className="card text-center">
-                    <div className="text-3xl font-black text-red-600">{totalRisks}</div>
-                    <div className="text-sm font-medium text-slate-500">Riesgos</div>
-                </div>
-            </div>
-
-            {/* Toolbar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                <div className="flex gap-2">
+                {/* Tabs */}
+                <div className="flex gap-2 p-1 bg-slate-100 rounded-xl w-fit mb-6">
                     <button
-                        onClick={() => setViewMode('tree')}
-                        className={`btn ${viewMode === 'tree' ? 'btn-primary' : 'btn-secondary'}`}
+                        onClick={() => setActiveTab('dimensions')}
+                        className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'dimensions'
+                            ? 'bg-white shadow-sm text-slate-900'
+                            : 'text-slate-500 hover:text-slate-700'
+                            }`}
                     >
                         <FolderTree size={18} />
-                        Árbol
+                        Árbol de Dimensiones
                     </button>
                     <button
-                        onClick={() => setViewMode('json')}
-                        className={`btn ${viewMode === 'json' ? 'btn-primary' : 'btn-secondary'}`}
+                        onClick={() => setActiveTab('tools')}
+                        className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'tools'
+                            ? 'bg-white shadow-sm text-slate-900'
+                            : 'text-slate-500 hover:text-slate-700'
+                            }`}
                     >
-                        <FileText size={18} />
-                        JSON
+                        <Wrench size={18} />
+                        Herramientas de Diagnóstico
                     </button>
                 </div>
+            </header>
 
-                {viewMode === 'tree' && (
-                    <div className="flex gap-2">
+            {/* Tab Content: Tools Manager */}
+            {activeTab === 'tools' && <ToolsManager />}
+
+            {/* Tab Content: Dimensions Tree */}
+            {activeTab === 'dimensions' && (
+                <>
+                    {/* Dimensions Header */}
+                    <div className="flex items-center justify-between mb-6">
+                        <p className="text-slate-500 max-w-2xl">
+                            Gestiona la estructura de dimensiones, subdimensiones e indicadores. Los cambios se guardan automáticamente.
+                        </p>
                         <button
-                            onClick={() => setShowDependencies(!showDependencies)}
-                            className={`btn btn-secondary ${showDependencies ? 'bg-indigo-50 border-indigo-200' : ''}`}
+                            onClick={() => setShowResetConfirm(true)}
+                            className="btn btn-secondary text-amber-600 border-amber-200 hover:bg-amber-50"
                         >
-                            {showDependencies ? <Eye size={18} /> : <EyeOff size={18} />}
-                            Dependencias
-                        </button>
-                        <button onClick={expandAll} className="btn btn-secondary text-sm">
-                            Expandir
-                        </button>
-                        <button onClick={collapseAll} className="btn btn-secondary text-sm">
-                            Colapsar
+                            <RotateCcw size={18} />
+                            Restablecer
                         </button>
                     </div>
-                )}
 
-                {viewMode === 'json' && (
-                    <button onClick={copyToClipboard} className="btn btn-secondary">
-                        {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
-                        {copied ? 'Copiado!' : 'Copiar JSON'}
-                    </button>
-                )}
-            </div>
+                    {/* Stats Cards */}
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                        <div className="card text-center">
+                            <div className="text-3xl font-black text-indigo-600">{Object.keys(dimensions).length}</div>
+                            <div className="text-sm font-medium text-slate-500">Dimensiones</div>
+                        </div>
+                        <div className="card text-center">
+                            <div className="text-3xl font-black text-blue-600">{totalSubdimensions}</div>
+                            <div className="text-sm font-medium text-slate-500">Subdimensiones</div>
+                        </div>
+                        <div className="card text-center">
+                            <div className="text-3xl font-black text-emerald-600">{totalIndicators}</div>
+                            <div className="text-sm font-medium text-slate-500">Indicadores</div>
+                        </div>
+                        <div className="card text-center">
+                            <div className="text-3xl font-black text-purple-600">{totalDependentIndicators}</div>
+                            <div className="text-sm font-medium text-slate-500">Con dependencia</div>
+                        </div>
+                        <div className="card text-center">
+                            <div className="text-3xl font-black text-red-600">{totalRisks}</div>
+                            <div className="text-sm font-medium text-slate-500">Riesgos</div>
+                        </div>
+                    </div>
 
-            {/* Content */}
-            {viewMode === 'tree' ? (
-                <div className="card">
-                    <div className="space-y-2">
-                        {Object.values(dimensions).map((dim) => (
-                            <div key={dim.id} className="border border-slate-100 rounded-xl overflow-hidden">
-                                {/* Dimension Header */}
+                    {/* Toolbar */}
+                    <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setViewMode('tree')}
+                                className={`btn ${viewMode === 'tree' ? 'btn-primary' : 'btn-secondary'}`}
+                            >
+                                <FolderTree size={18} />
+                                Árbol
+                            </button>
+                            <button
+                                onClick={() => setViewMode('json')}
+                                className={`btn ${viewMode === 'json' ? 'btn-primary' : 'btn-secondary'}`}
+                            >
+                                <FileText size={18} />
+                                JSON
+                            </button>
+                        </div>
+
+                        {viewMode === 'tree' && (
+                            <div className="flex gap-2">
                                 <button
-                                    onClick={() => toggleDim(dim.id)}
-                                    className="w-full flex items-center gap-3 p-4 bg-gradient-to-r from-indigo-50 to-white hover:from-indigo-100 transition-colors text-left"
+                                    onClick={() => setShowDependencies(!showDependencies)}
+                                    className={`btn btn-secondary ${showDependencies ? 'bg-indigo-50 border-indigo-200' : ''}`}
                                 >
-                                    {expandedDims[dim.id] ? (
-                                        <ChevronDown size={20} className="text-indigo-500" />
-                                    ) : (
-                                        <ChevronRight size={20} className="text-indigo-500" />
-                                    )}
-                                    <Layers size={20} className="text-indigo-600" />
-                                    <div className="flex-1">
-                                        <span className="font-bold text-slate-900">{dim.title}</span>
-                                        <span className="ml-2 text-xs text-slate-400">
-                                            ({dim.subdimensions.length} subdim., {dim.subdimensions.reduce((a, s) => a + s.indicators.length, 0)} ind.)
-                                        </span>
-                                    </div>
-                                    <span className="px-2 py-1 text-xs font-bold bg-slate-100 text-slate-600 rounded-full">
-                                        {dim.id.toUpperCase()}
-                                    </span>
+                                    {showDependencies ? <Eye size={18} /> : <EyeOff size={18} />}
+                                    Dependencias
                                 </button>
+                                <button onClick={expandAll} className="btn btn-secondary text-sm">
+                                    Expandir
+                                </button>
+                                <button onClick={collapseAll} className="btn btn-secondary text-sm">
+                                    Colapsar
+                                </button>
+                            </div>
+                        )}
 
-                                {/* Dimension Content */}
-                                {expandedDims[dim.id] && (
-                                    <div className="border-t border-slate-100">
-                                        <div className="px-12 py-3 bg-slate-50 text-sm text-slate-600 italic border-b border-slate-100">
-                                            {dim.description}
-                                        </div>
+                        {viewMode === 'json' && (
+                            <button onClick={copyToClipboard} className="btn btn-secondary">
+                                {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+                                {copied ? 'Copiado!' : 'Copiar JSON'}
+                            </button>
+                        )}
+                    </div>
 
-                                        {/* Subdimensions */}
-                                        <div className="pl-8">
-                                            {dim.subdimensions.map((sub) => {
-                                                const dependentCount = sub.indicators.filter(i => i.dependsOn).length;
+                    {/* Content */}
+                    {viewMode === 'tree' ? (
+                        <div className="card">
+                            <div className="space-y-2">
+                                {Object.values(dimensions).map((dim) => (
+                                    <div key={dim.id} className="border border-slate-100 rounded-xl overflow-hidden">
+                                        {/* Dimension Header */}
+                                        <button
+                                            onClick={() => toggleDim(dim.id)}
+                                            className="w-full flex items-center gap-3 p-4 bg-gradient-to-r from-indigo-50 to-white hover:from-indigo-100 transition-colors text-left"
+                                        >
+                                            {expandedDims[dim.id] ? (
+                                                <ChevronDown size={20} className="text-indigo-500" />
+                                            ) : (
+                                                <ChevronRight size={20} className="text-indigo-500" />
+                                            )}
+                                            <Layers size={20} className="text-indigo-600" />
+                                            <div className="flex-1">
+                                                <span className="font-bold text-slate-900">{dim.title}</span>
+                                                <span className="ml-2 text-xs text-slate-400">
+                                                    ({dim.subdimensions.length} subdim., {dim.subdimensions.reduce((a, s) => a + s.indicators.length, 0)} ind.)
+                                                </span>
+                                            </div>
+                                            <span className="px-2 py-1 text-xs font-bold bg-slate-100 text-slate-600 rounded-full">
+                                                {dim.id.toUpperCase()}
+                                            </span>
+                                        </button>
 
-                                                return (
-                                                    <div key={sub.id} className="border-b border-slate-50 last:border-0">
-                                                        <button
-                                                            onClick={() => toggleSub(sub.id)}
-                                                            className="w-full flex items-center gap-3 p-3 hover:bg-slate-50 transition-colors text-left"
-                                                        >
-                                                            {expandedSubs[sub.id] ? (
-                                                                <ChevronDown size={16} className="text-blue-400" />
-                                                            ) : (
-                                                                <ChevronRight size={16} className="text-blue-400" />
-                                                            )}
-                                                            <FolderTree size={16} className="text-blue-500" />
-                                                            <span className="font-semibold text-slate-700">{sub.title}</span>
-                                                            <span className="text-xs text-slate-400">({sub.indicators.length} indicadores)</span>
-                                                            {dependentCount > 0 && showDependencies && (
-                                                                <span className="flex items-center gap-1 text-xs text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-full">
-                                                                    <Link2 size={10} />
-                                                                    {dependentCount}
-                                                                </span>
-                                                            )}
-                                                        </button>
+                                        {/* Dimension Content */}
+                                        {expandedDims[dim.id] && (
+                                            <div className="border-t border-slate-100">
+                                                <div className="px-12 py-3 bg-slate-50 text-sm text-slate-600 italic border-b border-slate-100">
+                                                    {dim.description}
+                                                </div>
 
-                                                        {/* Indicators */}
-                                                        {expandedSubs[sub.id] && (
-                                                            <div className="pl-10 pb-3 space-y-1">
-                                                                {sub.indicators.map((ind) => (
-                                                                    <div
-                                                                        key={ind.id}
-                                                                        onClick={() => setEditingIndicator({ indicator: ind, dimId: dim.id, subId: sub.id })}
-                                                                        className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors group
+                                                {/* Subdimensions */}
+                                                <div className="pl-8">
+                                                    {dim.subdimensions.map((sub) => {
+                                                        const dependentCount = sub.indicators.filter(i => i.dependsOn).length;
+
+                                                        return (
+                                                            <div key={sub.id} className="border-b border-slate-50 last:border-0">
+                                                                <button
+                                                                    onClick={() => toggleSub(sub.id)}
+                                                                    className="w-full flex items-center gap-3 p-3 hover:bg-slate-50 transition-colors text-left"
+                                                                >
+                                                                    {expandedSubs[sub.id] ? (
+                                                                        <ChevronDown size={16} className="text-blue-400" />
+                                                                    ) : (
+                                                                        <ChevronRight size={16} className="text-blue-400" />
+                                                                    )}
+                                                                    <FolderTree size={16} className="text-blue-500" />
+                                                                    <span className="font-semibold text-slate-700">{sub.title}</span>
+                                                                    <span className="text-xs text-slate-400">({sub.indicators.length} indicadores)</span>
+                                                                    {dependentCount > 0 && showDependencies && (
+                                                                        <span className="flex items-center gap-1 text-xs text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-full">
+                                                                            <Link2 size={10} />
+                                                                            {dependentCount}
+                                                                        </span>
+                                                                    )}
+                                                                </button>
+
+                                                                {/* Indicators */}
+                                                                {expandedSubs[sub.id] && (
+                                                                    <div className="pl-10 pb-3 space-y-1">
+                                                                        {sub.indicators.map((ind) => (
+                                                                            <div
+                                                                                key={ind.id}
+                                                                                onClick={() => setEditingIndicator({ indicator: ind, dimId: dim.id, subId: sub.id })}
+                                                                                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors group
                                       ${ind.dependsOn ? 'bg-indigo-50/50 hover:bg-indigo-100' : 'bg-slate-50 hover:bg-slate-100'}`}
-                                                                    >
-                                                                        {getTypeIcon(ind.type)}
-                                                                        <span className="flex-1 text-slate-700">{ind.label}</span>
-                                                                        <span className="text-xs font-mono text-slate-400">{ind.type}</span>
-                                                                        {ind.options && (
-                                                                            <span className="text-xs text-slate-400">[{ind.options.length}]</span>
-                                                                        )}
-                                                                        {ind.dependsOn && showDependencies && (
-                                                                            <span
-                                                                                className="flex items-center gap-1 text-xs text-indigo-500"
-                                                                                title={`Depende de: ${getParentIndicatorLabel(ind.dependsOn.indicatorId, dim.id)}`}
                                                                             >
-                                                                                <Link2 size={12} />
-                                                                                {formatCondition(ind.dependsOn.condition)}
-                                                                            </span>
-                                                                        )}
-                                                                        <Edit3 size={14} className="text-slate-300 group-hover:text-indigo-500 transition-colors" />
+                                                                                {getTypeIcon(ind.type)}
+                                                                                <span className="flex-1 text-slate-700">{ind.label}</span>
+                                                                                <span className="text-xs font-mono text-slate-400">{ind.type}</span>
+                                                                                {ind.options && (
+                                                                                    <span className="text-xs text-slate-400">[{ind.options.length}]</span>
+                                                                                )}
+                                                                                {ind.dependsOn && showDependencies && (
+                                                                                    <span
+                                                                                        className="flex items-center gap-1 text-xs text-indigo-500"
+                                                                                        title={`Depende de: ${getParentIndicatorLabel(ind.dependsOn.indicatorId, dim.id)}`}
+                                                                                    >
+                                                                                        <Link2 size={12} />
+                                                                                        {formatCondition(ind.dependsOn.condition)}
+                                                                                    </span>
+                                                                                )}
+                                                                                <Edit3 size={14} className="text-slate-300 group-hover:text-indigo-500 transition-colors" />
+                                                                            </div>
+                                                                        ))}
                                                                     </div>
-                                                                ))}
+                                                                )}
                                                             </div>
-                                                        )}
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
+                                                        );
+                                                    })}
+                                                </div>
 
-                                        {/* Risks */}
-                                        {dim.risks.length > 0 && (
-                                            <div className="px-8 py-4 bg-red-50/50 border-t border-red-100">
-                                                <div className="flex items-center gap-2 mb-3">
-                                                    <AlertTriangle size={16} className="text-red-500" />
-                                                    <span className="font-semibold text-red-700 text-sm">Factores de Riesgo Crítico</span>
-                                                </div>
-                                                <div className="grid gap-2">
-                                                    {dim.risks.map((risk) => (
-                                                        <div key={risk.id} className="flex items-center gap-2 text-sm text-red-700">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                                                            {risk.label}
+                                                {/* Risks */}
+                                                {dim.risks.length > 0 && (
+                                                    <div className="px-8 py-4 bg-red-50/50 border-t border-red-100">
+                                                        <div className="flex items-center gap-2 mb-3">
+                                                            <AlertTriangle size={16} className="text-red-500" />
+                                                            <span className="font-semibold text-red-700 text-sm">Factores de Riesgo Crítico</span>
                                                         </div>
-                                                    ))}
-                                                </div>
+                                                        <div className="grid gap-2">
+                                                            {dim.risks.map((risk) => (
+                                                                <div key={risk.id} className="flex items-center gap-2 text-sm text-red-700">
+                                                                    <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                                                                    {risk.label}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </div>
-                                )}
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
-            ) : (
-                <div className="card overflow-hidden">
-                    <pre className="p-4 bg-slate-900 text-slate-100 text-sm overflow-auto max-h-[600px] rounded-xl font-mono">
-                        {JSON.stringify(dimensions, null, 2)}
-                    </pre>
-                </div>
-            )}
+                        </div>
+                    ) : (
+                        <div className="card overflow-hidden">
+                            <pre className="p-4 bg-slate-900 text-slate-100 text-sm overflow-auto max-h-[600px] rounded-xl font-mono">
+                                {JSON.stringify(dimensions, null, 2)}
+                            </pre>
+                        </div>
+                    )}
 
-            {/* Edit Indicator Modal */}
-            {editingIndicator && (
-                <EditIndicatorModal
-                    data={editingIndicator}
-                    onClose={() => setEditingIndicator(null)}
-                />
-            )}
+                    {/* Edit Indicator Modal */}
+                    {editingIndicator && (
+                        <EditIndicatorModal
+                            data={editingIndicator}
+                            onClose={() => setEditingIndicator(null)}
+                        />
+                    )}
 
-            {/* Reset Confirmation Modal */}
-            {showResetConfirm && <ResetConfirmModal />}
+                    {/* Reset Confirmation Modal */}
+                    {showResetConfirm && <ResetConfirmModal />}
+                </>
+            )}
         </div>
     );
 }
