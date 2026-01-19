@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import {
     ChevronDown, ChevronRight, AlertTriangle, Activity, Link2,
-    CheckCircle, ArrowDown, User, Minus, Plus
+    CheckCircle, ArrowDown, User, Minus, Plus, HelpCircle, Info
 } from 'lucide-react';
 import { evaluateDependency } from '../data/dimensions';
 
@@ -203,6 +203,17 @@ export function DimensionForm({ dimension, answers, onChange }) {
             <div className="relative">
                 <div className="flex items-center gap-2 mb-2">
                     <label className="label flex-1 mb-0">{field.label}</label>
+                    {field.description && (
+                        <span
+                            className="group relative cursor-help"
+                            title={field.description}
+                        >
+                            <HelpCircle size={16} className="text-slate-400 hover:text-teal-500 transition-colors" />
+                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs text-white bg-slate-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity w-64 z-50 shadow-lg pointer-events-none">
+                                {field.description}
+                            </span>
+                        </span>
+                    )}
                     {isCompleted && <CheckCircle size={16} className="text-teal-500" />}
                     {depInfo && (
                         <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
@@ -306,7 +317,10 @@ export function DimensionForm({ dimension, answers, onChange }) {
 
                                 <div className="flex-1 min-w-0">
                                     <h3 className="text-lg font-bold text-slate-900 truncate">{subdim.title}</h3>
-                                    <p className="text-xs text-slate-500">
+                                    {subdim.description && (
+                                        <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{subdim.description}</p>
+                                    )}
+                                    <p className="text-xs text-slate-400 mt-0.5">
                                         {stats?.completed || 0} de {stats?.total || 0} campos completados
                                         {hiddenCount > 0 && ` • ${hiddenCount} oculto${hiddenCount > 1 ? 's' : ''}`}
                                     </p>
@@ -338,6 +352,17 @@ export function DimensionForm({ dimension, answers, onChange }) {
                             {/* Collapsible Content */}
                             {isExpanded && (
                                 <div className="pt-6 mt-4 border-t border-slate-100 animate-fade-in">
+                                    {/* Subdimension description if exists */}
+                                    {subdim.description && (
+                                        <div className="mb-6 p-4 rounded-xl bg-gradient-to-r from-teal-50 to-slate-50 border border-teal-100">
+                                            <div className="flex items-start gap-2">
+                                                <Info size={18} className="text-teal-500 mt-0.5 shrink-0" />
+                                                <p className="text-sm text-slate-600">
+                                                    <strong className="text-teal-700">Guía de valoración:</strong> {subdim.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
                                     {visibleIndicators.length > 0 ? (
                                         <div className="grid md:grid-cols-2 gap-6">
                                             {visibleIndicators.map((field) => (
@@ -412,7 +437,7 @@ export function DimensionForm({ dimension, answers, onChange }) {
                             <div className="p-2 rounded-lg" style={{ background: 'rgba(230, 100, 20, 0.15)' }}>
                                 <AlertTriangle size={22} style={{ color: '#E66414' }} />
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900">Riesgos Críticos</h3>
+                            <h3 className="text-lg font-bold text-slate-900">Riesgos Críticos Identificados</h3>
                         </div>
                         <div className="space-y-2 max-h-[350px] overflow-y-auto">
                             {dimension.risks.map(risk => {

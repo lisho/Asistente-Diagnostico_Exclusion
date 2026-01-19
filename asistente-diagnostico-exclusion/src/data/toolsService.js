@@ -1,10 +1,23 @@
 /**
  * Service for managing Diagnostic Tools (templates)
  * Allows creating custom diagnostic configurations by enabling/disabling dimensions, subdimensions, and indicators
+ * Also supports configurable weights per dimension for ISES calculation
  */
 
 const TOOLS_STORAGE_KEY = 'asistente_dx_tools';
 const ACTIVE_TOOLS_KEY = 'asistente_dx_active_tools'; // Now stores array of active tool IDs
+
+// Default weights (equal weight for all dimensions)
+const DEFAULT_WEIGHTS = {
+    dim1: 1.0, // Económica
+    dim2: 1.0, // Vivienda
+    dim3: 1.0, // Salud Física
+    dim4: 1.0, // Salud Mental
+    dim5: 1.0, // Educación
+    dim6: 1.0, // Relaciones
+    dim7: 1.0, // Participación
+    dim8: 1.0  // Legal
+};
 
 // Default tool that includes everything
 const DEFAULT_TOOL = {
@@ -18,7 +31,8 @@ const DEFAULT_TOOL = {
     createdAt: new Date().toISOString(),
     enabledDimensions: ['dim1', 'dim2', 'dim3', 'dim4', 'dim5', 'dim6', 'dim7', 'dim8'],
     enabledSubdimensions: {},
-    disabledIndicators: {}
+    disabledIndicators: {},
+    weights: { ...DEFAULT_WEIGHTS } // All dimensions with equal weight
 };
 
 // Preset templates
@@ -38,7 +52,13 @@ const PRESET_TOOLS = [
             dim3: ['sub3_1'],
             dim4: ['sub4_1']
         },
-        disabledIndicators: {}
+        disabledIndicators: {},
+        weights: {
+            dim1: 1.0,
+            dim2: 1.5, // Mayor peso a vivienda en triaje
+            dim3: 1.0,
+            dim4: 1.5  // Mayor peso a salud mental en triaje
+        }
     },
     {
         id: 'laboral',
@@ -50,7 +70,11 @@ const PRESET_TOOLS = [
         isActive: false,
         enabledDimensions: ['dim1', 'dim5'],
         enabledSubdimensions: {},
-        disabledIndicators: {}
+        disabledIndicators: {},
+        weights: {
+            dim1: 2.0, // Mayor peso a económica
+            dim5: 1.5  // Peso alto a educación/competencias
+        }
     },
     {
         id: 'vivienda',
@@ -62,7 +86,10 @@ const PRESET_TOOLS = [
         isActive: false,
         enabledDimensions: ['dim2'],
         enabledSubdimensions: {},
-        disabledIndicators: {}
+        disabledIndicators: {},
+        weights: {
+            dim2: 1.0
+        }
     },
     {
         id: 'salud',
@@ -74,9 +101,14 @@ const PRESET_TOOLS = [
         isActive: false,
         enabledDimensions: ['dim3', 'dim4'],
         enabledSubdimensions: {},
-        disabledIndicators: {}
+        disabledIndicators: {},
+        weights: {
+            dim3: 1.0,
+            dim4: 1.2 // Ligeramente mayor peso a salud mental
+        }
     }
 ];
+
 
 /**
  * Get active tool IDs from storage

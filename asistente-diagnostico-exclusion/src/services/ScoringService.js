@@ -9,6 +9,18 @@ export const ScoringService = {
         4: { label: 'Crítica', color: '#ef4444', description: 'Situación límite, riesgo inmediato, emergencia social.' }
     },
 
+    // Default weights for each dimension (can be overridden by tool configuration)
+    DEFAULT_WEIGHTS: {
+        dim1: 1.0, // Económica
+        dim2: 1.0, // Vivienda
+        dim3: 1.0, // Salud Física
+        dim4: 1.0, // Salud Mental
+        dim5: 1.0, // Educación
+        dim6: 1.0, // Relaciones
+        dim7: 1.0, // Participación
+        dim8: 1.0  // Legal
+    },
+
     // ISES Ranges
     ISES_RANGES: [
         { max: 0.5, label: 'Integración Plena', color: '#10b981' },
@@ -18,21 +30,24 @@ export const ScoringService = {
         { max: 4.0, label: 'Exclusión Crítica', color: '#ef4444' }
     ],
 
-    calculateISES: (answers, dimensions) => {
-        let totalScore = 0;
-        let count = 0;
+    // Calculate ISES with optional custom weights
+    calculateISES: (answers, dimensions, weights = null) => {
+        const useWeights = weights || ScoringService.DEFAULT_WEIGHTS;
+        let totalWeightedScore = 0;
+        let totalWeight = 0;
 
         Object.keys(dimensions).forEach(dimId => {
             const dimAnswers = answers[dimId] || {};
             const score = parseFloat(dimAnswers.valuation || 0);
+            const weight = useWeights[dimId] || 1.0;
 
-            totalScore += score;
-            count++;
+            totalWeightedScore += score * weight;
+            totalWeight += weight;
         });
 
-        if (count === 0) return 0;
+        if (totalWeight === 0) return 0;
 
-        return (totalScore / count).toFixed(2);
+        return (totalWeightedScore / totalWeight).toFixed(2);
     },
 
     getISESLevel: (score) => {
@@ -45,7 +60,125 @@ export const ScoringService = {
         return ScoringService.ISES_RANGES[ScoringService.ISES_RANGES.length - 1]; // Fallback to Critical
     },
 
-    // NEW: Risk Detection Logic
+    // Get self-perception scores per dimension (from selfPerception field)
+    getSelfPerceptionScores: (answers, dimensions) => {
+        const scores = {};
+        Object.keys(dimensions).forEach(dimId => {
+            const dimAnswers = answers[dimId] || {};
+            // selfPerception is stored as 1-5, convert to 0-4 scale (inverted: 5->0, 1->4)
+            const selfPerception = dimAnswers.selfPerception;
+            if (selfPerception !== undefined && selfPerception !== null) {
+                // Convert 1-5 scale to 0-4 exclusion scale (higher perception = better = lower exclusion)
+                scores[dimId] = 5 - selfPerception;
+            } else {
+                scores[dimId] = null;
+            }
+        });
+        return scores;
+    },
+
+    // Calculate objective valuation based on indicators (from section IV of reference document)
+    calculateObjectiveValuation: (answers, dimensions) => {
+        const scores = {};
+
+        Object.keys(dimensions).forEach(dimId => {
+            const dim = dimensions[dimId];
+            const dimAnswers = answers[dimId] || {};
+
+            let totalIndicatorScore = 0;
+            let indicatorCount = 0;
+            let criticalRisksCount = 0;
+
+            // Count active risks
+            if (dimAnswers.risks) {
+                criticalRisksCount = Object.values(dimAnswers.risks).filter(v => v === true).length;
+            }
+
+            // Analyze indicators responses
+            dim.subdimensions?.forEach(sub => {
+                sub.indicators?.forEach(ind => {
+                    const answer = dimAnswers[ind.id];
+                    if (answer !== undefined && answer !== null && answer !== '') {
+                        let indicatorScore = 0;
+
+                        if (ind.type === 'select' && ind.options) {
+                            // For select: position in options array (first option = worst = 4, last = best = 0)
+                            const optionIndex = ind.options.indexOf(answer);
+                            if (optionIndex !== -1) {
+                                const totalOptions = ind.options.length;
+                                // Calculate score based on position (first = highest risk)
+                                indicatorScore = ((totalOptions - 1 - optionIndex) / (totalOptions - 1)) * 4;
+                            }
+                        } else if (ind.type === 'boolean') {
+                            // For boolean: typically 'yes' indicates a problem (depends on context)
+                            // Default: 'yes' or true = higher risk
+                            const isPositive = answer === 'yes' || answer === true || answer === 'Sí';
+                            // Check if this is a "good" indicator by checking label keywords
+                            const goodKeywords = ['acceso', 'disponible', 'capacidad', 'apoyo', 'inscripción'];
+                            const isGoodIndicator = goodKeywords.some(kw => ind.label.toLowerCase().includes(kw));
+
+                            if (isGoodIndicator) {
+                                indicatorScore = isPositive ? 0 : 4; // Having access is good
+                            } else {
+                                indicatorScore = isPositive ? 4 : 0; // Having a problem is bad
+                            }
+                        } else if (ind.type === 'number') {
+                            // For numbers, we can't easily score without context
+                            // Use moderate score
+                            indicatorScore = 2;
+                        }
+
+                        totalIndicatorScore += indicatorScore;
+                        indicatorCount++;
+                    }
+                });
+            });
+
+            // Calculate base score from indicators
+            let baseScore = indicatorCount > 0 ? totalIndicatorScore / indicatorCount : 0;
+
+            // Add weight for critical risks (each risk adds 0.5 up to max of 2)
+            const riskBonus = Math.min(criticalRisksCount * 0.5, 2);
+
+            // Final score capped at 4
+            scores[dimId] = Math.min(baseScore + riskBonus, 4);
+        });
+
+        return scores;
+    },
+
+    // Get chart data for radar charts
+    getRadarChartData: (dimensions, valuationType, answers, weights = null) => {
+        const data = [];
+
+        Object.values(dimensions).forEach(dim => {
+            let value = 0;
+
+            if (valuationType === 'valuation') {
+                // Technical valuation (from form)
+                value = parseFloat(answers[dim.id]?.valuation || 0);
+            } else if (valuationType === 'selfPerception') {
+                // Self perception (converted to exclusion scale)
+                const sp = answers[dim.id]?.selfPerception;
+                value = sp !== undefined ? 5 - sp : 0;
+            } else if (valuationType === 'objective') {
+                // Objective calculation based on indicators
+                const objScores = ScoringService.calculateObjectiveValuation({ [dim.id]: answers[dim.id] }, { [dim.id]: dim });
+                value = objScores[dim.id] || 0;
+            }
+
+            data.push({
+                subject: dim.title.split(' ')[0],
+                fullTitle: dim.title,
+                value: parseFloat(value.toFixed(2)),
+                fullMark: 4
+            });
+        });
+
+        return data;
+    },
+
+    // NEW: Risk Detection Logic (Riesgos Críticos Identificados)
     getDetectedAlerts: (answers) => {
         const alerts = [];
         const hasRisk = (dimId, riskId) => answers[dimId]?.risks?.[riskId] === true;
@@ -97,6 +230,7 @@ export const ScoringService = {
         return alerts;
     },
 
+    // Count total risks identified
     countTotalRisks: (answers) => {
         let count = 0;
         Object.values(answers).forEach(dim => {

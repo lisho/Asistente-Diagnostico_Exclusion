@@ -16,29 +16,68 @@ export const DIMENSIONS = {
             {
                 id: 'sub1_1',
                 title: 'Empleo y Actividad Laboral',
+                description: 'Evalúe la situación actual de empleo, tipo de contratación y barreras de acceso al mercado laboral. Considere tanto la situación formal como la real.',
                 indicators: [
-                    { id: 'ind1_1_1', label: 'Situación laboral actual', type: 'select', options: ['Sin empleo (>12 meses)', 'Sin empleo (<12 meses)', 'Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] },
+                    {
+                        id: 'ind1_1_1',
+                        label: 'Situación laboral actual',
+                        type: 'select',
+                        options: ['Sin empleo (>12 meses)', 'Sin empleo (<12 meses)', 'Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'],
+                        description: 'Identifique la situación laboral principal de la persona. El empleo precario incluye trabajos sin contrato, temporales muy cortos o con condiciones abusivas.'
+                    },
                     // Tipo de contrato solo si tiene empleo
                     {
-                        id: 'ind1_1_2', label: 'Tipo de contrato', type: 'select', options: ['Sin contrato', 'Informal', 'Temporal', 'Indefinido'],
+                        id: 'ind1_1_2',
+                        label: 'Tipo de contrato',
+                        type: 'select',
+                        options: ['Sin contrato', 'Informal', 'Temporal', 'Indefinido'],
+                        description: 'Valore la protección legal del empleo. Sin contrato implica vulnerabilidad total; informal indica trabajo sumergido.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] }
                     },
                     // Jornada laboral solo si tiene empleo
                     {
-                        id: 'ind1_1_3', label: 'Jornada laboral', type: 'select', options: ['< 20 horas', '20-30 horas', '> 30 horas adecuada'],
+                        id: 'ind1_1_3',
+                        label: 'Jornada laboral',
+                        type: 'select',
+                        options: ['< 20 horas', '20-30 horas', '> 30 horas adecuada'],
+                        description: 'Evalúe si la jornada permite ingresos suficientes y conciliación familiar.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] }
                     },
-                    { id: 'ind1_1_4', label: 'Acceso a mercado laboral', type: 'select', options: ['Barrera alta', 'Barrera moderada', 'Sin barreras'] },
-                    { id: 'ind1_1_5', label: 'Experiencia laboral', type: 'select', options: ['Fragmentada', 'Limitada', 'Consolidada'] },
-                    { id: 'ind1_1_6', label: 'Formación profesional', type: 'select', options: ['Inexistente', 'Desactualizada', 'Continua'] },
+                    {
+                        id: 'ind1_1_4',
+                        label: 'Acceso a mercado laboral',
+                        type: 'select',
+                        options: ['Barrera alta', 'Barrera moderada', 'Sin barreras'],
+                        description: 'Considere factores como idioma, discapacidad, edad, género, etnia, situación administrativa o estigma social que dificulten el acceso.'
+                    },
+                    {
+                        id: 'ind1_1_5',
+                        label: 'Experiencia laboral',
+                        type: 'select',
+                        options: ['Fragmentada', 'Limitada', 'Consolidada'],
+                        description: 'Fragmentada: muchos trabajos cortos sin continuidad. Limitada: poca experiencia. Consolidada: trayectoria estable y demostrable.'
+                    },
+                    {
+                        id: 'ind1_1_6',
+                        label: 'Formación profesional',
+                        type: 'select',
+                        options: ['Inexistente', 'Desactualizada', 'Continua'],
+                        description: 'Evalúe si posee cualificación profesional actual y demandada por el mercado laboral.'
+                    },
                     // Tiempo en desempleo solo si está sin empleo
                     {
-                        id: 'ind1_1_7', label: 'Tiempo en desempleo (meses)', type: 'number',
+                        id: 'ind1_1_7',
+                        label: 'Tiempo en desempleo (meses)',
+                        type: 'number',
+                        description: 'Tiempo transcurrido desde el último empleo. Más de 12 meses se considera desempleo de larga duración.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Sin empleo (>12 meses)', 'Sin empleo (<12 meses)'] }
                     },
                     // Búsqueda activa de empleo solo si está sin empleo
                     {
-                        id: 'ind1_1_8', label: 'Búsqueda activa de empleo', type: 'boolean',
+                        id: 'ind1_1_8',
+                        label: 'Búsqueda activa de empleo',
+                        type: 'boolean',
+                        description: '¿Realiza acciones concretas de búsqueda: envío de CV, inscripción en ofertas, asistencia a entrevistas?',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Sin empleo (>12 meses)', 'Sin empleo (<12 meses)'] }
                     }
                 ]
@@ -46,47 +85,101 @@ export const DIMENSIONS = {
             {
                 id: 'sub1_2',
                 title: 'Estabilidad e Ingresos Económicos',
+                description: 'Analice la capacidad económica real: ingresos, estabilidad, acceso a prestaciones y nivel de endeudamiento. Compare con umbrales de pobreza locales.',
                 indicators: [
-                    { id: 'ind1_2_1', label: 'Ingresos netos mensuales (€)', type: 'number' },
-                    { id: 'ind1_2_2', label: 'Precarización de ingresos', type: 'select', options: ['Variación > 30%', 'Variación moderada', 'Estable'] },
-                    { id: 'ind1_2_3', label: 'Acceso a prestaciones', type: 'select', options: ['Sin cobertura', 'Cobertura parcial', 'Cobertura completa'] },
+                    {
+                        id: 'ind1_2_1',
+                        label: 'Ingresos netos mensuales (€)',
+                        type: 'number',
+                        description: 'Total de ingresos netos mensuales del hogar. Compare con SMI (1.134€/2024) y umbral de pobreza (60% mediana ~9.535€/año).'
+                    },
+                    {
+                        id: 'ind1_2_2',
+                        label: 'Precarización de ingresos',
+                        type: 'select',
+                        options: ['Variación > 30%', 'Variación moderada', 'Estable'],
+                        description: 'Evalúe la variabilidad de ingresos mes a mes. Ingresos inestables dificultan planificación y generan estrés crónico.'
+                    },
+                    {
+                        id: 'ind1_2_3',
+                        label: 'Acceso a prestaciones',
+                        type: 'select',
+                        options: ['Sin cobertura', 'Cobertura parcial', 'Cobertura completa'],
+                        description: 'Prestaciones incluyen: desempleo, subsidios, IMV/RMI, pensiones, ayudas familiares, etc.'
+                    },
                     // Tipo de prestación solo si tiene alguna cobertura
                     {
                         id: 'ind1_2_3b', label: 'Tipo de prestación principal', type: 'select', options: ['Desempleo', 'Subsidio', 'RMI/IMV', 'Pensión', 'Otra'],
                         dependsOn: { indicatorId: 'ind1_2_3', condition: 'notEquals', value: 'Sin cobertura' }
                     },
-                    { id: 'ind1_2_4', label: 'Nivel de deuda', type: 'select', options: ['> 36 meses ingresos', '6-36 meses', '< 6 meses', 'Sin deuda'] },
+                    {
+                        id: 'ind1_2_4',
+                        label: 'Nivel de deuda',
+                        type: 'select',
+                        options: ['> 36 meses ingresos', '6-36 meses', '< 6 meses', 'Sin deuda'],
+                        description: 'Deuda superior a 36 meses de ingresos indica sobreendeudamiento crítico. Incluya todas las deudas: hipoteca, préstamos, servicios.'
+                    },
                     // Tipo de deuda solo si tiene deuda
                     {
                         id: 'ind1_2_4b', label: 'Tipos de deuda', type: 'select', options: ['Hipoteca', 'Préstamos personales', 'Deudas consumo', 'Deudas servicios', 'Mixta'],
                         dependsOn: { indicatorId: 'ind1_2_4', condition: 'notEquals', value: 'Sin deuda' }
                     },
-                    { id: 'ind1_2_5', label: 'Capacidad de ahorro', type: 'boolean' },
-                    { id: 'ind1_2_6', label: 'Capacidad gastos imprevistos', type: 'select', options: ['Nula', 'Limitada', 'Total'] }
+                    {
+                        id: 'ind1_2_5',
+                        label: 'Capacidad de ahorro',
+                        type: 'boolean',
+                        description: '¿Puede reservar aunque sea una pequeña cantidad mensual? La ausencia total indica vulnerabilidad ante imprevistos.'
+                    },
+                    {
+                        id: 'ind1_2_6',
+                        label: 'Capacidad gastos imprevistos',
+                        type: 'select',
+                        options: ['Nula', 'Limitada', 'Total'],
+                        description: '¿Podría afrontar un gasto inesperado de 600€ (ej: reparación, multa, tratamiento)? Indicador clave de resiliencia económica.'
+                    }
                 ]
             },
             {
                 id: 'sub1_3',
                 title: 'Condiciones Laborales',
+                description: 'Evalúe la calidad del empleo: jornada, seguridad, protección social y conciliación. Solo aplica si la persona tiene empleo activo.',
                 indicators: [
                     {
-                        id: 'ind1_3_1', label: 'Jornada respecto a deseada', type: 'select', options: ['Excesiva', 'Insuficiente', 'Adecuada'],
+                        id: 'ind1_3_1',
+                        label: 'Jornada respecto a deseada',
+                        type: 'select',
+                        options: ['Excesiva', 'Insuficiente', 'Adecuada'],
+                        description: 'Excesiva: más horas de las deseadas (sin compensación). Insuficiente: menos horas, afectando ingresos.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] }
                     },
                     {
-                        id: 'ind1_3_2', label: 'Seguridad e higiene laboral', type: 'boolean',
+                        id: 'ind1_3_2',
+                        label: 'Seguridad e higiene laboral',
+                        type: 'boolean',
+                        description: '¿El lugar de trabajo cumple normativa de prevención de riesgos? Considere EPIs, formación, medidas de seguridad.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] }
                     },
                     {
-                        id: 'ind1_3_3', label: 'Explotación laboral', type: 'boolean',
+                        id: 'ind1_3_3',
+                        label: 'Explotación laboral',
+                        type: 'boolean',
+                        description: 'Indicadores: horas extra no pagadas, retención de documentos, amenazas, condiciones degradantes, salario muy inferior al mínimo.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] }
                     },
                     {
-                        id: 'ind1_3_4', label: 'Protección social laboral', type: 'select', options: ['< 25% cobertura', '25-75% cobertura', '> 75% cobertura'],
+                        id: 'ind1_3_4',
+                        label: 'Protección social laboral',
+                        type: 'select',
+                        options: ['< 25% cobertura', '25-75% cobertura', '> 75% cobertura'],
+                        description: 'Cobertura: cotización SS, seguro accidentes, baja por enfermedad, vacaciones pagadas, indemnización.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] }
                     },
                     {
-                        id: 'ind1_3_5', label: 'Compatibilidad vida-trabajo', type: 'select', options: ['Incompatible', 'Difícil', 'Compatible'],
+                        id: 'ind1_3_5',
+                        label: 'Compatibilidad vida-trabajo',
+                        type: 'select',
+                        options: ['Incompatible', 'Difícil', 'Compatible'],
+                        description: '¿Puede atender responsabilidades familiares (menores, dependientes)? Considere horarios, desplazamientos, flexibilidad.',
                         dependsOn: { indicatorId: 'ind1_1_1', condition: 'includes', value: ['Empleo precario', 'Empleo tiempo parcial no deseado', 'Empleo estable tiempo completo'] }
                     }
                 ]
