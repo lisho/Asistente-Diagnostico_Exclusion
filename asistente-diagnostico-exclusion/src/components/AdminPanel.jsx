@@ -100,6 +100,7 @@ export function AdminPanel({ onBack }) {
         const [form, setForm] = useState({
             label: indicator.label,
             type: indicator.type,
+            description: indicator.description || '',
             options: indicator.options ? indicator.options.join('\n') : '',
             hasDependency: !!indicator.dependsOn,
             depIndicatorId: indicator.dependsOn?.indicatorId || '',
@@ -119,7 +120,8 @@ export function AdminPanel({ onBack }) {
         const handleSave = () => {
             const updates = {
                 label: form.label,
-                type: form.type
+                type: form.type,
+                description: form.description.trim() || undefined
             };
 
             if (form.type === 'select' && form.options.trim()) {
@@ -202,6 +204,16 @@ export function AdminPanel({ onBack }) {
                                     onChange={e => setForm({ ...form, label: e.target.value })}
                                     className="input"
                                     placeholder="Nombre del indicador"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="label">Descripción/Ayuda (opcional)</label>
+                                <textarea
+                                    value={form.description}
+                                    onChange={e => setForm({ ...form, description: e.target.value })}
+                                    className="input h-20 resize-none"
+                                    placeholder="Texto de ayuda que explica cómo valorar este indicador. Aparecerá como tooltip junto al campo."
                                 />
                             </div>
 
@@ -634,6 +646,12 @@ export function AdminPanel({ onBack }) {
                                                                 {/* Indicators */}
                                                                 {expandedSubs[sub.id] && (
                                                                     <div className="pl-10 pb-3 space-y-1">
+                                                                        {/* Subdimension description */}
+                                                                        {sub.description && (
+                                                                            <div className="p-2 mb-2 bg-blue-50/50 rounded-lg border border-blue-100 text-xs text-blue-600 italic">
+                                                                                📋 {sub.description}
+                                                                            </div>
+                                                                        )}
                                                                         {sub.indicators.map((ind) => (
                                                                             <div
                                                                                 key={ind.id}
@@ -646,6 +664,9 @@ export function AdminPanel({ onBack }) {
                                                                                 <span className="text-xs font-mono text-slate-400">{ind.type}</span>
                                                                                 {ind.options && (
                                                                                     <span className="text-xs text-slate-400">[{ind.options.length}]</span>
+                                                                                )}
+                                                                                {ind.description && (
+                                                                                    <span className="text-xs text-teal-500" title={ind.description}>❓</span>
                                                                                 )}
                                                                                 {ind.dependsOn && showDependencies && (
                                                                                     <span

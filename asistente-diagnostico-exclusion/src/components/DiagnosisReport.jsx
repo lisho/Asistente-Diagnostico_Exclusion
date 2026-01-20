@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScoringService } from '../services/ScoringService';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { AlertCircle, TrendingUp, Shield, AlertTriangle, Wrench, User, Eye, BarChart3 } from 'lucide-react';
+import { AlertCircle, TrendingUp, Shield, AlertTriangle, Wrench, User, Eye, BarChart3, ChevronDown, ChevronRight, Sparkles, Check } from 'lucide-react';
 import { getToolById } from '../data/toolsService';
 
+// Mapeo de etiquetas cortas para los gráficos radar (más identificables)
+const DIMENSION_SHORT_LABELS = {
+    dim1: 'Económica',
+    dim2: 'Vivienda',
+    dim3: 'Salud',
+    dim4: 'Mental',
+    dim5: 'Educación',
+    dim6: 'Relaciones',
+    dim7: 'Ciudadanía',
+    dim8: 'Legal'
+};
+
 export function DiagnosisReport({ dimensions, answers, currentCase }) {
+    const [showRisksDetail, setShowRisksDetail] = useState(false);
+
     const isesScore = ScoringService.calculateISES(answers, dimensions);
     const isesLevel = ScoringService.getISESLevel(isesScore);
     const alerts = ScoringService.getDetectedAlerts(answers);
@@ -18,9 +32,12 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
     // Obtener pesos configurados de la herramienta (si existen)
     const toolWeights = tool?.weights || null;
 
+    // Obtener etiqueta corta para dimensión
+    const getShortLabel = (dim) => DIMENSION_SHORT_LABELS[dim.id] || dim.title.split(' ')[0];
+
     // Datos para la gráfica de valoración técnica (original)
     const technicalChartData = Object.values(dimensions).map(dim => ({
-        subject: dim.title.split(' ')[0],
+        subject: getShortLabel(dim),
         fullTitle: dim.title,
         value: parseFloat(answers[dim.id]?.valuation || 0),
         fullMark: 4
@@ -32,7 +49,7 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
         // Convertir de escala 1-5 a escala de exclusión 0-4 (5=mejor=0 exclusión, 1=peor=4 exclusión)
         const value = sp !== undefined && sp !== null ? 5 - sp : 0;
         return {
-            subject: dim.title.split(' ')[0],
+            subject: getShortLabel(dim),
             fullTitle: dim.title,
             value: parseFloat(value.toFixed(2)),
             fullMark: 4
@@ -42,11 +59,71 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
     // Datos para la gráfica de valoración objetiva (basada en indicadores)
     const objectiveScores = ScoringService.calculateObjectiveValuation(answers, dimensions);
     const objectiveChartData = Object.values(dimensions).map(dim => ({
-        subject: dim.title.split(' ')[0],
+        subject: getShortLabel(dim),
         fullTitle: dim.title,
         value: parseFloat((objectiveScores[dim.id] || 0).toFixed(2)),
         fullMark: 4
     }));
+
+    // Obtener todos los riesgos identificados por dimensión
+    const getIdentifiedRisks = () => {
+        const risks = [];
+        Object.values(dimensions).forEach(dim => {
+            const dimAnswers = answers[dim.id] || {};
+            if (dimAnswers.risks) {
+                dim.risks?.forEach(risk => {
+                    if (dimAnswers.risks[risk.id] === true) {
+                        risks.push({
+                            ...risk,
+                            dimensionId: dim.id,
+                            dimensionTitle: dim.title,
+                            dimensionShort: getShortLabel(dim)
+                        });
+                    }
+                });
+            }
+        });
+        return risks;
+    };
+
+    const identifiedRisks = getIdentifiedRisks();
+
+    // Obtener potencialidades y recursos por dimensión
+    const getPotentialities = () => {
+        const potentialities = [];
+        Object.values(dimensions).forEach(dim => {
+            const dimAnswers = answers[dim.id] || {};
+            const checkedPotentialities = [];
+
+            // Recoger potencialidades predefinidas marcadas
+            if (dimAnswers.potentialitiesChecked && dim.potentialities) {
+                dim.potentialities.forEach(pot => {
+                    if (dimAnswers.potentialitiesChecked[pot.id] === true) {
+                        checkedPotentialities.push(pot.label);
+                    }
+                });
+            }
+
+            // Incluir si hay potencialidades marcadas o notas
+            const hasChecked = checkedPotentialities.length > 0;
+            const hasNotes = dimAnswers.potentialitiesNotes && dimAnswers.potentialitiesNotes.trim();
+            // También compatibilidad con el campo antiguo
+            const hasOldText = dimAnswers.potentialities && dimAnswers.potentialities.trim();
+
+            if (hasChecked || hasNotes || hasOldText) {
+                potentialities.push({
+                    dimensionId: dim.id,
+                    dimensionTitle: dim.title,
+                    dimensionShort: getShortLabel(dim),
+                    checkedItems: checkedPotentialities,
+                    notes: dimAnswers.potentialitiesNotes || dimAnswers.potentialities || ''
+                });
+            }
+        });
+        return potentialities;
+    };
+
+    const potentialities = getPotentialities();
 
     // Componente de gráfica de radar reutilizable
     const RadarChartComponent = ({ data, title, description, color, icon: Icon }) => (
@@ -78,7 +155,7 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                                 padding: '12px'
                             }}
-                            formatter={(value, name) => [value.toFixed(2), 'Nivel de exclusión']}
+                            formatter={(value, name, props) => [value.toFixed(2), props.payload.fullTitle]}
                         />
                     </RadarChart>
                 </ResponsiveContainer>
@@ -143,7 +220,10 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
                     </div>
 
                     <div className="flex items-center justify-center">
-                        <div className="text-center p-6 rounded-2xl bg-slate-50">
+                        <div
+                            className="text-center p-6 rounded-2xl bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors"
+                            onClick={() => setShowRisksDetail(!showRisksDetail)}
+                        >
                             <div className="flex items-center justify-center gap-2 mb-2">
                                 <Shield size={20} className={riskCount > 0 ? 'text-red-500' : 'text-emerald-500'} />
                                 <span className="text-sm font-bold text-slate-500 uppercase tracking-wider">Riesgos Críticos Identificados</span>
@@ -151,11 +231,48 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
                             <span className={`text-5xl font-black ${riskCount > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
                                 {riskCount}
                             </span>
-                            <p className="text-xs text-slate-400 mt-1">indicadores detectados</p>
+                            <p className="text-xs text-slate-400 mt-1">
+                                {riskCount > 0 ? 'Click para ver detalle' : 'Sin riesgos detectados'}
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Detailed Risks Section (Collapsible) */}
+            {showRisksDetail && identifiedRisks.length > 0 && (
+                <div className="card mb-8 border-l-4 border-red-400 animate-fade-in">
+                    <div className="flex items-center gap-2 mb-4">
+                        <Shield size={20} className="text-red-500" />
+                        <h3 className="text-lg font-bold text-slate-900">Detalle de Riesgos Críticos Identificados</h3>
+                    </div>
+                    <div className="space-y-3">
+                        {Object.values(dimensions).map(dim => {
+                            const dimRisks = identifiedRisks.filter(r => r.dimensionId === dim.id);
+                            if (dimRisks.length === 0) return null;
+
+                            return (
+                                <div key={dim.id} className="p-4 rounded-xl bg-red-50/50">
+                                    <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                        <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-bold rounded">
+                                            {getShortLabel(dim)}
+                                        </span>
+                                        {dim.title}
+                                    </h4>
+                                    <ul className="space-y-1 ml-4">
+                                        {dimRisks.map(risk => (
+                                            <li key={risk.id} className="flex items-center gap-2 text-sm text-slate-700">
+                                                <AlertTriangle size={14} className="text-red-500 shrink-0" />
+                                                {risk.label}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
 
             {/* Alerts Section */}
             {alerts.length > 0 && (
@@ -195,6 +312,54 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
                                 <div className="mt-4 p-3 rounded-xl bg-white/60 text-sm text-slate-600">
                                     💡 <strong>Acción:</strong> {alert.action}
                                 </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Potentialities Section (Enfoque Apreciativo) */}
+            {potentialities.length > 0 && (
+                <div className="card mb-8 border-l-4 border-emerald-400 bg-gradient-to-r from-emerald-50/50 to-white">
+                    <div className="flex items-center gap-2 mb-4">
+                        <Sparkles size={20} className="text-emerald-500" />
+                        <h3 className="text-lg font-bold text-slate-900">Potencialidades y Recursos Identificados</h3>
+                        <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
+                            {potentialities.reduce((acc, p) => acc + p.checkedItems.length, 0)} identificadas
+                        </span>
+                    </div>
+                    <p className="text-sm text-slate-500 mb-4">
+                        Fortalezas, capacidades y recursos detectados durante la evaluación (enfoque apreciativo).
+                    </p>
+                    <div className="space-y-4">
+                        {potentialities.map(pot => (
+                            <div key={pot.dimensionId} className="p-4 rounded-xl bg-emerald-50/50 border border-emerald-100">
+                                <h4 className="font-semibold text-slate-800 mb-3 flex items-center gap-2">
+                                    <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-bold rounded">
+                                        {pot.dimensionShort}
+                                    </span>
+                                    {pot.dimensionTitle}
+                                </h4>
+                                {/* Checked potentialities as badges */}
+                                {pot.checkedItems.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mb-3">
+                                        {pot.checkedItems.map((item, idx) => (
+                                            <span
+                                                key={idx}
+                                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-medium"
+                                            >
+                                                <Sparkles size={12} />
+                                                {item}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                                {/* Additional notes */}
+                                {pot.notes && pot.notes.trim() && (
+                                    <p className="text-sm text-slate-700 ml-1 italic border-l-2 border-emerald-200 pl-3">
+                                        {pot.notes}
+                                    </p>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -253,12 +418,26 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
                         const percentage = (val / 4) * 100;
                         const selfPerception = answers[dim.id]?.selfPerception;
                         const objectiveScore = objectiveScores[dim.id] || 0;
+                        const dimRisks = identifiedRisks.filter(r => r.dimensionId === dim.id);
+                        const hasPotentiality = answers[dim.id]?.potentialities?.trim();
 
                         return (
                             <div key={dim.id} className="p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
                                 <div className="flex items-center gap-4">
                                     <div className="flex-1">
-                                        <h4 className="font-bold text-slate-900">{dim.title}</h4>
+                                        <div className="flex items-center gap-2">
+                                            <h4 className="font-bold text-slate-900">{dim.title}</h4>
+                                            {dimRisks.length > 0 && (
+                                                <span className="px-2 py-0.5 bg-red-100 text-red-600 text-xs font-bold rounded-full">
+                                                    {dimRisks.length} riesgo{dimRisks.length > 1 ? 's' : ''}
+                                                </span>
+                                            )}
+                                            {hasPotentiality && (
+                                                <span className="px-2 py-0.5 bg-emerald-100 text-emerald-600 text-xs font-bold rounded-full flex items-center gap-1">
+                                                    <Sparkles size={10} /> Recursos
+                                                </span>
+                                            )}
+                                        </div>
                                         {dim.description && (
                                             <p className="text-xs text-slate-500 mt-1 line-clamp-2">{dim.description}</p>
                                         )}

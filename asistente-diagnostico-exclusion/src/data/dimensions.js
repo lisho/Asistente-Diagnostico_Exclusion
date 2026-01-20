@@ -192,6 +192,16 @@ export const DIMENSIONS = {
             { id: 'risk_d1_4', label: 'Imposibilidad de hacer frente a gastos básicos' },
             { id: 'risk_d1_5', label: 'Endeudamiento superior a 36 meses de ingresos' },
             { id: 'risk_d1_6', label: 'Exclusión del sistema de prestaciones' }
+        ],
+        potentialities: [
+            { id: 'pot_d1_1', label: 'Experiencia laboral previa demostrable' },
+            { id: 'pot_d1_2', label: 'Formación profesional o titulación reconocida' },
+            { id: 'pot_d1_3', label: 'Habilidades técnicas o artesanales específicas' },
+            { id: 'pot_d1_4', label: 'Alta motivación para la inserción laboral' },
+            { id: 'pot_d1_5', label: 'Red de contactos profesionales activa' },
+            { id: 'pot_d1_6', label: 'Capacidad de ahorro o gestión económica' },
+            { id: 'pot_d1_7', label: 'Acceso a recursos de empleabilidad (cursos, orientación)' },
+            { id: 'pot_d1_8', label: 'Permiso de trabajo vigente' }
         ]
     },
 
@@ -203,6 +213,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub2_1',
                 title: 'Acceso y Estabilidad Residencial',
+                description: 'Evalúe la situación actual de alojamiento, estabilidad residencial y riesgo de pérdida de vivienda. Considere sinhogarismo según tipología ETHOS.',
                 indicators: [
                     { id: 'ind2_1_1', label: 'Situación residencial', type: 'select', options: ['Sinhogarismo', 'Vivienda precaria', 'Alojamiento temporal', 'Alquiler', 'Propiedad'] },
                     // Proporción ingreso solo si tiene vivienda estable
@@ -237,6 +248,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub2_2',
                 title: 'Condiciones Físicas y Habitabilidad',
+                description: 'Valore los elementos básicos de habitabilidad: suministros, salubridad, estructura y espacio. Solo aplica si tiene vivienda física.',
                 indicators: [
                     {
                         id: 'ind2_2_1', label: 'Agua corriente potable', type: 'boolean',
@@ -283,6 +295,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub2_3',
                 title: 'Entorno y Localización',
+                description: 'Analice el entorno urbano: accesibilidad, seguridad, servicios y relación con la comunidad. Afecta a la inserción social.',
                 indicators: [
                     { id: 'ind2_3_1', label: 'Acceso transporte público', type: 'select', options: ['> 45 min', '15-45 min', '< 15 min'] },
                     { id: 'ind2_3_2', label: 'Distancia servicios básicos', type: 'select', options: ['> 2 km', '500m - 2km', '< 500m'] },
@@ -312,6 +325,16 @@ export const DIMENSIONS = {
             { id: 'risk_d2_6', label: 'Hacinamiento (> 2 personas/habitación)' },
             { id: 'risk_d2_7', label: 'Vivienda sin condiciones de habitabilidad' },
             { id: 'risk_d2_8', label: 'Aislamiento geográfico del entorno' }
+        ],
+        potentialities: [
+            { id: 'pot_d2_1', label: 'Vivienda estable y segura' },
+            { id: 'pot_d2_2', label: 'Red familiar que puede ofrecer alojamiento temporal' },
+            { id: 'pot_d2_3', label: 'Acceso a lista de vivienda social o protegida' },
+            { id: 'pot_d2_4', label: 'Buena integración con vecinos/comunidad' },
+            { id: 'pot_d2_5', label: 'Conocimiento de recursos de vivienda disponibles' },
+            { id: 'pot_d2_6', label: 'Capacidad de mantener la vivienda (limpieza, cuidado)' },
+            { id: 'pot_d2_7', label: 'Cercanía a servicios y transportes' },
+            { id: 'pot_d2_8', label: 'Habilidades para pequeñas reparaciones domésticas' }
         ]
     },
 
@@ -323,6 +346,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub3_1',
                 title: 'Estado de Salud Física',
+                description: 'Evalúe enfermedades crónicas, discapacidad, nutrición y sueño. Considere cómo afectan a la autonomía y calidad de vida.',
                 indicators: [
                     { id: 'ind3_1_1', label: 'Enfermedades crónicas', type: 'select', options: ['Múltiples sin control', 'Alguna controlada', 'Ninguna'] },
                     // Tipo de enfermedad crónica solo si tiene alguna
@@ -379,6 +403,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub3_2',
                 title: 'Acceso a Servicios Sanitarios',
+                description: 'Valore el acceso efectivo a atención médica: inscripción, tiempos de espera, medicamentos, prevención y barreras de acceso.',
                 indicators: [
                     { id: 'ind3_2_1', label: 'Inscripción centro salud', type: 'boolean' },
                     { id: 'ind3_2_2', label: 'Acceso atención primaria', type: 'select', options: ['Imposible', 'Retrasado', 'Inmediato'] },
@@ -408,6 +433,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub3_3',
                 title: 'Factores de Riesgo para la Salud',
+                description: 'Identifique hábitos y exposiciones que afectan a la salud: consumo de sustancias, violencia, estrés e higiene ambiental.',
                 indicators: [
                     { id: 'ind3_3_1', label: 'Tabaquismo', type: 'select', options: ['Intenso', 'Moderado', 'Nulo'] },
                     { id: 'ind3_3_2', label: 'Consumo de alcohol', type: 'select', options: ['Riesgo alto', 'Moderado', 'Bajo'] },
@@ -447,6 +473,16 @@ export const DIMENSIONS = {
             { id: 'risk_d3_5', label: 'Violencia doméstica activa' },
             { id: 'risk_d3_6', label: 'Acceso nulo o muy limitado a servicios sanitarios' },
             { id: 'risk_d3_7', label: 'Falta de seguimiento de enfermedades graves' }
+        ],
+        potentialities: [
+            { id: 'pot_d3_1', label: 'Buena salud general o enfermedades controladas' },
+            { id: 'pot_d3_2', label: 'Adherencia al tratamiento médico' },
+            { id: 'pot_d3_3', label: 'Acceso garantizado a atención sanitaria' },
+            { id: 'pot_d3_4', label: 'Hábitos de vida saludables (alimentación, ejercicio)' },
+            { id: 'pot_d3_5', label: 'Red de apoyo para cuidados de salud' },
+            { id: 'pot_d3_6', label: 'Motivación para superar adicciones' },
+            { id: 'pot_d3_7', label: 'Conocimiento sobre autocuidado y prevención' },
+            { id: 'pot_d3_8', label: 'Capacidad funcional preservada' }
         ]
     },
 
@@ -458,6 +494,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub4_1',
                 title: 'Estado de Salud Mental',
+                description: 'Evalúe sintomatología: depresión, ansiedad, riesgo suicida, trastornos graves. URGENTE si hay ideación suicida activa.',
                 indicators: [
                     { id: 'ind4_1_1', label: 'Síntomas depresivos', type: 'select', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
                     { id: 'ind4_1_2', label: 'Síntomas ansiosos', type: 'select', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
@@ -499,6 +536,7 @@ export const DIMENSIONS = {
             {
                 id: 'sub4_2',
                 title: 'Acceso a Servicios de Salud Mental',
+                description: 'Valore diagnóstico formal, tratamiento, adherencia y barreras de acceso a salud mental.',
                 indicators: [
                     { id: 'ind4_2_1', label: 'Diagnóstico formal', type: 'select', options: ['Nunca', 'Pendiente', 'Realizado'] },
                     // Diagnóstico específico solo si está realizado
@@ -540,6 +578,16 @@ export const DIMENSIONS = {
             { id: 'risk_d4_6', label: 'Automutilación activa' },
             { id: 'risk_d4_7', label: 'TEPT sin resolver' },
             { id: 'risk_d4_8', label: 'Falta total de apoyo social' }
+        ],
+        potentialities: [
+            { id: 'pot_d4_1', label: 'Buena capacidad de insight y autoconocimiento' },
+            { id: 'pot_d4_2', label: 'Adherencia a tratamiento psicológico/psiquiátrico' },
+            { id: 'pot_d4_3', label: 'Red de apoyo emocional sólida' },
+            { id: 'pot_d4_4', label: 'Resiliencia demostrada ante adversidades' },
+            { id: 'pot_d4_5', label: 'Estrategías de afrontamiento saludables' },
+            { id: 'pot_d4_6', label: 'Motivación para el cambio y la mejora personal' },
+            { id: 'pot_d4_7', label: 'Experiencia positiva previa con tratamiento' },
+            { id: 'pot_d4_8', label: 'Hobbies o actividades que proporcionan bienestar' }
         ]
     },
 
@@ -620,6 +668,16 @@ export const DIMENSIONS = {
             { id: 'risk_d5_6', label: 'Falta total de competencias digitales' },
             { id: 'risk_d5_7', label: 'Discriminación educativa activa' },
             { id: 'risk_d5_8', label: 'Discapacidad intelectual sin apoyos' }
+        ],
+        potentialities: [
+            { id: 'pot_d5_1', label: 'Formación académica o profesional completada' },
+            { id: 'pot_d5_2', label: 'Dominio de varios idiomas' },
+            { id: 'pot_d5_3', label: 'Competencias digitales desarrolladas' },
+            { id: 'pot_d5_4', label: 'Alta motivación para formarse' },
+            { id: 'pot_d5_5', label: 'Experiencia en oficios o habilidades prácticas' },
+            { id: 'pot_d5_6', label: 'Capacidad de aprendizaje demostrada' },
+            { id: 'pot_d5_7', label: 'Acceso a recursos formativos (becas, cursos)' },
+            { id: 'pot_d5_8', label: 'Menores con buen rendimiento escolar' }
         ]
     },
 
@@ -729,6 +787,16 @@ export const DIMENSIONS = {
             { id: 'risk_d6_5', label: 'Víctima activa de trata' },
             { id: 'risk_d6_6', label: 'Falta apoyo para cuidados' },
             { id: 'risk_d6_7', label: 'Familia en fragmentación/ruptura' }
+        ],
+        potentialities: [
+            { id: 'pot_d6_1', label: 'Red familiar sólida y de apoyo' },
+            { id: 'pot_d6_2', label: 'Amistades significativas y estables' },
+            { id: 'pot_d6_3', label: 'Buenas habilidades sociales y comunicativas' },
+            { id: 'pot_d6_4', label: 'Integración positiva en la comunidad' },
+            { id: 'pot_d6_5', label: 'Participación en grupos o asociaciones' },
+            { id: 'pot_d6_6', label: 'Capacidad de establecer vínculos de confianza' },
+            { id: 'pot_d6_7', label: 'Apoyo comunitario disponible (vecinos, parroquia)' },
+            { id: 'pot_d6_8', label: 'Relaciones familiares en proceso de mejora' }
         ]
     },
 
@@ -823,71 +891,257 @@ export const DIMENSIONS = {
             { id: 'risk_d7_6', label: 'Sin acceso a asesoría legal' },
             { id: 'risk_d7_7', label: 'Falta representación en decisiones' },
             { id: 'risk_d7_8', label: 'Exclusión procesos políticos' }
+        ],
+        potentialities: [
+            { id: 'pot_d7_1', label: 'Documentación en regla y acceso a derechos' },
+            { id: 'pot_d7_2', label: 'Conocimiento de derechos ciudadanos' },
+            { id: 'pot_d7_3', label: 'Participación activa en asociaciones' },
+            { id: 'pot_d7_4', label: 'Interés en la vida comunitaria y política' },
+            { id: 'pot_d7_5', label: 'Acceso a servicios sociales públicos' },
+            { id: 'pot_d7_6', label: 'Vínculo con ONG o entidades de apoyo' },
+            { id: 'pot_d7_7', label: 'Capacidad de advocacy (defensa de sus derechos)' },
+            { id: 'pot_d7_8', label: 'Proceso de regularización en curso favorable' }
         ]
     },
 
     dim8: {
         id: 'dim8',
         title: 'Situación Legal y Conflictividad Social',
-        description: 'Situación legal, antecedentes penales, procesos legales, victimización y conflictividad social.',
+        description: 'Situación legal, antecedentes penales, procesos legales, victimización, conflictividad social y estatus de residencia/extranjería.',
         subdimensions: [
+            {
+                id: 'sub8_0',
+                title: 'Situación de Residencia y Extranjería',
+                description: 'Evalúe el estatus administrativo de la persona si es de origen extranjero: permisos, documentación, procesos de regularización y riesgo de expulsión.',
+                indicators: [
+                    {
+                        id: 'ind8_0_1',
+                        label: 'Nacionalidad',
+                        type: 'select',
+                        options: ['Española', 'UE/EEE', 'Extracomunitaria con permiso', 'Extracomunitaria sin permiso', 'Apátrida'],
+                        description: 'Identifique la situación de nacionalidad. UE/EEE incluye ciudadanos de la Unión Europea y Espacio Económico Europeo.'
+                    },
+                    {
+                        id: 'ind8_0_2',
+                        label: 'Tipo de permiso de residencia',
+                        type: 'select',
+                        options: ['No aplica (español)', 'Comunitario', 'Temporal', 'Larga duración', 'Arraigo', 'Humanitario', 'En trámite', 'Denegado/Sin permiso'],
+                        description: 'Tipo de autorización de residencia vigente. Arraigo puede ser social, laboral o familiar.',
+                        dependsOn: { indicatorId: 'ind8_0_1', condition: 'notEquals', value: 'Española' }
+                    },
+                    {
+                        id: 'ind8_0_3',
+                        label: 'Permiso de trabajo',
+                        type: 'select',
+                        options: ['No aplica', 'Sí autorizado', 'Limitado (sector/zona)', 'No autorizado', 'En trámite'],
+                        description: '¿Tiene autorización para trabajar legalmente? Algunos permisos limitan sectores o zonas geográficas.',
+                        dependsOn: { indicatorId: 'ind8_0_1', condition: 'notEquals', value: 'Española' }
+                    },
+                    {
+                        id: 'ind8_0_4',
+                        label: 'Tiempo en situación irregular',
+                        type: 'select',
+                        options: ['No aplica', '< 6 meses', '6 meses - 2 años', '2-3 años (arraigo)', '> 3 años'],
+                        description: 'Tiempo transcurrido en situación administrativa irregular. 3 años posibilita arraigo social.',
+                        dependsOn: { indicatorId: 'ind8_0_2', condition: 'equals', value: 'Denegado/Sin permiso' }
+                    },
+                    {
+                        id: 'ind8_0_5',
+                        label: 'Documentación acreditativa',
+                        type: 'select',
+                        options: ['Pasaporte vigente', 'Pasaporte caducado', 'Sin pasaporte', 'NIE vigente', 'NIE caducado', 'TIE vigente', 'Sin documentación'],
+                        description: 'Estado de la documentación identificativa. TIE = Tarjeta de Identidad de Extranjero.'
+                    },
+                    {
+                        id: 'ind8_0_6',
+                        label: 'Empadronamiento',
+                        type: 'select',
+                        options: ['Empadronado/a', 'En trámite', 'Sin empadronamiento'],
+                        description: 'El empadronamiento es requisito para acceso a servicios y para acreditar arraigo. Todos tienen derecho a empadronarse.'
+                    },
+                    {
+                        id: 'ind8_0_7',
+                        label: 'Procedimiento de expulsión',
+                        type: 'select',
+                        options: ['No', 'Orden de expulsión activa', 'Devolución en frontera', 'CIE internamiento', 'Recurrido'],
+                        description: '¿Existe procedimiento sancionador de expulsión? CIE = Centro de Internamiento de Extranjeros.',
+                        dependsOn: { indicatorId: 'ind8_0_1', condition: 'notEquals', value: 'Española' }
+                    },
+                    {
+                        id: 'ind8_0_8',
+                        label: 'Solicitud de protección internacional',
+                        type: 'select',
+                        options: ['No aplica', 'Solicitante asilo', 'Refugiado/a', 'Protección subsidiaria', 'Denegada'],
+                        description: 'Estado de solicitud de asilo o protección internacional.',
+                        dependsOn: { indicatorId: 'ind8_0_1', condition: 'notEquals', value: 'Española' }
+                    },
+                    {
+                        id: 'ind8_0_9',
+                        label: 'Acceso a tarjeta sanitaria',
+                        type: 'select',
+                        options: ['TSI completa', 'TSI limitada', 'Solo urgencias', 'Sin acceso'],
+                        description: 'Tipo de cobertura sanitaria. TSI = Tarjeta Sanitaria Individual.'
+                    },
+                    {
+                        id: 'ind8_0_10',
+                        label: 'Asesoramiento jurídico extranjería',
+                        type: 'boolean',
+                        description: '¿Tiene acceso a asesoramiento legal especializado en extranjería?'
+                    }
+                ]
+            },
             {
                 id: 'sub8_1',
                 title: 'Antecedentes y Situación Legal',
+                description: 'Evalúe antecedentes penales, procedimientos judiciales activos, condenas y deudas judiciales.',
                 indicators: [
-                    { id: 'ind8_1_1', label: 'Antecedentes penales', type: 'boolean' },
                     {
-                        id: 'ind8_1_2', label: 'Tipo de delitos', type: 'select', options: ['Ninguno', 'No violentos', 'Violentos'],
-                        dependsOn: { indicatorId: 'ind8_1_1', condition: 'equals', value: 'yes' }
-                    },
-                    { id: 'ind8_1_3', label: 'Procedimientos judiciales activos', type: 'boolean' },
-                    {
-                        id: 'ind8_1_4', label: 'Condenas activas', type: 'boolean',
-                        dependsOn: { indicatorId: 'ind8_1_1', condition: 'equals', value: 'yes' }
+                        id: 'ind8_1_1',
+                        label: 'Antecedentes penales',
+                        type: 'boolean',
+                        description: '¿Tiene antecedentes penales vigentes o cancelados? Los antecedentes se cancelan tras cierto tiempo según gravedad.'
                     },
                     {
-                        id: 'ind8_1_5', label: 'Situación penitenciaria', type: 'select', options: ['Nunca', 'Completado', 'Cumpliendo'],
+                        id: 'ind8_1_2',
+                        label: 'Tipo de delitos',
+                        type: 'select',
+                        options: ['Ninguno', 'No violentos', 'Violentos'],
+                        description: 'No violentos: hurtos, estafas, tráfico menor. Violentos: lesiones, robos con fuerza, delitos sexuales.',
                         dependsOn: { indicatorId: 'ind8_1_1', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind8_1_6', label: 'Deudas judiciales', type: 'boolean' },
-                    { id: 'ind8_1_7', label: 'Prohibiciones judiciales', type: 'boolean' },
-                    { id: 'ind8_1_8', label: 'Historial detenciones', type: 'select', options: ['Ninguna', 'Ocasionales', 'Frecuentes'] }
+                    {
+                        id: 'ind8_1_3',
+                        label: 'Procedimientos judiciales activos',
+                        type: 'boolean',
+                        description: '¿Tiene causas penales, civiles o administrativas actualmente en curso?'
+                    },
+                    {
+                        id: 'ind8_1_4',
+                        label: 'Condenas activas',
+                        type: 'boolean',
+                        description: '¿Tiene sentencias condenatorias pendientes de cumplimiento?',
+                        dependsOn: { indicatorId: 'ind8_1_1', condition: 'equals', value: 'yes' }
+                    },
+                    {
+                        id: 'ind8_1_5',
+                        label: 'Situación penitenciaria',
+                        type: 'select',
+                        options: ['Nunca', 'Completado', 'Cumpliendo'],
+                        description: 'Estado respecto a cumplimiento de penas privativas de libertad.',
+                        dependsOn: { indicatorId: 'ind8_1_1', condition: 'equals', value: 'yes' }
+                    },
+                    {
+                        id: 'ind8_1_6',
+                        label: 'Deudas judiciales',
+                        type: 'boolean',
+                        description: 'Multas, responsabilidades civiles, costas procesales pendientes de pago.'
+                    },
+                    {
+                        id: 'ind8_1_7',
+                        label: 'Prohibiciones judiciales',
+                        type: 'boolean',
+                        description: 'Órdenes de alejamiento, inhabilitaciones, prohibición de aproximarse a personas o lugares.'
+                    },
+                    {
+                        id: 'ind8_1_8',
+                        label: 'Historial detenciones',
+                        type: 'select',
+                        options: ['Ninguna', 'Ocasionales', 'Frecuentes'],
+                        description: 'Frecuencia de detenciones policiales, aunque no resultaran en condena.'
+                    }
                 ]
             },
             {
                 id: 'sub8_2',
                 title: 'Victimización y Violencia Sufrida',
+                description: 'Identifique si la persona ha sido víctima de delitos, violencia o discriminación, y su acceso a protección.',
                 indicators: [
-                    { id: 'ind8_2_1', label: 'Delitos sufridos (robo, asalto)', type: 'boolean' },
-                    { id: 'ind8_2_2', label: 'Violencia de género sufrida', type: 'boolean' },
+                    {
+                        id: 'ind8_2_1',
+                        label: 'Delitos sufridos (robo, asalto)',
+                        type: 'boolean',
+                        description: '¿Ha sido víctima de delitos contra su persona o patrimonio?'
+                    },
+                    {
+                        id: 'ind8_2_2',
+                        label: 'Violencia de género sufrida',
+                        type: 'boolean',
+                        description: 'Violencia física, psicológica, sexual o económica por parte de pareja o ex-pareja.'
+                    },
                     // Denuncia violencia género
                     {
-                        id: 'ind8_2_2b', label: 'Denuncia interpuesta VG', type: 'boolean',
+                        id: 'ind8_2_2b',
+                        label: 'Denuncia interpuesta VG',
+                        type: 'boolean',
+                        description: '¿Ha interpuesto denuncia? Valorar barreras: miedo, dependencia, desconocimiento.',
                         dependsOn: { indicatorId: 'ind8_2_2', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind8_2_3', label: 'Violencia familiar sufrida', type: 'boolean' },
-                    { id: 'ind8_2_4', label: 'Abuso sexual sufrido', type: 'boolean' },
+                    {
+                        id: 'ind8_2_3',
+                        label: 'Violencia familiar sufrida',
+                        type: 'boolean',
+                        description: 'Maltrato por parte de familiares (padres, hijos, hermanos, etc.).'
+                    },
+                    {
+                        id: 'ind8_2_4',
+                        label: 'Abuso sexual sufrido',
+                        type: 'boolean',
+                        description: 'Incluye agresiones sexuales, abusos en la infancia, explotación sexual.'
+                    },
                     // Atención especializada abuso
                     {
-                        id: 'ind8_2_4b', label: 'Atención especializada recibida', type: 'boolean',
+                        id: 'ind8_2_4b',
+                        label: 'Atención especializada recibida',
+                        type: 'boolean',
+                        description: '¿Ha recibido atención psicológica o de servicios especializados?',
                         dependsOn: { indicatorId: 'ind8_2_4', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind8_2_5', label: 'Acoso sufrido', type: 'boolean' },
-                    { id: 'ind8_2_6', label: 'Discriminación sufrida', type: 'boolean' },
+                    {
+                        id: 'ind8_2_5',
+                        label: 'Acoso sufrido',
+                        type: 'boolean',
+                        description: 'Acoso laboral (mobbing), escolar (bullying), callejero o digital.'
+                    },
+                    {
+                        id: 'ind8_2_6',
+                        label: 'Discriminación sufrida',
+                        type: 'boolean',
+                        description: 'Trato desigual por origen, género, discapacidad, orientación sexual, etc.'
+                    },
                     // Tipo de discriminación
                     {
-                        id: 'ind8_2_6b', label: 'Motivo discriminación', type: 'select', options: ['Etnia', 'Género', 'Orientación sexual', 'Discapacidad', 'Religión', 'Otro'],
+                        id: 'ind8_2_6b',
+                        label: 'Motivo discriminación',
+                        type: 'select',
+                        options: ['Etnia', 'Género', 'Orientación sexual', 'Discapacidad', 'Religión', 'Otro'],
                         dependsOn: { indicatorId: 'ind8_2_6', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind8_2_7', label: 'Denuncias por victimización', type: 'boolean' },
-                    { id: 'ind8_2_8', label: 'Protección para víctimas', type: 'select', options: ['Innecesaria', 'Presente', 'Necesaria ausente'] }
+                    {
+                        id: 'ind8_2_7',
+                        label: 'Denuncias por victimización',
+                        type: 'boolean',
+                        description: '¿Ha denunciado las situaciones de victimización sufridas?'
+                    },
+                    {
+                        id: 'ind8_2_8',
+                        label: 'Protección para víctimas',
+                        type: 'select',
+                        options: ['Innecesaria', 'Presente', 'Necesaria ausente'],
+                        description: 'Órdenes de protección, programas de víctimas, recursos de acogida.'
+                    }
                 ]
             },
             {
                 id: 'sub8_3',
                 title: 'Conflictividad Social y Riesgos',
+                description: 'Valore la posible vinculación con entornos de riesgo, conflictividad interpersonal y problemas de conducta.',
                 indicators: [
-                    { id: 'ind8_3_1', label: 'Pertenencia grupos de riesgo', type: 'boolean' },
+                    {
+                        id: 'ind8_3_1',
+                        label: 'Pertenencia grupos de riesgo',
+                        type: 'boolean',
+                        description: 'Bandas, grupos organizados, sectas u otras organizaciones de riesgo.'
+                    },
                     // Tipo de grupo de riesgo
                     {
                         id: 'ind8_3_1b', label: 'Tipo de grupo', type: 'select', options: ['Banda juvenil', 'Organización criminal', 'Secta', 'Otro'],
@@ -915,8 +1169,14 @@ export const DIMENSIONS = {
             {
                 id: 'sub8_4',
                 title: 'Acceso a Justicia y Protección Legal',
+                description: 'Evalúe el acceso efectivo a la justicia, asesoramiento legal y garantías procesales.',
                 indicators: [
-                    { id: 'ind8_4_1', label: 'Acceso asesoramiento legal', type: 'boolean' },
+                    {
+                        id: 'ind8_4_1',
+                        label: 'Acceso asesoramiento legal',
+                        type: 'boolean',
+                        description: '¿Tiene acceso a servicios de orientación jurídica gratuitos o puede costear abogado?'
+                    },
                     { id: 'ind8_4_2', label: 'Acceso a abogado', type: 'select', options: ['Inaccesible', 'Disponible'] },
                     { id: 'ind8_4_3', label: 'Conocimiento derechos procesales', type: 'select', options: ['Nulo', 'Parcial', 'Completo'] },
                     { id: 'ind8_4_4', label: 'Garantías procesales', type: 'select', options: ['Vulneradas', 'Presentes'] },
@@ -937,7 +1197,21 @@ export const DIMENSIONS = {
             { id: 'risk_d8_5', label: 'Sin acceso a justicia/abogado' },
             { id: 'risk_d8_6', label: 'Discriminación sistemática en justicia' },
             { id: 'risk_d8_7', label: 'Riesgo inminente de prisión' },
-            { id: 'risk_d8_8', label: 'Víctima de trata o explotación' }
+            { id: 'risk_d8_8', label: 'Víctima de trata o explotación' },
+            { id: 'risk_d8_9', label: 'Situación administrativa irregular' },
+            { id: 'risk_d8_10', label: 'Orden de expulsión activa' },
+            { id: 'risk_d8_11', label: 'Sin documentación de identidad' },
+            { id: 'risk_d8_12', label: 'Sin acceso a tarjeta sanitaria' }
+        ],
+        potentialities: [
+            { id: 'pot_d8_1', label: 'Sin antecedentes penales' },
+            { id: 'pot_d8_2', label: 'Documentación de residencia en regla' },
+            { id: 'pot_d8_3', label: 'Arraigo social acreditable (> 3 años)' },
+            { id: 'pot_d8_4', label: 'Acceso efectivo a justicia gratuita' },
+            { id: 'pot_d8_5', label: 'Conocimiento proceso de regularización' },
+            { id: 'pot_d8_6', label: 'Red de apoyo para trámites legales' },
+            { id: 'pot_d8_7', label: 'Empadronamiento vigente' },
+            { id: 'pot_d8_8', label: 'Asesoramiento jurídico disponible' }
         ]
     }
 };

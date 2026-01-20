@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import {
     ChevronDown, ChevronRight, AlertTriangle, Activity, Link2,
-    CheckCircle, ArrowDown, User, Minus, Plus, HelpCircle, Info
+    CheckCircle, ArrowDown, User, Minus, Plus, HelpCircle, Info, Sparkles
 } from 'lucide-react';
 import { evaluateDependency } from '../data/dimensions';
 
@@ -511,6 +511,88 @@ export function DimensionForm({ dimension, answers, onChange }) {
                     <div className="p-4 rounded-xl bg-white/10 border border-white/10">
                         <p className="text-sm text-white/80 italic text-center">"{currentEIE.desc}"</p>
                     </div>
+                </div>
+
+                {/* Potentialities & Resources (Appreciative Approach) */}
+                <div className="card lg:col-span-3" style={{ background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="p-2 rounded-lg" style={{ background: 'rgba(16, 185, 129, 0.15)' }}>
+                            <Sparkles size={22} style={{ color: '#10b981' }} />
+                        </div>
+                        <div className="flex-1">
+                            <h3 className="text-lg font-bold text-slate-900">Potencialidades y Recursos</h3>
+                            <p className="text-xs text-slate-500">Enfoque apreciativo: fortalezas, capacidades y recursos identificados</p>
+                        </div>
+                        {/* Counter */}
+                        {dimension.potentialities && (
+                            <div className="flex items-center gap-2">
+                                <span className="px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 text-sm font-bold">
+                                    {Object.values(currentAnswers.potentialitiesChecked || {}).filter(Boolean).length} / {dimension.potentialities.length}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-white/60 border border-emerald-100 mb-4">
+                        <p className="text-sm text-slate-600">
+                            🌟 <strong>Guía:</strong> Identifique habilidades, redes de apoyo, experiencias positivas,
+                            motivaciones, recursos materiales o inmateriales que la persona posee y que pueden
+                            facilitar su proceso de inclusión.
+                        </p>
+                    </div>
+
+                    {/* Predefined potentialities as checkboxes */}
+                    {dimension.potentialities && dimension.potentialities.length > 0 && (
+                        <div className="grid gap-2 mb-4">
+                            {dimension.potentialities.map((pot) => {
+                                const checked = currentAnswers.potentialitiesChecked?.[pot.id] === true;
+                                return (
+                                    <label
+                                        key={pot.id}
+                                        className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${checked
+                                                ? 'border-emerald-300 shadow-sm bg-emerald-50'
+                                                : 'bg-white/50 border-transparent hover:bg-white hover:border-emerald-100'
+                                            }`}
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            checked={checked}
+                                            onChange={(e) => handleChange('potentialitiesChecked', {
+                                                ...currentAnswers.potentialitiesChecked,
+                                                [pot.id]: e.target.checked
+                                            })}
+                                            className="mt-0.5 w-4 h-4 rounded text-emerald-500 focus:ring-emerald-500"
+                                            style={{ accentColor: '#10b981' }}
+                                        />
+                                        <span className={`text-sm ${checked ? 'text-slate-900 font-medium' : 'text-slate-600'}`}>
+                                            {pot.label}
+                                        </span>
+                                    </label>
+                                );
+                            })}
+                        </div>
+                    )}
+
+                    {/* Additional notes textarea */}
+                    <div className="border-t border-emerald-100 pt-4">
+                        <label className="text-sm font-medium text-slate-700 mb-2 block">
+                            Otras potencialidades observadas (texto libre):
+                        </label>
+                        <textarea
+                            value={currentAnswers.potentialitiesNotes || ''}
+                            onChange={(e) => handleChange('potentialitiesNotes', e.target.value)}
+                            rows={3}
+                            className="w-full p-4 rounded-xl border-2 border-emerald-200 bg-white focus:border-emerald-400 focus:ring-2 focus:ring-emerald-200 transition-all resize-none text-slate-700"
+                            placeholder="Ej: Red de apoyo en parroquia local, experiencia previa como cuidador, habilidades manuales..."
+                        />
+                    </div>
+
+                    {(Object.values(currentAnswers.potentialitiesChecked || {}).filter(Boolean).length > 0 || currentAnswers.potentialitiesNotes) && (
+                        <div className="mt-3 flex items-center gap-2 text-sm text-emerald-600">
+                            <CheckCircle size={16} />
+                            <span>Potencialidades registradas</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
