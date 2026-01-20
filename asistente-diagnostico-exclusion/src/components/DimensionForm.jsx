@@ -34,6 +34,9 @@ export function DimensionForm({ dimension, answers, onChange }) {
         return initial;
     });
 
+    // Track which field descriptions are expanded
+    const [expandedDescriptions, setExpandedDescriptions] = useState({});
+
     if (!dimension) return <div className="text-center py-20 text-slate-500">Dimensión no encontrada</div>;
 
     const handleChange = (fieldId, value) => onChange(dimension.id, fieldId, value);
@@ -41,6 +44,10 @@ export function DimensionForm({ dimension, answers, onChange }) {
 
     const toggleSubdimension = (subId) => {
         setExpandedSubs(prev => ({ ...prev, [subId]: !prev[subId] }));
+    };
+
+    const toggleDescription = (fieldId) => {
+        setExpandedDescriptions(prev => ({ ...prev, [fieldId]: !prev[fieldId] }));
     };
 
     const expandAll = () => {
@@ -347,18 +354,22 @@ export function DimensionForm({ dimension, answers, onChange }) {
 
         return (
             <div className="relative">
+                {/* Header con label y botón de info */}
                 <div className="flex items-center gap-2 mb-2">
-                    <label className="label flex-1 mb-0">{field.label}</label>
+                    <label className="label flex-1 mb-0 font-semibold">{field.label}</label>
                     {field.description && (
-                        <span
-                            className="group relative cursor-help"
-                            title={field.description}
+                        <button
+                            type="button"
+                            onClick={() => toggleDescription(field.id)}
+                            className="flex items-center gap-1 text-xs text-teal-600 hover:text-teal-700 transition-colors px-2 py-1 rounded-lg hover:bg-teal-50"
+                            aria-label={expandedDescriptions[field.id] ? "Ocultar descripción" : "Ver descripción"}
                         >
-                            <HelpCircle size={16} className="text-slate-400 hover:text-teal-500 transition-colors" />
-                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs text-white bg-slate-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity w-64 z-50 shadow-lg pointer-events-none">
-                                {field.description}
-                            </span>
-                        </span>
+                            <Info size={16} />
+                            <ChevronDown
+                                size={14}
+                                className={`transition-transform ${expandedDescriptions[field.id] ? 'rotate-180' : ''}`}
+                            />
+                        </button>
                     )}
                     {isCompleted && <CheckCircle size={16} className="text-teal-500" />}
                     {depInfo && (
@@ -371,6 +382,15 @@ export function DimensionForm({ dimension, answers, onChange }) {
                         </span>
                     )}
                 </div>
+
+                {/* Descripción colapsable */}
+                {field.description && expandedDescriptions[field.id] && (
+                    <div className="mb-3 p-3 bg-slate-50 border-l-4 border-teal-500 rounded-r-lg animate-fade-in">
+                        <p className="text-sm text-slate-700 leading-relaxed">{field.description}</p>
+                    </div>
+                )}
+
+                {/* Campo de entrada */}
                 {fieldContent}
             </div>
         );

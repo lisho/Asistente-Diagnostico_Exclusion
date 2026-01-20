@@ -102,6 +102,15 @@ export function AdminPanel({ onBack }) {
             type: indicator.type,
             description: indicator.description || '',
             options: indicator.options || [],
+            // Range/Number config
+            min: indicator.min,
+            max: indicator.max,
+            step: indicator.step,
+            unit: indicator.unit,
+            // Scale config
+            scaleMax: indicator.scaleMax,
+            scaleLabels: indicator.scaleLabels || {},
+            // Dependency
             hasDependency: !!indicator.dependsOn,
             depIndicatorId: indicator.dependsOn?.indicatorId || '',
             depCondition: indicator.dependsOn?.condition || 'equals',
@@ -145,12 +154,34 @@ export function AdminPanel({ onBack }) {
                 description: form.description.trim() || undefined
             };
 
-            if (form.type === 'select' && form.options.length > 0) {
+            // Options for select/radio/checkbox
+            if (['select', 'radio', 'checkbox'].includes(form.type) && form.options.length > 0) {
                 updates.options = form.options;
             } else {
                 delete updates.options;
             }
 
+            // Range/Number parameters
+            if (form.type === 'range' || form.type === 'number') {
+                if (form.min !== undefined && form.min !== '') updates.min = form.min;
+                if (form.max !== undefined && form.max !== '') updates.max = form.max;
+            }
+
+            // Range-specific parameters
+            if (form.type === 'range') {
+                if (form.step !== undefined && form.step !== '') updates.step = form.step;
+                if (form.unit) updates.unit = form.unit;
+            }
+
+            // Scale parameters
+            if (form.type === 'scale') {
+                if (form.scaleMax) updates.scaleMax = form.scaleMax;
+                if (form.scaleLabels && (form.scaleLabels.min || form.scaleLabels.max)) {
+                    updates.scaleLabels = form.scaleLabels;
+                }
+            }
+
+            // Dependency
             if (form.hasDependency && form.depIndicatorId) {
                 let depValue = form.depValue;
                 if (form.depCondition === 'includes') {
@@ -322,6 +353,144 @@ export function AdminPanel({ onBack }) {
                                                 {form.options.length} opcion{form.options.length !== 1 ? 'es' : ''} definida{form.options.length !== 1 ? 's' : ''}
                                             </p>
                                         )}
+                                    </div>
+                                )}
+
+                                {/* Configuración de Range (slider) */}
+                                {form.type === 'range' && (
+                                    <div className="col-span-2 p-4 rounded-xl border border-blue-200 bg-blue-50/30">
+                                        <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+                                            <span>🎚️</span> Configuración del Slider
+                                        </h4>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label className="label text-xs">Valor mínimo</label>
+                                                <input
+                                                    type="number"
+                                                    value={form.min ?? 0}
+                                                    onChange={e => setForm({ ...form, min: parseFloat(e.target.value) || 0 })}
+                                                    className="input text-sm"
+                                                    placeholder="0"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="label text-xs">Valor máximo</label>
+                                                <input
+                                                    type="number"
+                                                    value={form.max ?? 100}
+                                                    onChange={e => setForm({ ...form, max: parseFloat(e.target.value) || 100 })}
+                                                    className="input text-sm"
+                                                    placeholder="100"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="label text-xs">Incremento (step)</label>
+                                                <input
+                                                    type="number"
+                                                    value={form.step ?? 1}
+                                                    onChange={e => setForm({ ...form, step: parseFloat(e.target.value) || 1 })}
+                                                    className="input text-sm"
+                                                    placeholder="1"
+                                                    step="0.1"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="label text-xs">Unidad (opcional)</label>
+                                                <input
+                                                    type="text"
+                                                    value={form.unit ?? ''}
+                                                    onChange={e => setForm({ ...form, unit: e.target.value })}
+                                                    className="input text-sm"
+                                                    placeholder="€, %, años, kg..."
+                                                    maxLength={10}
+                                                />
+                                            </div>
+                                        </div>
+                                        <p className="text-xs text-slate-500 mt-2">
+                                            💡 El slider irá de <strong>{form.min ?? 0}</strong> a <strong>{form.max ?? 100}</strong> {form.unit || ''}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* Configuración de Scale (likert) */}
+                                {form.type === 'scale' && (
+                                    <div className="col-span-2 p-4 rounded-xl border border-purple-200 bg-purple-50/30">
+                                        <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+                                            <span>📊</span> Configuración de la Escala
+                                        </h4>
+                                        <div className="grid grid-cols-3 gap-3 mb-3">
+                                            <div>
+                                                <label className="label text-xs">Valor máximo</label>
+                                                <input
+                                                    type="number"
+                                                    value={form.scaleMax ?? 5}
+                                                    onChange={e => setForm({ ...form, scaleMax: parseInt(e.target.value) || 5 })}
+                                                    className="input text-sm"
+                                                    placeholder="5"
+                                                    min="2"
+                                                    max="10"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="label text-xs">Etiqueta mínimo</label>
+                                                <input
+                                                    type="text"
+                                                    value={form.scaleLabels?.min ?? ''}
+                                                    onChange={e => setForm({ ...form, scaleLabels: { ...form.scaleLabels, min: e.target.value } })}
+                                                    className="input text-sm"
+                                                    placeholder="Ej: Muy mal"
+                                                    maxLength={30}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="label text-xs">Etiqueta máximo</label>
+                                                <input
+                                                    type="text"
+                                                    value={form.scaleLabels?.max ?? ''}
+                                                    onChange={e => setForm({ ...form, scaleLabels: { ...form.scaleLabels, max: e.target.value } })}
+                                                    className="input text-sm"
+                                                    placeholder="Ej: Muy bien"
+                                                    maxLength={30}
+                                                />
+                                            </div>
+                                        </div>
+                                        <p className="text-xs text-slate-500">
+                                            💡 Escala del 1 al <strong>{form.scaleMax ?? 5}</strong> con gradiente de colores
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* Configuración de Number */}
+                                {form.type === 'number' && (
+                                    <div className="col-span-2 p-4 rounded-xl border border-green-200 bg-green-50/30">
+                                        <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+                                            <span>🔢</span> Límites Numéricos (opcional)
+                                        </h4>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label className="label text-xs">Valor mínimo</label>
+                                                <input
+                                                    type="number"
+                                                    value={form.min ?? ''}
+                                                    onChange={e => setForm({ ...form, min: e.target.value ? parseFloat(e.target.value) : undefined })}
+                                                    className="input text-sm"
+                                                    placeholder="Sin límite"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="label text-xs">Valor máximo</label>
+                                                <input
+                                                    type="number"
+                                                    value={form.max ?? ''}
+                                                    onChange={e => setForm({ ...form, max: e.target.value ? parseFloat(e.target.value) : undefined })}
+                                                    className="input text-sm"
+                                                    placeholder="Sin límite"
+                                                />
+                                            </div>
+                                        </div>
+                                        <p className="text-xs text-slate-500 mt-2">
+                                            💡 Restringe el rango de valores que se pueden introducir
+                                        </p>
                                     </div>
                                 )}
                             </div>
