@@ -46,21 +46,21 @@ export const DIMENSIONS = {
                     {
                         id: 'ind1_1_4',
                         label: 'Acceso a mercado laboral',
-                        type: 'select',
+                        type: 'radio',
                         options: ['Barrera alta', 'Barrera moderada', 'Sin barreras'],
                         description: 'Considere factores como idioma, discapacidad, edad, género, etnia, situación administrativa o estigma social que dificulten el acceso.'
                     },
                     {
                         id: 'ind1_1_5',
                         label: 'Experiencia laboral',
-                        type: 'select',
+                        type: 'radio',
                         options: ['Fragmentada', 'Limitada', 'Consolidada'],
                         description: 'Fragmentada: muchos trabajos cortos sin continuidad. Limitada: poca experiencia. Consolidada: trayectoria estable y demostrable.'
                     },
                     {
                         id: 'ind1_1_6',
                         label: 'Formación profesional',
-                        type: 'select',
+                        type: 'radio',
                         options: ['Inexistente', 'Desactualizada', 'Continua'],
                         description: 'Evalúe si posee cualificación profesional actual y demandada por el mercado laboral.'
                     },
@@ -96,14 +96,14 @@ export const DIMENSIONS = {
                     {
                         id: 'ind1_2_2',
                         label: 'Precarización de ingresos',
-                        type: 'select',
+                        type: 'radio',
                         options: ['Variación > 30%', 'Variación moderada', 'Estable'],
                         description: 'Evalúe la variabilidad de ingresos mes a mes. Ingresos inestables dificultan planificación y generan estrés crónico.'
                     },
                     {
                         id: 'ind1_2_3',
                         label: 'Acceso a prestaciones',
-                        type: 'select',
+                        type: 'radio',
                         options: ['Sin cobertura', 'Cobertura parcial', 'Cobertura completa'],
                         description: 'Prestaciones incluyen: desempleo, subsidios, IMV/RMI, pensiones, ayudas familiares, etc.'
                     },
@@ -133,7 +133,7 @@ export const DIMENSIONS = {
                     {
                         id: 'ind1_2_6',
                         label: 'Capacidad gastos imprevistos',
-                        type: 'select',
+                        type: 'radio',
                         options: ['Nula', 'Limitada', 'Total'],
                         description: '¿Podría afrontar un gasto inesperado de 600€ (ej: reparación, multa, tratamiento)? Indicador clave de resiliencia económica.'
                     }
@@ -297,17 +297,17 @@ export const DIMENSIONS = {
                 title: 'Entorno y Localización',
                 description: 'Analice el entorno urbano: accesibilidad, seguridad, servicios y relación con la comunidad. Afecta a la inserción social.',
                 indicators: [
-                    { id: 'ind2_3_1', label: 'Acceso transporte público', type: 'select', options: ['> 45 min', '15-45 min', '< 15 min'] },
-                    { id: 'ind2_3_2', label: 'Distancia servicios básicos', type: 'select', options: ['> 2 km', '500m - 2km', '< 500m'] },
-                    { id: 'ind2_3_3', label: 'Seguridad del entorno', type: 'select', options: ['Alto riesgo', 'Moderado', 'Bajo riesgo'] },
+                    { id: 'ind2_3_1', label: 'Acceso transporte público', type: 'radio', options: ['> 45 min', '15-45 min', '< 15 min'] },
+                    { id: 'ind2_3_2', label: 'Distancia servicios básicos', type: 'radio', options: ['> 2 km', '500m - 2km', '< 500m'] },
+                    { id: 'ind2_3_3', label: 'Seguridad del entorno', type: 'radio', options: ['Alto riesgo', 'Moderado', 'Bajo riesgo'] },
                     // Tipo de inseguridad solo si hay alto riesgo
                     {
                         id: 'ind2_3_3b', label: 'Tipo de inseguridad', type: 'select', options: ['Delincuencia', 'Drogas', 'Violencia', 'Abandono urbano', 'Múltiple'],
                         dependsOn: { indicatorId: 'ind2_3_3', condition: 'equals', value: 'Alto riesgo' }
                     },
-                    { id: 'ind2_3_4', label: 'Ruido y contaminación', type: 'select', options: ['Excesivos', 'Moderados', 'Tolerables'] },
+                    { id: 'ind2_3_4', label: 'Ruido y contaminación', type: 'radio', options: ['Excesivos', 'Moderados', 'Tolerables'] },
                     { id: 'ind2_3_5', label: 'Espacios públicos/áreas verdes', type: 'boolean' },
-                    { id: 'ind2_3_6', label: 'Integración comunitaria', type: 'select', options: ['Conflictiva', 'Neutral', 'Buena'] },
+                    { id: 'ind2_3_6', label: 'Integración comunitaria', type: 'radio', options: ['Conflictiva', 'Neutral', 'Buena'] },
                     // Motivo conflicto comunitario
                     {
                         id: 'ind2_3_6b', label: 'Motivo conflicto comunitario', type: 'select', options: ['Étnico', 'Económico', 'Conducta', 'Ruido', 'Otro'],
@@ -348,26 +348,26 @@ export const DIMENSIONS = {
                 title: 'Estado de Salud Física',
                 description: 'Evalúe enfermedades crónicas, discapacidad, nutrición y sueño. Considere cómo afectan a la autonomía y calidad de vida.',
                 indicators: [
-                    { id: 'ind3_1_1', label: 'Enfermedades crónicas', type: 'select', options: ['Múltiples sin control', 'Alguna controlada', 'Ninguna'] },
+                    { id: 'ind3_1_1', label: 'Enfermedades crónicas', type: 'radio', options: ['Múltiples sin control', 'Alguna controlada', 'Ninguna'] },
                     // Tipo de enfermedad crónica solo si tiene alguna
                     {
                         id: 'ind3_1_1b', label: 'Principales enfermedades crónicas', type: 'text',
                         dependsOn: { indicatorId: 'ind3_1_1', condition: 'notEquals', value: 'Ninguna' }
                     },
-                    { id: 'ind3_1_2', label: 'Discapacidad física', type: 'select', options: ['Severa', 'Moderada', 'Leve', 'Nula'] },
+                    { id: 'ind3_1_2', label: 'Discapacidad física', type: 'radio', options: ['Severa', 'Moderada', 'Leve', 'Nula'] },
                     // Grado de discapacidad solo si tiene discapacidad
                     {
                         id: 'ind3_1_2b', label: 'Grado de discapacidad reconocido (%)', type: 'number',
                         dependsOn: { indicatorId: 'ind3_1_2', condition: 'notEquals', value: 'Nula' }
                     },
                     { id: 'ind3_1_3', label: 'Accidentes/traumas recurrentes', type: 'boolean' },
-                    { id: 'ind3_1_4', label: 'Estado nutricional', type: 'select', options: ['Malnutrición', 'Inadecuado', 'Adecuado'] },
+                    { id: 'ind3_1_4', label: 'Estado nutricional', type: 'radio', options: ['Malnutrición', 'Inadecuado', 'Adecuado'] },
                     // Inseguridad alimentaria solo si hay malnutrición
                     {
                         id: 'ind3_1_4b', label: 'Inseguridad alimentaria', type: 'select', options: ['Severa', 'Moderada', 'Leve'],
                         dependsOn: { indicatorId: 'ind3_1_4', condition: 'notEquals', value: 'Adecuado' }
                     },
-                    { id: 'ind3_1_5', label: 'Calidad de sueño', type: 'select', options: ['Problemas severos', 'Problemas moderados', 'Normal'] },
+                    { id: 'ind3_1_5', label: 'Calidad de sueño', type: 'radio', options: ['Problemas severos', 'Problemas moderados', 'Normal'] },
                     // Medicación para dormir solo si hay problemas
                     {
                         id: 'ind3_1_5b', label: 'Uso de medicación para dormir', type: 'boolean',
@@ -496,22 +496,22 @@ export const DIMENSIONS = {
                 title: 'Estado de Salud Mental',
                 description: 'Evalúe sintomatología: depresión, ansiedad, riesgo suicida, trastornos graves. URGENTE si hay ideación suicida activa.',
                 indicators: [
-                    { id: 'ind4_1_1', label: 'Síntomas depresivos', type: 'select', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
-                    { id: 'ind4_1_2', label: 'Síntomas ansiosos', type: 'select', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
-                    { id: 'ind4_1_3', label: 'Baja autoestima', type: 'select', options: ['Severa', 'Moderada', 'Leve', 'Normal'] },
-                    { id: 'ind4_1_4', label: 'Ideación suicida', type: 'select', options: ['Activa', 'Pasada', 'Nunca'] },
+                    { id: 'ind4_1_1', label: 'Síntomas depresivos', type: 'radio', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
+                    { id: 'ind4_1_2', label: 'Síntomas ansiosos', type: 'radio', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
+                    { id: 'ind4_1_3', label: 'Baja autoestima', type: 'radio', options: ['Severa', 'Moderada', 'Leve', 'Normal'] },
+                    { id: 'ind4_1_4', label: 'Ideación suicida', type: 'radio', options: ['Activa', 'Pasada', 'Nunca'] },
                     // Plan suicida solo si hay ideación activa
                     {
                         id: 'ind4_1_4b', label: 'Plan suicida estructurado', type: 'boolean',
                         dependsOn: { indicatorId: 'ind4_1_4', condition: 'equals', value: 'Activa' }
                     },
-                    { id: 'ind4_1_5', label: 'Intentos de suicidio', type: 'select', options: ['Reciente', 'Pasado', 'Nunca'] },
+                    { id: 'ind4_1_5', label: 'Intentos de suicidio', type: 'radio', options: ['Reciente', 'Pasado', 'Nunca'] },
                     // Método de intento solo si hubo intento
                     {
                         id: 'ind4_1_5b', label: 'Letalidad del método', type: 'select', options: ['Alta', 'Media', 'Baja'],
                         dependsOn: { indicatorId: 'ind4_1_5', condition: 'notEquals', value: 'Nunca' }
                     },
-                    { id: 'ind4_1_6', label: 'Autolesiones', type: 'select', options: ['Activas', 'Pasadas', 'Nunca'] },
+                    { id: 'ind4_1_6', label: 'Autolesiones', type: 'radio', options: ['Activas', 'Pasadas', 'Nunca'] },
                     // Frecuencia autolesiones solo si las hay
                     {
                         id: 'ind4_1_6b', label: 'Frecuencia autolesiones', type: 'select', options: ['Diaria', 'Semanal', 'Mensual', 'Esporádica'],
@@ -559,13 +559,13 @@ export const DIMENSIONS = {
                 id: 'sub4_3',
                 title: 'Factores de Resiliencia y Protección',
                 indicators: [
-                    { id: 'ind4_3_1', label: 'Estrategias de afrontamiento', type: 'select', options: ['Desadaptativas', 'Mixtas', 'Adaptativas'] },
-                    { id: 'ind4_3_2', label: 'Apoyo social percibido', type: 'select', options: ['Nulo', 'Débil', 'Fuerte'] },
-                    { id: 'ind4_3_3', label: 'Sentido de vida y metas', type: 'select', options: ['Ausente', 'Parcial', 'Presente'] },
-                    { id: 'ind4_3_4', label: 'Esperanza en el futuro', type: 'select', options: ['Ausente', 'Parcial', 'Presente'] },
-                    { id: 'ind4_3_5', label: 'Autonomía (toma decisiones)', type: 'select', options: ['Baja', 'Media', 'Alta'] },
-                    { id: 'ind4_3_6', label: 'Sentimiento de pertenencia', type: 'select', options: ['Ausente', 'Parcial', 'Presente'] },
-                    { id: 'ind4_3_7', label: 'Creencias espirituales', type: 'select', options: ['Limitantes', 'Neutras', 'Fortalecedoras'] }
+                    { id: 'ind4_3_1', label: 'Estrategias de afrontamiento', type: 'radio', options: ['Desadaptativas', 'Mixtas', 'Adaptativas'] },
+                    { id: 'ind4_3_2', label: 'Apoyo social percibido', type: 'radio', options: ['Nulo', 'Débil', 'Fuerte'] },
+                    { id: 'ind4_3_3', label: 'Sentido de vida y metas', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'] },
+                    { id: 'ind4_3_4', label: 'Esperanza en el futuro', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'] },
+                    { id: 'ind4_3_5', label: 'Autonomía (toma decisiones)', type: 'radio', options: ['Baja', 'Media', 'Alta'] },
+                    { id: 'ind4_3_6', label: 'Sentimiento de pertenencia', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'] },
+                    { id: 'ind4_3_7', label: 'Creencias espirituales', type: 'radio', options: ['Limitantes', 'Neutras', 'Fortalecedoras'] }
                 ]
             }
         ],
@@ -602,13 +602,13 @@ export const DIMENSIONS = {
                 indicators: [
                     { id: 'ind5_1_1', label: 'Nivel máximo alcanzado', type: 'select', options: ['Sin escolarizar', 'Primaria incompleta', 'Primaria', 'ESO', 'Bachillerato/FP', 'Universidad'] },
                     { id: 'ind5_1_2', label: 'Certificaciones oficiales', type: 'boolean' },
-                    { id: 'ind5_1_3', label: 'Alfabetización lectura/escritura', type: 'select', options: ['Analfabeto', 'Alfabetización funcional', 'Alfabetizado'] },
+                    { id: 'ind5_1_3', label: 'Alfabetización lectura/escritura', type: 'radio', options: ['Analfabeto', 'Alfabetización funcional', 'Alfabetizado'] },
                     // Programa alfabetización solo si analfabeto o funcional
                     {
                         id: 'ind5_1_3b', label: 'Participando en programa alfabetización', type: 'boolean',
                         dependsOn: { indicatorId: 'ind5_1_3', condition: 'notEquals', value: 'Alfabetizado' }
                     },
-                    { id: 'ind5_1_4', label: 'Competencias digitales', type: 'select', options: ['Nulas', 'Básicas', 'Intermedias', 'Avanzadas'] },
+                    { id: 'ind5_1_4', label: 'Competencias digitales', type: 'radio', options: ['Nulas', 'Básicas', 'Intermedias', 'Avanzadas'] },
                     // Formación digital si competencias nulas
                     {
                         id: 'ind5_1_4b', label: 'Acceso a formación digital', type: 'boolean',
@@ -616,7 +616,7 @@ export const DIMENSIONS = {
                     },
                     { id: 'ind5_1_5', label: 'Acreditación competencias informales', type: 'boolean' },
                     { id: 'ind5_1_6', label: 'Cualificación profesional', type: 'boolean' },
-                    { id: 'ind5_1_7', label: 'Idiomas adicionales', type: 'select', options: ['Ninguno', 'Básico', 'Fluido'] }
+                    { id: 'ind5_1_7', label: 'Idiomas adicionales', type: 'radio', options: ['Ninguno', 'Básico', 'Fluido'] }
                 ]
             },
             {
@@ -650,12 +650,12 @@ export const DIMENSIONS = {
                 id: 'sub5_3',
                 title: 'Competencias y Habilidades',
                 indicators: [
-                    { id: 'ind5_3_1', label: 'Competencia comunicación', type: 'select', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'] },
-                    { id: 'ind5_3_2', label: 'Competencia matemática', type: 'select', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'] },
-                    { id: 'ind5_3_3', label: 'Competencia digital', type: 'select', options: ['Nula', 'Básica', 'Intermedia', 'Avanzada'] },
-                    { id: 'ind5_3_4', label: 'Competencias empleabilidad', type: 'select', options: ['Severa carencia', 'Deficitarias', 'Adecuadas', 'Excelentes'] },
-                    { id: 'ind5_3_5', label: 'Habilidades sociales', type: 'select', options: ['Severa deficiencia', 'Deficiencias', 'Adecuadas', 'Excelentes'] },
-                    { id: 'ind5_3_6', label: 'Capacidad de aprendizaje', type: 'select', options: ['Muy limitada', 'Limitada', 'Buena', 'Muy buena'] }
+                    { id: 'ind5_3_1', label: 'Competencia comunicación', type: 'radio', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'] },
+                    { id: 'ind5_3_2', label: 'Competencia matemática', type: 'radio', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'] },
+                    { id: 'ind5_3_3', label: 'Competencia digital', type: 'radio', options: ['Nula', 'Básica', 'Intermedia', 'Avanzada'] },
+                    { id: 'ind5_3_4', label: 'Competencias empleabilidad', type: 'radio', options: ['Severa carencia', 'Deficitarias', 'Adecuadas', 'Excelentes'] },
+                    { id: 'ind5_3_5', label: 'Habilidades sociales', type: 'radio', options: ['Severa dificultad', 'Deficiencias', 'Adecuadas', 'Excelentes'] },
+                    { id: 'ind5_3_6', label: 'Capacidad de aprendizaje', type: 'radio', options: ['Muy limitada', 'Limitada', 'Buena', 'Muy buena'] }
                 ]
             }
         ],
@@ -714,8 +714,8 @@ export const DIMENSIONS = {
                 id: 'sub6_2',
                 title: 'Redes de Apoyo Social',
                 indicators: [
-                    { id: 'ind6_2_1', label: 'Amistades significativas', type: 'select', options: ['Ninguna', 'Algunas', 'Múltiples'] },
-                    { id: 'ind6_2_2', label: 'Contacto social regular', type: 'select', options: ['Nulo', 'Ocasional', 'Mensual', 'Semanal'] },
+                    { id: 'ind6_2_1', label: 'Amistades significativas', type: 'radio', options: ['Ninguna', 'Algunas', 'Múltiples'] },
+                    { id: 'ind6_2_2', label: 'Contacto social regular', type: 'radio', options: ['Nulo', 'Ocasional', 'Mensual', 'Semanal'] },
                     { id: 'ind6_2_3', label: 'Apoyo emocional disponible', type: 'boolean' },
                     { id: 'ind6_2_4', label: 'Apoyo económico disponible', type: 'boolean' },
                     { id: 'ind6_2_5', label: 'Apoyo material disponible', type: 'boolean' },
@@ -723,7 +723,7 @@ export const DIMENSIONS = {
                         id: 'ind6_2_6', label: 'Reciprocidad en relaciones', type: 'select', options: ['Asimétrica', 'Equilibrada'],
                         dependsOn: { indicatorId: 'ind6_2_1', condition: 'notEquals', value: 'Ninguna' }
                     },
-                    { id: 'ind6_2_7', label: 'Sentimiento de soledad', type: 'select', options: ['Severo', 'Moderado', 'Leve', 'Inexistente'] },
+                    { id: 'ind6_2_7', label: 'Sentimiento de soledad', type: 'radio', options: ['Severo', 'Moderado', 'Leve', 'Inexistente'] },
                     { id: 'ind6_2_8', label: 'Aislamiento social', type: 'boolean' },
                     // Causas del aislamiento solo si hay aislamiento
                     {
@@ -736,10 +736,10 @@ export const DIMENSIONS = {
                 id: 'sub6_3',
                 title: 'Integración Comunitaria',
                 indicators: [
-                    { id: 'ind6_3_1', label: 'Participación en asociaciones', type: 'select', options: ['Nula', 'Pasiva', 'Activa'] },
-                    { id: 'ind6_3_2', label: 'Actividades comunitarias', type: 'select', options: ['Nula', 'Pasiva', 'Activa'] },
-                    { id: 'ind6_3_3', label: 'Sentimiento de pertenencia', type: 'select', options: ['Ausente', 'Débil', 'Fuerte'] },
-                    { id: 'ind6_3_4', label: 'Confianza en comunidad', type: 'select', options: ['Baja', 'Media', 'Alta'] },
+                    { id: 'ind6_3_1', label: 'Participación en asociaciones', type: 'radio', options: ['Nula', 'Pasiva', 'Activa'] },
+                    { id: 'ind6_3_2', label: 'Actividades comunitarias', type: 'radio', options: ['Nula', 'Pasiva', 'Activa'] },
+                    { id: 'ind6_3_3', label: 'Sentimiento de pertenencia', type: 'radio', options: ['Ausente', 'Débil', 'Fuerte'] },
+                    { id: 'ind6_3_4', label: 'Confianza en comunidad', type: 'radio', options: ['Baja', 'Media', 'Alta'] },
                     { id: 'ind6_3_5', label: 'Conflictividad comunitaria', type: 'boolean' },
                     { id: 'ind6_3_6', label: 'Participación política local', type: 'boolean' },
                     { id: 'ind6_3_7', label: 'Espacios de encuentro', type: 'select', options: ['Ninguno', 'Limitados', 'Disponibles'] },

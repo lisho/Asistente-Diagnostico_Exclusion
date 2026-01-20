@@ -128,7 +128,8 @@ export function DimensionForm({ dimension, answers, onChange }) {
     const renderField = (field) => {
         const value = currentAnswers[field.id];
         const depInfo = getDependencyInfo(field);
-        const isCompleted = value !== undefined && value !== '' && value !== null;
+        const isCompleted = value !== undefined && value !== '' && value !== null &&
+            (field.type !== 'checkbox' || (Array.isArray(value) && value.length > 0));
 
         const fieldContent = (() => {
             switch (field.type) {
@@ -146,6 +147,149 @@ export function DimensionForm({ dimension, answers, onChange }) {
                             </select>
                             <ChevronDown size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         </div>
+                    );
+
+                case 'radio':
+                    // Radio buttons displayed as horizontal chips - single selection
+                    return (
+                        <div className="flex flex-wrap gap-2">
+                            {field.options?.map(opt => (
+                                <button
+                                    key={opt}
+                                    type="button"
+                                    onClick={() => handleChange(field.id, opt)}
+                                    className={`px-4 py-2.5 rounded-xl font-medium text-sm transition-all border-2
+                                        ${value === opt
+                                            ? 'bg-teal-50 border-teal-400 text-teal-700 shadow-sm'
+                                            : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
+                                        }`}
+                                >
+                                    {opt}
+                                </button>
+                            ))}
+                        </div>
+                    );
+
+                case 'checkbox':
+                    // Checkboxes for multiple selection
+                    const selectedValues = Array.isArray(value) ? value : [];
+                    return (
+                        <div className="flex flex-wrap gap-2">
+                            {field.options?.map(opt => {
+                                const isSelected = selectedValues.includes(opt);
+                                return (
+                                    <button
+                                        key={opt}
+                                        type="button"
+                                        onClick={() => {
+                                            const newValues = isSelected
+                                                ? selectedValues.filter(v => v !== opt)
+                                                : [...selectedValues, opt];
+                                            handleChange(field.id, newValues);
+                                        }}
+                                        className={`px-4 py-2.5 rounded-xl font-medium text-sm transition-all border-2 flex items-center gap-2
+                                            ${isSelected
+                                                ? 'bg-teal-50 border-teal-400 text-teal-700 shadow-sm'
+                                                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
+                                            }`}
+                                    >
+                                        <span className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors
+                                            ${isSelected ? 'bg-teal-500 border-teal-500' : 'border-slate-300'}`}>
+                                            {isSelected && <CheckCircle size={12} className="text-white" />}
+                                        </span>
+                                        {opt}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    );
+
+                case 'scale':
+                    // Likert scale - visual rating 1 to max (default 5)
+                    const scaleMax = field.scaleMax || 5;
+                    const scaleLabels = field.scaleLabels || {};
+                    const scaleColors = ['#E66414', '#FF924D', '#9AD3DA', '#00A8A8', '#03444A'];
+                    return (
+                        <div className="space-y-2">
+                            <div className="flex justify-between gap-1">
+                                {Array.from({ length: scaleMax }, (_, i) => i + 1).map(num => {
+                                    const isSelected = value === num;
+                                    const colorIndex = Math.floor((num - 1) / (scaleMax - 1) * (scaleColors.length - 1));
+                                    const color = scaleColors[colorIndex];
+                                    return (
+                                        <button
+                                            key={num}
+                                            type="button"
+                                            onClick={() => handleChange(field.id, num)}
+                                            className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all border-2
+                                                ${isSelected
+                                                    ? 'shadow-lg scale-105'
+                                                    : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
+                                                }`}
+                                            style={isSelected ? {
+                                                backgroundColor: color + '20',
+                                                borderColor: color,
+                                                color: color
+                                            } : {}}
+                                        >
+                                            {num}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            {(scaleLabels.min || scaleLabels.max) && (
+                                <div className="flex justify-between text-xs text-slate-400">
+                                    <span>{scaleLabels.min || ''}</span>
+                                    <span>{scaleLabels.max || ''}</span>
+                                </div>
+                            )}
+                        </div>
+                    );
+
+                case 'range':
+                    // Slider with numeric value display
+                    const rangeMin = field.min ?? 0;
+                    const rangeMax = field.max ?? 100;
+                    const rangeStep = field.step ?? 1;
+                    const currentVal = value ?? rangeMin;
+                    const percentage = ((currentVal - rangeMin) / (rangeMax - rangeMin)) * 100;
+                    return (
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-4">
+                                <input
+                                    id={`field-${field.id}`}
+                                    type="range"
+                                    min={rangeMin}
+                                    max={rangeMax}
+                                    step={rangeStep}
+                                    value={currentVal}
+                                    onChange={(e) => handleChange(field.id, parseFloat(e.target.value))}
+                                    className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"
+                                    style={{
+                                        background: `linear-gradient(to right, #00A8A8 0%, #00A8A8 ${percentage}%, #e2e8f0 ${percentage}%, #e2e8f0 100%)`
+                                    }}
+                                />
+                                <span className={`min-w-[60px] text-center px-3 py-2 rounded-lg font-bold text-lg
+                                    ${isCompleted ? 'bg-teal-100 text-teal-700' : 'bg-slate-100 text-slate-600'}`}>
+                                    {currentVal}{field.unit || ''}
+                                </span>
+                            </div>
+                            <div className="flex justify-between text-xs text-slate-400">
+                                <span>{rangeMin}{field.unit || ''}</span>
+                                <span>{rangeMax}{field.unit || ''}</span>
+                            </div>
+                        </div>
+                    );
+
+                case 'date':
+                    return (
+                        <input
+                            id={`field-${field.id}`}
+                            type="date"
+                            value={value || ''}
+                            onChange={(e) => handleChange(field.id, e.target.value)}
+                            className={`input ${isCompleted ? 'border-teal-300 bg-teal-50/30' : ''}`}
+                        />
                     );
 
                 case 'text':
@@ -169,6 +313,8 @@ export function DimensionForm({ dimension, answers, onChange }) {
                             onChange={(e) => handleChange(field.id, e.target.value)}
                             className={`input ${isCompleted ? 'border-teal-300 bg-teal-50/30' : ''}`}
                             placeholder="0"
+                            min={field.min}
+                            max={field.max}
                         />
                     );
 
@@ -550,8 +696,8 @@ export function DimensionForm({ dimension, answers, onChange }) {
                                     <label
                                         key={pot.id}
                                         className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${checked
-                                                ? 'border-emerald-300 shadow-sm bg-emerald-50'
-                                                : 'bg-white/50 border-transparent hover:bg-white hover:border-emerald-100'
+                                            ? 'border-emerald-300 shadow-sm bg-emerald-50'
+                                            : 'bg-white/50 border-transparent hover:bg-white hover:border-emerald-100'
                                             }`}
                                     >
                                         <input

@@ -101,7 +101,7 @@ export function AdminPanel({ onBack }) {
             label: indicator.label,
             type: indicator.type,
             description: indicator.description || '',
-            options: indicator.options ? indicator.options.join('\n') : '',
+            options: indicator.options || [],
             hasDependency: !!indicator.dependsOn,
             depIndicatorId: indicator.dependsOn?.indicatorId || '',
             depCondition: indicator.dependsOn?.condition || 'equals',
@@ -112,10 +112,31 @@ export function AdminPanel({ onBack }) {
         const [targetSubId, setTargetSubId] = useState(`${dimId}:${subId}`);
         const [showMoveSection, setShowMoveSection] = useState(false);
         const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+        const [newOption, setNewOption] = useState('');
 
         const allSubdimensions = getAllSubdimensions(dimensions);
         const dimensionIndicators = getDimensionIndicators(dimensions, dimId)
             .filter(i => i.id !== indicator.id);
+
+        // Handlers for tag-based options
+        const addOption = () => {
+            const trimmed = newOption.trim();
+            if (trimmed && !form.options.includes(trimmed)) {
+                setForm({ ...form, options: [...form.options, trimmed] });
+                setNewOption('');
+            }
+        };
+
+        const removeOption = (index) => {
+            setForm({ ...form, options: form.options.filter((_, i) => i !== index) });
+        };
+
+        const handleOptionKeyDown = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addOption();
+            }
+        };
 
         const handleSave = () => {
             const updates = {
@@ -124,8 +145,8 @@ export function AdminPanel({ onBack }) {
                 description: form.description.trim() || undefined
             };
 
-            if (form.type === 'select' && form.options.trim()) {
-                updates.options = form.options.split('\n').map(o => o.trim()).filter(o => o);
+            if (form.type === 'select' && form.options.length > 0) {
+                updates.options = form.options;
             } else {
                 delete updates.options;
             }
@@ -222,25 +243,85 @@ export function AdminPanel({ onBack }) {
                                     <label className="label">Tipo de campo</label>
                                     <select
                                         value={form.type}
-                                        onChange={e => setForm({ ...form, type: e.target.value })}
+                                        onChange={e => setForm({ ...form, type: e.target.value, options: ['select', 'radio', 'checkbox'].includes(e.target.value) ? form.options : [] })}
                                         className="select"
                                     >
-                                        <option value="select">Selección (dropdown)</option>
-                                        <option value="boolean">Sí/No (boolean)</option>
-                                        <option value="number">Número</option>
-                                        <option value="text">Texto libre</option>
+                                        <optgroup label="Selección">
+                                            <option value="select">Dropdown (desplegable)</option>
+                                            <option value="radio">Radio (chips excluyentes)</option>
+                                            <option value="checkbox">Checkbox (selección múltiple)</option>
+                                        </optgroup>
+                                        <optgroup label="Entrada simple">
+                                            <option value="boolean">Sí/No (boolean)</option>
+                                            <option value="number">Número</option>
+                                            <option value="text">Texto libre</option>
+                                            <option value="date">Fecha</option>
+                                        </optgroup>
+                                        <optgroup label="Escalas visuales">
+                                            <option value="scale">Escala likert (1-5)</option>
+                                            <option value="range">Slider (rango numérico)</option>
+                                        </optgroup>
                                     </select>
+                                    <p className="text-xs text-slate-400 mt-1">
+                                        {form.type === 'radio' && '📌 Para pocas opciones (2-5), se muestran como chips'}
+                                        {form.type === 'checkbox' && '☑️ Permite seleccionar múltiples opciones'}
+                                        {form.type === 'scale' && '📊 Escala visual de 1 a 5 con colores'}
+                                        {form.type === 'range' && '🎚️ Slider para valores numéricos en rango'}
+                                    </p>
                                 </div>
 
-                                {form.type === 'select' && (
-                                    <div>
-                                        <label className="label">Opciones (una por línea)</label>
-                                        <textarea
-                                            value={form.options}
-                                            onChange={e => setForm({ ...form, options: e.target.value })}
-                                            className="input h-24 resize-none text-sm font-mono"
-                                            placeholder="Opción 1&#10;Opción 2&#10;Opción 3"
-                                        />
+                                {['select', 'radio', 'checkbox'].includes(form.type) && (
+                                    <div className="col-span-2">
+                                        <label className="label">Opciones</label>
+                                        {/* Input para añadir nuevas opciones */}
+                                        <div className="flex gap-2 mb-3">
+                                            <input
+                                                type="text"
+                                                value={newOption}
+                                                onChange={e => setNewOption(e.target.value)}
+                                                onKeyDown={handleOptionKeyDown}
+                                                className="input flex-1"
+                                                placeholder="Escribe una opción y pulsa Enter..."
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={addOption}
+                                                disabled={!newOption.trim()}
+                                                className="btn btn-secondary px-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <Plus size={18} />
+                                            </button>
+                                        </div>
+                                        {/* Lista de opciones como tags */}
+                                        <div className="flex flex-wrap gap-2 min-h-[48px] p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                            {form.options.length === 0 ? (
+                                                <span className="text-sm text-slate-400 italic">
+                                                    No hay opciones definidas. Añade opciones arriba.
+                                                </span>
+                                            ) : (
+                                                form.options.map((opt, index) => (
+                                                    <span
+                                                        key={index}
+                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-100 text-indigo-700 text-sm font-medium group transition-all hover:bg-indigo-200"
+                                                    >
+                                                        {opt}
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => removeOption(index)}
+                                                            className="p-0.5 rounded-full hover:bg-indigo-300 transition-colors"
+                                                            title="Eliminar opción"
+                                                        >
+                                                            <X size={14} />
+                                                        </button>
+                                                    </span>
+                                                ))
+                                            )}
+                                        </div>
+                                        {form.options.length > 0 && (
+                                            <p className="text-xs text-slate-400 mt-2">
+                                                {form.options.length} opcion{form.options.length !== 1 ? 'es' : ''} definida{form.options.length !== 1 ? 's' : ''}
+                                            </p>
+                                        )}
                                     </div>
                                 )}
                             </div>
