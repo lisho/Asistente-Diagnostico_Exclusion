@@ -4,12 +4,13 @@ import { DimensionForm } from './components/DimensionForm'
 import { DiagnosisReport } from './components/DiagnosisReport'
 import { AdminPanel } from './components/AdminPanel'
 import { ConfirmationModal } from './components/ConfirmationModal'
+import { DimensionsVisualization } from './components/DimensionsVisualization'
 import { getDimensionsConfig } from './data/dimensionsService'
 import { getActiveTools, getToolById, filterDimensionsByTool } from './data/toolsService'
 import { StorageService } from './services/StorageService'
 import {
   Plus, FileText, Trash2, Clock, ChevronRight, FolderOpen, Settings,
-  X, Zap, Briefcase, Home, Heart, FileCheck, Wrench, Check
+  X, Zap, Briefcase, Home, Heart, FileCheck, Wrench, Check, BarChart3
 } from 'lucide-react'
 import './App.css'
 
@@ -189,6 +190,13 @@ function App() {
           Crear Nuevo Diagnóstico
         </button>
         <button
+          onClick={() => setCurrentView('visualization')}
+          className="btn btn-secondary text-base px-6 py-4 gap-2"
+        >
+          <BarChart3 size={20} />
+          Mapa de Indicadores
+        </button>
+        <button
           onClick={() => setCurrentView('admin')}
           className="btn btn-secondary text-base px-6 py-4 gap-2"
         >
@@ -284,6 +292,7 @@ function App() {
   const renderContent = () => {
     if (currentView === 'dashboard') return renderDashboard();
     if (currentView === 'admin') return <AdminPanel onBack={handleAdminBack} />;
+    if (currentView === 'visualization') return <DimensionsVisualization onBack={returnToDashboard} />;
     if (currentView === 'report') return <DiagnosisReport dimensions={filteredDimensions} answers={answers} currentCase={currentCase} />;
     const dim = filteredDimensions[currentView];
     if (dim) return <DimensionForm dimension={dim} answers={answers} onChange={handleAnswerChange} />;
