@@ -1,0 +1,257 @@
+﻿Código,Indicador,Dimensión,Subdimensión,Tipo,Tiene Dependencia,Dependencia
+ind5_1_1,"Nivel máximo alcanzado","Educación y Competencias","Niveles Educativos",Selección,No,
+ind5_1_2,"Certificaciones oficiales","Educación y Competencias","Niveles Educativos",Sí/No,No,
+ind5_1_3,"Alfabetización lectura/escritura","Educación y Competencias","Niveles Educativos",Opción única,No,
+ind5_1_3b,"Participando en programa alfabetización","Educación y Competencias","Niveles Educativos",Sí/No,Sí,Este indicador solo aparece si "Alfabetización lectura/escritura" sea diferente de "Alfabetizado"
+ind5_1_4,"Competencias digitales","Educación y Competencias","Niveles Educativos",Opción única,No,
+ind5_1_4b,"Acceso a formación digital","Educación y Competencias","Niveles Educativos",Sí/No,Sí,Este indicador solo aparece si "Competencias digitales" sea igual a "Nulas"
+ind5_1_5,"Acreditación competencias informales","Educación y Competencias","Niveles Educativos",Sí/No,No,
+ind5_1_6,"Cualificación profesional","Educación y Competencias","Niveles Educativos",Sí/No,No,
+ind5_1_7,"Idiomas adicionales","Educación y Competencias","Niveles Educativos",Opción única,No,
+ind5_2_1,"Escolarización menores","Educación y Competencias","Acceso a Educación",Selección,No,
+ind5_2_2,"Educación obligatoria completa","Educación y Competencias","Acceso a Educación",Sí/No,No,
+ind5_2_3,"Absentismo escolar","Educación y Competencias","Acceso a Educación",Selección,Sí,Este indicador solo aparece si "Escolarización menores" sea igual a "Escolarizado"
+ind5_2_4,"Educación postobligatoria","Educación y Competencias","Acceso a Educación",Selección,No,
+ind5_2_5,"Educación permanente adulto","Educación y Competencias","Acceso a Educación",Sí/No,No,
+ind5_2_6,"Barreras económicas educación","Educación y Competencias","Acceso a Educación",Sí/No,No,
+ind5_2_7,"Discriminación educativa","Educación y Competencias","Acceso a Educación",Sí/No,No,
+ind5_2_7b,"Motivo discriminación educativa","Educación y Competencias","Acceso a Educación",Selección,Sí,Este indicador solo aparece si "Discriminación educativa" sea igual a "yes"
+ind5_2_8,"Acceso educación inclusiva","Educación y Competencias","Acceso a Educación",Sí/No,No,
+ind5_2_8b,"Tipo de adaptaciones","Educación y Competencias","Acceso a Educación",Selección,Sí,Este indicador solo aparece si "Acceso educación inclusiva" sea igual a "yes"
+ind5_3_1,"Competencia comunicación","Educación y Competencias","Competencias y Habilidades",Opción única,No,
+ind5_3_2,"Competencia matemática","Educación y Competencias","Competencias y Habilidades",Opción única,No,
+ind5_3_3,"Competencia digital","Educación y Competencias","Competencias y Habilidades",Opción única,No,
+ind5_3_4,"Competencias empleabilidad","Educación y Competencias","Competencias y Habilidades",Opción única,No,
+ind5_3_5,"Habilidades sociales","Educación y Competencias","Competencias y Habilidades",Opción única,No,
+ind5_3_6,"Capacidad de aprendizaje","Educación y Competencias","Competencias y Habilidades",Opción única,No,
+ind7_1_1,"Registro electoral","Participación Política y Ciudadanía","Derechos Políticos Formales",Sí/No,No,
+ind7_1_2,"Derecho de voto","Participación Política y Ciudadanía","Derechos Políticos Formales",Selección,No,
+ind7_1_2b,"Motivo impedimento voto","Participación Política y Ciudadanía","Derechos Políticos Formales",Selección,Sí,Este indicador solo aparece si "Derecho de voto" sea igual a "Impedido"
+ind7_1_3,"Acceso a documentación","Participación Política y Ciudadanía","Derechos Políticos Formales",Selección,No,
+ind7_1_3b,"Documentos que faltan","Participación Política y Ciudadanía","Derechos Políticos Formales",Texto,Sí,Este indicador solo aparece si "Acceso a documentación" sea diferente de "Presente"
+ind7_1_4,"Nacionalidad/estatus","Participación Política y Ciudadanía","Derechos Políticos Formales",Selección,No,
+ind7_1_4b,"Tiempo en situación irregular (años)","Participación Política y Ciudadanía","Derechos Políticos Formales",Número,Sí,Este indicador solo aparece si "Nacionalidad/estatus" sea igual a "Irregular"
+ind7_1_4c,"Tipo de solicitud","Participación Política y Ciudadanía","Derechos Políticos Formales",Selección,Sí,Este indicador solo aparece si "Nacionalidad/estatus" sea igual a "Solicitante"
+ind7_1_5,"Impedimentos legales","Participación Política y Ciudadanía","Derechos Políticos Formales",Sí/No,No,
+ind7_1_5b,"Tipo de impedimento","Participación Política y Ciudadanía","Derechos Políticos Formales",Selección,Sí,Este indicador solo aparece si "Impedimentos legales" sea igual a "yes"
+ind7_1_6,"Acceso a justicia","Participación Política y Ciudadanía","Derechos Políticos Formales",Selección,No,
+ind7_2_1,"Conocimiento de derechos","Participación Política y Ciudadanía","Acceso a Información y Derechos",Selección,No,
+ind7_2_2,"Acceso información sobre derechos","Participación Política y Ciudadanía","Acceso a Información y Derechos",Selección,No,
+ind7_2_3,"Asesoramiento legal","Participación Política y Ciudadanía","Acceso a Información y Derechos",Selección,No,
+ind7_2_4,"Capacidad de denuncia","Participación Política y Ciudadanía","Acceso a Información y Derechos",Sí/No,No,
+ind7_2_5,"Barreras de idioma","Participación Política y Ciudadanía","Acceso a Información y Derechos",Selección,No,
+ind7_2_6,"Accesibilidad para discapacidad","Participación Política y Ciudadanía","Acceso a Información y Derechos",Sí/No,No,
+ind7_3_1,"Participación electoral","Participación Política y Ciudadanía","Participación Activa",Selección,Sí,Este indicador solo aparece si "Derecho de voto" sea diferente de "Impedido"
+ind7_3_2,"Participación en organizaciones","Participación Política y Ciudadanía","Participación Activa",Selección,No,
+ind7_3_3,"Participación comunitaria","Participación Política y Ciudadanía","Participación Activa",Selección,No,
+ind7_3_4,"Voz en decisiones que afectan","Participación Política y Ciudadanía","Participación Activa",Selección,No,
+ind7_3_5,"Movilización social","Participación Política y Ciudadanía","Participación Activa",Sí/No,No,
+ind7_3_6,"Liderazgo comunitario","Participación Política y Ciudadanía","Participación Activa",Sí/No,No,
+ind7_4_1,"Discriminación política","Participación Política y Ciudadanía","Conflictividad Social y Exclusión Política",Sí/No,No,
+ind7_4_2,"Estigmatización","Participación Política y Ciudadanía","Conflictividad Social y Exclusión Política",Sí/No,No,
+ind7_4_3,"Exclusión comunitaria","Participación Política y Ciudadanía","Conflictividad Social y Exclusión Política",Sí/No,No,
+ind7_4_4,"Conflictividad con instituciones","Participación Política y Ciudadanía","Conflictividad Social y Exclusión Política",Sí/No,No,
+ind7_4_5,"Desconfianza institucional","Participación Política y Ciudadanía","Conflictividad Social y Exclusión Política",Selección,No,
+ind7_4_6,"Experiencia de injusticia","Participación Política y Ciudadanía","Conflictividad Social y Exclusión Política",Sí/No,No,
+ind6_1_1,"Composición familiar","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Selección,No,
+ind6_1_2,"Relaciones parentales","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Selección,Sí,Este indicador solo aparece si "Composición familiar" sea diferente de "Unipersonal"
+ind6_1_3,"Comunicación familiar","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Selección,Sí,Este indicador solo aparece si "Composición familiar" sea diferente de "Unipersonal"
+ind6_1_4,"Cohabitación","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Selección,No,
+ind6_1_5,"Responsabilidades de cuidado","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Sí/No,No,
+ind6_1_6,"Carga de cuidado","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Selección,Sí,Este indicador solo aparece si "Responsabilidades de cuidado" sea igual a "yes"
+ind6_1_7,"Apoyo intrafamiliar","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Sí/No,No,
+ind6_1_8,"Violencia familiar","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Selección,No,
+ind6_1_9,"Separación/divorcio","Relaciones Sociales, Familiares y Comunitarias","Estructura y Funcionamiento Familiar",Selección,No,
+ind6_2_1,"Amistades significativas","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Opción única,No,
+ind6_2_2,"Contacto social regular","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Opción única,No,
+ind6_2_3,"Apoyo emocional disponible","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Sí/No,No,
+ind6_2_4,"Apoyo económico disponible","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Sí/No,No,
+ind6_2_5,"Apoyo material disponible","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Sí/No,No,
+ind6_2_6,"Reciprocidad en relaciones","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Selección,Sí,Este indicador solo aparece si "Amistades significativas" sea diferente de "Ninguna"
+ind6_2_7,"Sentimiento de soledad","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Opción única,No,
+ind6_2_8,"Aislamiento social","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Sí/No,No,
+ind6_2_8b,"Causa principal aislamiento","Relaciones Sociales, Familiares y Comunitarias","Redes de Apoyo Social",Selección,Sí,Este indicador solo aparece si "Aislamiento social" sea igual a "yes"
+ind6_3_1,"Participación en asociaciones","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Opción única,No,
+ind6_3_2,"Actividades comunitarias","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Opción única,No,
+ind6_3_3,"Sentimiento de pertenencia","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Opción única,No,
+ind6_3_4,"Confianza en comunidad","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Opción única,No,
+ind6_3_5,"Conflictividad comunitaria","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Sí/No,No,
+ind6_3_6,"Participación política local","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Sí/No,No,
+ind6_3_7,"Espacios de encuentro","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Selección,No,
+ind6_3_8,"Integración multicultural","Relaciones Sociales, Familiares y Comunitarias","Integración Comunitaria",Selección,No,
+ind6_4_1,"Violencia de género","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Selección,No,
+ind6_4_1b,"Orden de protección","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Selección,Sí,Este indicador solo aparece si "Violencia de género" sea igual a "Activa"
+ind6_4_2,"Abuso de menores","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Selección,No,
+ind6_4_2b,"Intervención protección menores","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Sí/No,Sí,Este indicador solo aparece si "Abuso de menores" sea diferente de "Nunca"
+ind6_4_3,"Explotación laboral","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Sí/No,No,
+ind6_4_4,"Situación de trata","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Sí/No,No,
+ind6_4_4b,"Tipo de trata","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Selección,Sí,Este indicador solo aparece si "Situación de trata" sea igual a "yes"
+ind6_4_5,"Acoso (escolar, laboral, callejero)","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Sí/No,No,
+ind6_4_5b,"Tipo de acoso","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Selección,Sí,Este indicador solo aparece si "Acoso (escolar, laboral, callejero)" sea igual a "yes"
+ind6_4_6,"Abandono/negligencia","Relaciones Sociales, Familiares y Comunitarias","Situaciones de Riesgo en Relaciones",Sí/No,No,
+ind4_1_1,"Síntomas depresivos","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Opción única,No,
+ind4_1_2,"Síntomas ansiosos","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Opción única,No,
+ind4_1_3,"Baja autoestima","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Opción única,No,
+ind4_1_4,"Ideación suicida","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Opción única,No,
+ind4_1_4b,"Plan suicida estructurado","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Sí/No,Sí,Este indicador solo aparece si "Ideación suicida" sea igual a "Activa"
+ind4_1_5,"Intentos de suicidio","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Opción única,No,
+ind4_1_5b,"Letalidad del método","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Selección,Sí,Este indicador solo aparece si "Intentos de suicidio" sea diferente de "Nunca"
+ind4_1_6,"Autolesiones","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Opción única,No,
+ind4_1_6b,"Frecuencia autolesiones","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Selección,Sí,Este indicador solo aparece si "Autolesiones" sea diferente de "Nunca"
+ind4_1_7,"Trastornos de personalidad","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Sí/No,No,
+ind4_1_8,"Síntomas psicóticos","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Sí/No,No,
+ind4_1_8b,"Tipo síntomas psicóticos","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Selección,Sí,Este indicador solo aparece si "Síntomas psicóticos" sea igual a "yes"
+ind4_1_9,"TEPT (estrés postraumático)","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Sí/No,No,
+ind4_1_9b,"Tipo de trauma","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Selección,Sí,Este indicador solo aparece si "TEPT (estrés postraumático)" sea igual a "yes"
+ind4_1_10,"Problemas cognitivos","Salud Mental y Bienestar Psicológico","Estado de Salud Mental",Sí/No,No,
+ind4_2_1,"Diagnóstico formal","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Selección,No,
+ind4_2_1b,"Diagnóstico principal","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Texto,Sí,Este indicador solo aparece si "Diagnóstico formal" sea igual a "Realizado"
+ind4_2_2,"Atención psicológica","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Selección,No,
+ind4_2_3,"Atención psiquiátrica","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Selección,No,
+ind4_2_4,"Adherencia medicación","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Selección,Sí,Este indicador solo aparece si "Atención psiquiátrica" sea diferente de "Nunca"
+ind4_2_5,"Acceso sin barreras económicas","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Sí/No,No,
+ind4_2_6,"Continuidad asistencial","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Sí/No,No,
+ind4_2_7,"Tratamiento adaptado","Salud Mental y Bienestar Psicológico","Acceso a Servicios de Salud Mental",Sí/No,No,
+ind4_3_1,"Estrategias de afrontamiento","Salud Mental y Bienestar Psicológico","Factores de Resiliencia y Protección",Opción única,No,
+ind4_3_2,"Apoyo social percibido","Salud Mental y Bienestar Psicológico","Factores de Resiliencia y Protección",Opción única,No,
+ind4_3_3,"Sentido de vida y metas","Salud Mental y Bienestar Psicológico","Factores de Resiliencia y Protección",Opción única,No,
+ind4_3_4,"Esperanza en el futuro","Salud Mental y Bienestar Psicológico","Factores de Resiliencia y Protección",Opción única,No,
+ind4_3_5,"Autonomía (toma decisiones)","Salud Mental y Bienestar Psicológico","Factores de Resiliencia y Protección",Opción única,No,
+ind4_3_6,"Sentimiento de pertenencia","Salud Mental y Bienestar Psicológico","Factores de Resiliencia y Protección",Opción única,No,
+ind4_3_7,"Creencias espirituales","Salud Mental y Bienestar Psicológico","Factores de Resiliencia y Protección",Opción única,No,
+ind3_1_1,"Enfermedades crónicas","Salud y Bienestar Físico","Estado de Salud Física",Opción única,No,
+ind3_1_1b,"Principales enfermedades crónicas","Salud y Bienestar Físico","Estado de Salud Física",Texto,Sí,Este indicador solo aparece si "Enfermedades crónicas" sea diferente de "Ninguna"
+ind3_1_2,"Discapacidad física","Salud y Bienestar Físico","Estado de Salud Física",Opción única,No,
+ind3_1_2b,"Grado de discapacidad reconocido (%)","Salud y Bienestar Físico","Estado de Salud Física",Número,Sí,Este indicador solo aparece si "Discapacidad física" sea diferente de "Nula"
+ind3_1_3,"Accidentes/traumas recurrentes","Salud y Bienestar Físico","Estado de Salud Física",Sí/No,No,
+ind3_1_4,"Estado nutricional","Salud y Bienestar Físico","Estado de Salud Física",Opción única,No,
+ind3_1_4b,"Inseguridad alimentaria","Salud y Bienestar Físico","Estado de Salud Física",Selección,Sí,Este indicador solo aparece si "Estado nutricional" sea diferente de "Adecuado"
+ind3_1_5,"Calidad de sueño","Salud y Bienestar Físico","Estado de Salud Física",Opción única,No,
+ind3_1_5b,"Uso de medicación para dormir","Salud y Bienestar Físico","Estado de Salud Física",Sí/No,Sí,Este indicador solo aparece si "Calidad de sueño" sea diferente de "Normal"
+ind3_1_6,"Actividad física","Salud y Bienestar Físico","Estado de Salud Física",Selección,No,
+ind3_1_7,"Higiene personal","Salud y Bienestar Físico","Estado de Salud Física",Selección,No,
+ind3_1_7b,"Causa higiene deficiente","Salud y Bienestar Físico","Estado de Salud Física",Selección,Sí,Este indicador solo aparece si "Higiene personal" sea igual a "Deficiente"
+ind3_1_8,"Problemas de visión","Salud y Bienestar Físico","Estado de Salud Física",Sí/No,No,
+ind3_1_8b,"Acceso a corrección visual","Salud y Bienestar Físico","Estado de Salud Física",Selección,Sí,Este indicador solo aparece si "Problemas de visión" sea igual a "yes"
+ind3_1_9,"Problemas auditivos","Salud y Bienestar Físico","Estado de Salud Física",Sí/No,No,
+ind3_1_9b,"Acceso a audífonos/adaptación","Salud y Bienestar Físico","Estado de Salud Física",Selección,Sí,Este indicador solo aparece si "Problemas auditivos" sea igual a "yes"
+ind3_1_10,"Problemas dentales","Salud y Bienestar Físico","Estado de Salud Física",Selección,No,
+ind3_1_10b,"Acceso a tratamiento dental","Salud y Bienestar Físico","Estado de Salud Física",Selección,Sí,Este indicador solo aparece si "Problemas dentales" sea diferente de "Controlados"
+ind3_2_1,"Inscripción centro salud","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Sí/No,No,
+ind3_2_2,"Acceso atención primaria","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Selección,No,
+ind3_2_3,"Acceso atención especializada","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Selección,No,
+ind3_2_4,"Acceso a medicamentos","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Selección,No,
+ind3_2_5,"Automedicación por coste","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Sí/No,No,
+ind3_2_6,"Prevención sanitaria","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Selección,No,
+ind3_2_7,"Seguimiento enfermedades crónicas","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Selección,Sí,Este indicador solo aparece si "Enfermedades crónicas" sea diferente de "Ninguna"
+ind3_2_8,"Barreras económicas (copagos)","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Sí/No,No,
+ind3_2_9,"Barreras culturales/idioma","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Sí/No,No,
+ind3_2_9b,"Idioma principal","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Texto,Sí,Este indicador solo aparece si "Barreras culturales/idioma" sea igual a "yes"
+ind3_2_10,"Barreras de movilidad","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Sí/No,No,
+ind3_2_10b,"Tipo barrera movilidad","Salud y Bienestar Físico","Acceso a Servicios Sanitarios",Selección,Sí,Este indicador solo aparece si "Barreras de movilidad" sea igual a "yes"
+ind3_3_1,"Tabaquismo","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,No,
+ind3_3_2,"Consumo de alcohol","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,No,
+ind3_3_2b,"En tratamiento alcoholismo","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Sí/No,Sí,Este indicador solo aparece si "Consumo de alcohol" sea igual a "Riesgo alto"
+ind3_3_3,"Consumo de sustancias","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,No,
+ind3_3_3b,"Sustancias principales","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Texto,Sí,Este indicador solo aparece si "Consumo de sustancias" sea diferente de "Nulo"
+ind3_3_3c,"En tratamiento adicciones","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Sí/No,Sí,Este indicador solo aparece si "Consumo de sustancias" sea igual a "Activo"
+ind3_3_4,"Violencia sufrida","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,No,
+ind3_3_4b,"Tipo de violencia","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,Sí,Este indicador solo aparece si "Violencia sufrida" sea diferente de "Nunca"
+ind3_3_5,"Estrés crónico","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,No,
+ind3_3_6,"Exposición contaminación/tóxicos","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,No,
+ind3_3_7,"Higiene ambiental hogar","Salud y Bienestar Físico","Factores de Riesgo para la Salud",Selección,No,
+ind1_1_1,"Situación laboral actual","Situación Económica y Laboral","Empleo y Actividad Laboral",Selección,No,
+ind1_1_2,"Tipo de contrato","Situación Económica y Laboral","Empleo y Actividad Laboral",Selección,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Empleo precario" o "Empleo tiempo parcial no deseado" o "Empleo estable tiempo completo"
+ind1_1_3,"Jornada laboral","Situación Económica y Laboral","Empleo y Actividad Laboral",Selección,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Empleo precario" o "Empleo tiempo parcial no deseado" o "Empleo estable tiempo completo"
+ind1_1_4,"Acceso a mercado laboral","Situación Económica y Laboral","Empleo y Actividad Laboral",Opción única,No,
+ind1_1_5,"Experiencia laboral","Situación Económica y Laboral","Empleo y Actividad Laboral",Opción única,No,
+ind1_1_6,"Formación profesional","Situación Económica y Laboral","Empleo y Actividad Laboral",Opción única,No,
+ind1_1_7,"Tiempo en desempleo (meses)","Situación Económica y Laboral","Empleo y Actividad Laboral",Número,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Sin empleo (>12 meses)" o "Sin empleo (<12 meses)"
+ind1_1_8,"Búsqueda activa de empleo","Situación Económica y Laboral","Empleo y Actividad Laboral",Sí/No,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Sin empleo (>12 meses)" o "Sin empleo (<12 meses)"
+ind1_2_1,"Ingresos netos mensuales (€)","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Número,No,
+ind1_2_2,"Precarización de ingresos","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Opción única,No,
+ind1_2_3,"Acceso a prestaciones","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Opción única,No,
+ind1_2_3b,"Tipo de prestación principal","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Selección,Sí,Este indicador solo aparece si "Acceso a prestaciones" sea diferente de "Sin cobertura"
+ind1_2_4,"Nivel de deuda","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Selección,No,
+ind1_2_4b,"Tipos de deuda","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Selección,Sí,Este indicador solo aparece si "Nivel de deuda" sea diferente de "Sin deuda"
+ind1_2_5,"Capacidad de ahorro","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Sí/No,No,
+ind1_2_6,"Capacidad gastos imprevistos","Situación Económica y Laboral","Estabilidad e Ingresos Económicos",Opción única,No,
+ind1_3_1,"Jornada respecto a deseada","Situación Económica y Laboral","Condiciones Laborales",Selección,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Empleo precario" o "Empleo tiempo parcial no deseado" o "Empleo estable tiempo completo"
+ind1_3_2,"Seguridad e higiene laboral","Situación Económica y Laboral","Condiciones Laborales",Sí/No,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Empleo precario" o "Empleo tiempo parcial no deseado" o "Empleo estable tiempo completo"
+ind1_3_3,"Explotación laboral","Situación Económica y Laboral","Condiciones Laborales",Sí/No,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Empleo precario" o "Empleo tiempo parcial no deseado" o "Empleo estable tiempo completo"
+ind1_3_4,"Protección social laboral","Situación Económica y Laboral","Condiciones Laborales",Selección,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Empleo precario" o "Empleo tiempo parcial no deseado" o "Empleo estable tiempo completo"
+ind1_3_5,"Compatibilidad vida-trabajo","Situación Económica y Laboral","Condiciones Laborales",Selección,Sí,Este indicador solo aparece si "Situación laboral actual" incluya "Empleo precario" o "Empleo tiempo parcial no deseado" o "Empleo estable tiempo completo"
+ind8_0_1,"Nacionalidad","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,No,
+ind8_0_2,"Tipo de permiso de residencia","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,Sí,Este indicador solo aparece si "Nacionalidad" sea diferente de "Española"
+ind8_0_3,"Permiso de trabajo","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,Sí,Este indicador solo aparece si "Nacionalidad" sea diferente de "Española"
+ind8_0_4,"Tiempo en situación irregular","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,Sí,Este indicador solo aparece si "Tipo de permiso de residencia" sea igual a "Denegado/Sin permiso"
+ind8_0_5,"Documentación acreditativa","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,No,
+ind8_0_6,"Empadronamiento","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,No,
+ind8_0_7,"Procedimiento de expulsión","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,Sí,Este indicador solo aparece si "Nacionalidad" sea diferente de "Española"
+ind8_0_8,"Solicitud de protección internacional","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,Sí,Este indicador solo aparece si "Nacionalidad" sea diferente de "Española"
+ind8_0_9,"Acceso a tarjeta sanitaria","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Selección,No,
+ind8_0_10,"Asesoramiento jurídico extranjería","Situación Legal y Conflictividad Social","Situación de Residencia y Extranjería",Sí/No,No,
+ind8_1_1,"Antecedentes penales","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Sí/No,No,
+ind8_1_2,"Tipo de delitos","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Selección,Sí,Este indicador solo aparece si "Antecedentes penales" sea igual a "yes"
+ind8_1_3,"Procedimientos judiciales activos","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Sí/No,No,
+ind8_1_4,"Condenas activas","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Sí/No,Sí,Este indicador solo aparece si "Antecedentes penales" sea igual a "yes"
+ind8_1_5,"Situación penitenciaria","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Selección,Sí,Este indicador solo aparece si "Antecedentes penales" sea igual a "yes"
+ind8_1_6,"Deudas judiciales","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Sí/No,No,
+ind8_1_7,"Prohibiciones judiciales","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Sí/No,No,
+ind8_1_8,"Historial detenciones","Situación Legal y Conflictividad Social","Antecedentes y Situación Legal",Selección,No,
+ind8_2_1,"Delitos sufridos (robo, asalto)","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,No,
+ind8_2_2,"Violencia de género sufrida","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,No,
+ind8_2_2b,"Denuncia interpuesta VG","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,Sí,Este indicador solo aparece si "Violencia de género sufrida" sea igual a "yes"
+ind8_2_3,"Violencia familiar sufrida","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,No,
+ind8_2_4,"Abuso sexual sufrido","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,No,
+ind8_2_4b,"Atención especializada recibida","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,Sí,Este indicador solo aparece si "Abuso sexual sufrido" sea igual a "yes"
+ind8_2_5,"Acoso sufrido","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,No,
+ind8_2_6,"Discriminación sufrida","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,No,
+ind8_2_6b,"Motivo discriminación","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Selección,Sí,Este indicador solo aparece si "Discriminación sufrida" sea igual a "yes"
+ind8_2_7,"Denuncias por victimización","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Sí/No,No,
+ind8_2_8,"Protección para víctimas","Situación Legal y Conflictividad Social","Victimización y Violencia Sufrida",Selección,No,
+ind8_3_1,"Pertenencia grupos de riesgo","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Sí/No,No,
+ind8_3_1b,"Tipo de grupo","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Selección,Sí,Este indicador solo aparece si "Pertenencia grupos de riesgo" sea igual a "yes"
+ind8_3_2,"Red contactos de riesgo","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Selección,No,
+ind8_3_3,"Implicación narcotráfico","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Selección,No,
+ind8_3_3b,"Rol en narcotráfico","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Selección,Sí,Este indicador solo aparece si "Implicación narcotráfico" sea diferente de "Nunca"
+ind8_3_4,"Violencia interpersonal","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Selección,No,
+ind8_3_5,"Posesión de armas","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Sí/No,No,
+ind8_3_5b,"Tipo de armas","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Selección,Sí,Este indicador solo aparece si "Posesión de armas" sea igual a "yes"
+ind8_3_6,"Conflictividad familiar","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Sí/No,No,
+ind8_3_7,"Conflictividad vecinal","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Sí/No,No,
+ind8_3_8,"Problemas de conducta","Situación Legal y Conflictividad Social","Conflictividad Social y Riesgos",Selección,No,
+ind8_4_1,"Acceso asesoramiento legal","Situación Legal y Conflictividad Social","Acceso a Justicia y Protección Legal",Sí/No,No,
+ind8_4_2,"Acceso a abogado","Situación Legal y Conflictividad Social","Acceso a Justicia y Protección Legal",Selección,No,
+ind8_4_3,"Conocimiento derechos procesales","Situación Legal y Conflictividad Social","Acceso a Justicia y Protección Legal",Selección,No,
+ind8_4_4,"Garantías procesales","Situación Legal y Conflictividad Social","Acceso a Justicia y Protección Legal",Selección,No,
+ind8_4_5,"Discriminación en justicia","Situación Legal y Conflictividad Social","Acceso a Justicia y Protección Legal",Sí/No,No,
+ind8_4_6,"Duración procesos","Situación Legal y Conflictividad Social","Acceso a Justicia y Protección Legal",Selección,Sí,Este indicador solo aparece si "Procedimientos judiciales activos" sea igual a "yes"
+ind8_4_7,"Ejecución sentencias","Situación Legal y Conflictividad Social","Acceso a Justicia y Protección Legal",Selección,No,
+ind2_1_1,"Situación residencial","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Selección,No,
+ind2_1_2,"Proporción ingreso en vivienda","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Selección,Sí,Este indicador solo aparece si "Situación residencial" incluya "Alquiler" o "Propiedad"
+ind2_1_3,"Riesgo de desahucio","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Selección,Sí,Este indicador solo aparece si "Situación residencial" incluya "Alquiler" o "Propiedad"
+ind2_1_4,"Estabilidad del alojamiento","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Selección,No,
+ind2_1_5,"Movilidad forzada frecuente","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Sí/No,No,
+ind2_1_5b,"Motivo principal movilidad","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Selección,Sí,Este indicador solo aparece si "Movilidad forzada frecuente" sea igual a "yes"
+ind2_1_6,"Acceso vivienda emergencia","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Selección,No,
+ind2_1_7,"Tiempo en situación de calle (meses)","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Número,Sí,Este indicador solo aparece si "Situación residencial" sea igual a "Sinhogarismo"
+ind2_1_8,"Uso de albergues/recursos","Vivienda y Hábitat","Acceso y Estabilidad Residencial",Selección,Sí,Este indicador solo aparece si "Situación residencial" sea igual a "Sinhogarismo"
+ind2_2_1,"Agua corriente potable","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_2,"Saneamiento (baño con privacidad)","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_3,"Electricidad segura","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_4,"Calefacción/temperatura adecuada","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_5,"Estructuras íntegras","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_6,"Humedad y moho","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_7,"Control de plagas","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_8,"Ventilación adecuada","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_9,"Iluminación natural","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_2_10,"Hacinamiento (> 2 personas/habitación)","Vivienda y Hábitat","Condiciones Físicas y Habitabilidad",Sí/No,Sí,Este indicador solo aparece si "Situación residencial" sea diferente de "Sinhogarismo"
+ind2_3_1,"Acceso transporte público","Vivienda y Hábitat","Entorno y Localización",Opción única,No,
+ind2_3_2,"Distancia servicios básicos","Vivienda y Hábitat","Entorno y Localización",Opción única,No,
+ind2_3_3,"Seguridad del entorno","Vivienda y Hábitat","Entorno y Localización",Opción única,No,
+ind2_3_3b,"Tipo de inseguridad","Vivienda y Hábitat","Entorno y Localización",Selección,Sí,Este indicador solo aparece si "Seguridad del entorno" sea igual a "Alto riesgo"
+ind2_3_4,"Ruido y contaminación","Vivienda y Hábitat","Entorno y Localización",Opción única,No,
+ind2_3_5,"Espacios públicos/áreas verdes","Vivienda y Hábitat","Entorno y Localización",Sí/No,No,
+ind2_3_6,"Integración comunitaria","Vivienda y Hábitat","Entorno y Localización",Opción única,No,
+ind2_3_6b,"Motivo conflicto comunitario","Vivienda y Hábitat","Entorno y Localización",Selección,Sí,Este indicador solo aparece si "Integración comunitaria" sea igual a "Conflictiva"
