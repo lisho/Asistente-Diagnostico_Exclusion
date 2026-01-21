@@ -348,12 +348,12 @@ export function IndicatorsTable({ filters }) {
                                         <td colSpan="6" className="px-4 py-4">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 {/* Description */}
-                                                {item.description && (
-                                                    <div className="bg-white rounded-lg p-3 border border-slate-200">
-                                                        <p className="text-xs font-bold text-slate-500 uppercase mb-1">Descripción</p>
-                                                        <p className="text-sm text-slate-700">{item.description}</p>
-                                                    </div>
-                                                )}
+                                                <div className="bg-white rounded-lg p-3 border border-slate-200">
+                                                    <p className="text-xs font-bold text-slate-500 uppercase mb-1">Descripción</p>
+                                                    <p className="text-sm text-slate-700">
+                                                        {item.description || <span className="text-slate-400 italic">No hay descripción disponible para este indicador.</span>}
+                                                    </p>
+                                                </div>
 
                                                 {/* Options */}
                                                 {item.options && item.options.length > 0 && (
