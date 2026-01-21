@@ -215,32 +215,34 @@ export const DIMENSIONS = {
                 title: 'Acceso y Estabilidad Residencial',
                 description: 'Evalúe la situación actual de alojamiento, estabilidad residencial y riesgo de pérdida de vivienda. Considere sinhogarismo según tipología ETHOS.',
                 indicators: [
-                    { id: 'ind2_1_1', label: 'Situación residencial', type: 'select', options: ['Sinhogarismo', 'Vivienda precaria', 'Alojamiento temporal', 'Alquiler', 'Propiedad'] },
+                    { id: 'ind2_1_1', label: 'Situación residencial', type: 'select', options: ['Sinhogarismo', 'Vivienda precaria', 'Alojamiento temporal', 'Alquiler', 'Propiedad'], description: 'Clasifique la situación residencial principal según tipología ETHOS. Incluye vivienda inadecuada o insegura.' },
                     // Proporción ingreso solo si tiene vivienda estable
                     {
                         id: 'ind2_1_2', label: 'Proporción ingreso en vivienda', type: 'select', options: ['> 50%', '30-50%', '< 30%'],
+                        description: 'Porcentaje de ingresos del hogar destinados a gastos de vivienda. >30% indica sobreesfuerzo; >50% riesgo alto.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'includes', value: ['Alquiler', 'Propiedad'] }
                     },
                     {
                         id: 'ind2_1_3', label: 'Riesgo de desahucio', type: 'select', options: ['Muy alto', 'Moderado', 'Inexistente'],
+                        description: 'Probabilidad de pérdida de vivienda por impagos, finalización de contrato o situación legal precaria.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'includes', value: ['Alquiler', 'Propiedad'] }
                     },
-                    { id: 'ind2_1_4', label: 'Estabilidad del alojamiento', type: 'select', options: ['< 6 meses', '6 meses - 3 años', '> 3 años'] },
-                    { id: 'ind2_1_5', label: 'Movilidad forzada frecuente', type: 'boolean' },
+                    { id: 'ind2_1_4', label: 'Estabilidad del alojamiento', type: 'select', options: ['< 6 meses', '6 meses - 3 años', '> 3 años'], description: 'Tiempo de permanencia continuada en el alojamiento actual. Indica arraigo o inestabilidad residencial.' },
+                    { id: 'ind2_1_5', label: 'Movilidad forzada frecuente', type: 'boolean', description: '¿Ha tenido que cambiar de residencia más de una vez en el último año por motivos ajenos a su voluntad?' },
                     // Motivo movilidad forzada
                     {
                         id: 'ind2_1_5b', label: 'Motivo principal movilidad', type: 'select', options: ['Económico', 'Desahucio', 'Violencia', 'Laboral', 'Familiar'],
                         dependsOn: { indicatorId: 'ind2_1_5', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind2_1_6', label: 'Acceso vivienda emergencia', type: 'select', options: ['Inexistente', 'Disponible'] },
+                    { id: 'ind2_1_6', label: 'Acceso vivienda emergencia', type: 'select', options: ['Inexistente', 'Disponible'], description: 'Posibilidad real de acceso a recursos habitacionales de emergencia en caso de necesidad inmediata.' },
                     // Tiempo en sinhogarismo solo si está en sinhogarismo
                     {
-                        id: 'ind2_1_7', label: 'Tiempo en situación de calle (meses)', type: 'number',
+                        id: 'ind2_1_7', label: 'Tiempo en situación de calle (meses)', type: 'number', description: 'Meses acumulados en situación de calle o sin hogar. >12 meses indica cronificación.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'equals', value: 'Sinhogarismo' }
                     },
                     // Uso de recursos para sinhogar
                     {
-                        id: 'ind2_1_8', label: 'Uso de albergues/recursos', type: 'select', options: ['Nunca', 'Ocasional', 'Regular'],
+                        id: 'ind2_1_8', label: 'Uso de albergues/recursos', type: 'select', options: ['Nunca', 'Ocasional', 'Regular'], description: 'Frecuencia de uso de dispositivos de la red de atención a personas sin hogar.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'equals', value: 'Sinhogarismo' }
                     }
                 ]
@@ -251,43 +253,43 @@ export const DIMENSIONS = {
                 description: 'Valore los elementos básicos de habitabilidad: suministros, salubridad, estructura y espacio. Solo aplica si tiene vivienda física.',
                 indicators: [
                     {
-                        id: 'ind2_2_1', label: 'Agua corriente potable', type: 'boolean',
+                        id: 'ind2_2_1', label: 'Agua corriente potable', type: 'boolean', description: 'Disponibilidad de suministro regular de agua potable dentro de la vivienda.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_2', label: 'Saneamiento (baño con privacidad)', type: 'boolean',
+                        id: 'ind2_2_2', label: 'Saneamiento (baño con privacidad)', type: 'boolean', description: 'Disponibilidad de inodoro conectado a saneamiento y ducha en espacio privado.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_3', label: 'Electricidad segura', type: 'boolean',
+                        id: 'ind2_2_3', label: 'Electricidad segura', type: 'boolean', description: 'Instalación eléctrica legal y segura, sin riesgo de incendio o cortes frecuentes.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_4', label: 'Calefacción/temperatura adecuada', type: 'boolean',
+                        id: 'ind2_2_4', label: 'Calefacción/temperatura adecuada', type: 'boolean', description: 'Capacidad para mantener la vivienda a temperatura adecuada (18-21ºC) en invierno.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_5', label: 'Estructuras íntegras', type: 'boolean',
+                        id: 'ind2_2_5', label: 'Estructuras íntegras', type: 'boolean', description: 'Ausencia de daños estructurales graves en techos, muros o cimientos.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_6', label: 'Humedad y moho', type: 'boolean',
+                        id: 'ind2_2_6', label: 'Humedad y moho', type: 'boolean', description: 'Presencia visible de humedades, filtraciones o moho en paredes/techos.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_7', label: 'Control de plagas', type: 'boolean',
+                        id: 'ind2_2_7', label: 'Control de plagas', type: 'boolean', description: 'Vivienda libre de plagas (cucarachas, roedores, insectos) y vectores de enfermedad.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_8', label: 'Ventilación adecuada', type: 'boolean',
+                        id: 'ind2_2_8', label: 'Ventilación adecuada', type: 'boolean', description: 'Existencia de ventanas o sistemas que permitan la renovación del aire.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_9', label: 'Iluminación natural', type: 'boolean',
+                        id: 'ind2_2_9', label: 'Iluminación natural', type: 'boolean', description: 'Entrada de luz solar directa en las estancias principales de la vivienda.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     },
                     {
-                        id: 'ind2_2_10', label: 'Hacinamiento (> 2 personas/habitación)', type: 'boolean',
+                        id: 'ind2_2_10', label: 'Hacinamiento (> 2 personas/habitación)', type: 'boolean', description: 'Ratio de personas por dormitorio. Se considera hacinamiento si supera 2 personas.',
                         dependsOn: { indicatorId: 'ind2_1_1', condition: 'notEquals', value: 'Sinhogarismo' }
                     }
                 ]
@@ -297,17 +299,17 @@ export const DIMENSIONS = {
                 title: 'Entorno y Localización',
                 description: 'Analice el entorno urbano: accesibilidad, seguridad, servicios y relación con la comunidad. Afecta a la inserción social.',
                 indicators: [
-                    { id: 'ind2_3_1', label: 'Acceso transporte público', type: 'radio', options: ['> 45 min', '15-45 min', '< 15 min'] },
-                    { id: 'ind2_3_2', label: 'Distancia servicios básicos', type: 'radio', options: ['> 2 km', '500m - 2km', '< 500m'] },
-                    { id: 'ind2_3_3', label: 'Seguridad del entorno', type: 'radio', options: ['Alto riesgo', 'Moderado', 'Bajo riesgo'] },
+                    { id: 'ind2_3_1', label: 'Acceso transporte público', type: 'radio', options: ['> 45 min', '15-45 min', '< 15 min'], description: 'Tiempo de acceso a pie a la red de transporte público regular.' },
+                    { id: 'ind2_3_2', label: 'Distancia servicios básicos', type: 'radio', options: ['> 2 km', '500m - 2km', '< 500m'], description: 'Proximidad a centro de salud, escuelas, comercios de alimentación, etc.' },
+                    { id: 'ind2_3_3', label: 'Seguridad del entorno', type: 'radio', options: ['Alto riesgo', 'Moderado', 'Bajo riesgo'], description: 'Percepción de seguridad física y delincuencia en el vecindario.' },
                     // Tipo de inseguridad solo si hay alto riesgo
                     {
                         id: 'ind2_3_3b', label: 'Tipo de inseguridad', type: 'select', options: ['Delincuencia', 'Drogas', 'Violencia', 'Abandono urbano', 'Múltiple'],
                         dependsOn: { indicatorId: 'ind2_3_3', condition: 'equals', value: 'Alto riesgo' }
                     },
-                    { id: 'ind2_3_4', label: 'Ruido y contaminación', type: 'radio', options: ['Excesivos', 'Moderados', 'Tolerables'] },
-                    { id: 'ind2_3_5', label: 'Espacios públicos/áreas verdes', type: 'boolean' },
-                    { id: 'ind2_3_6', label: 'Integración comunitaria', type: 'radio', options: ['Conflictiva', 'Neutral', 'Buena'] },
+                    { id: 'ind2_3_4', label: 'Ruido y contaminación', type: 'radio', options: ['Excesivos', 'Moderados', 'Tolerables'], description: 'Niveles de ruido o polución que impactan en la salud o el descanso.' },
+                    { id: 'ind2_3_5', label: 'Espacios públicos/áreas verdes', type: 'boolean', description: 'Disponibilidad de zonas de esparcimiento seguras y accesibles.' },
+                    { id: 'ind2_3_6', label: 'Integración comunitaria', type: 'radio', options: ['Conflictiva', 'Neutral', 'Buena'], description: 'Calidad de la convivencia y relaciones con el vecindario.' },
                     // Motivo conflicto comunitario
                     {
                         id: 'ind2_3_6b', label: 'Motivo conflicto comunitario', type: 'select', options: ['Étnico', 'Económico', 'Conducta', 'Ruido', 'Otro'],
@@ -348,51 +350,51 @@ export const DIMENSIONS = {
                 title: 'Estado de Salud Física',
                 description: 'Evalúe enfermedades crónicas, discapacidad, nutrición y sueño. Considere cómo afectan a la autonomía y calidad de vida.',
                 indicators: [
-                    { id: 'ind3_1_1', label: 'Enfermedades crónicas', type: 'radio', options: ['Múltiples sin control', 'Alguna controlada', 'Ninguna'] },
+                    { id: 'ind3_1_1', label: 'Enfermedades crónicas', type: 'radio', options: ['Múltiples sin control', 'Alguna controlada', 'Ninguna'], description: 'Presencia de patologías de larga duración (diabetes, hipertensión, etc.) y su grado de control.' },
                     // Tipo de enfermedad crónica solo si tiene alguna
                     {
                         id: 'ind3_1_1b', label: 'Principales enfermedades crónicas', type: 'text',
                         dependsOn: { indicatorId: 'ind3_1_1', condition: 'notEquals', value: 'Ninguna' }
                     },
-                    { id: 'ind3_1_2', label: 'Discapacidad física', type: 'radio', options: ['Severa', 'Moderada', 'Leve', 'Nula'] },
+                    { id: 'ind3_1_2', label: 'Discapacidad física', type: 'radio', options: ['Severa', 'Moderada', 'Leve', 'Nula'], description: 'Limitaciones funcionales físicas que afectan a las actividades de la vida diaria.' },
                     // Grado de discapacidad solo si tiene discapacidad
                     {
                         id: 'ind3_1_2b', label: 'Grado de discapacidad reconocido (%)', type: 'number',
                         dependsOn: { indicatorId: 'ind3_1_2', condition: 'notEquals', value: 'Nula' }
                     },
-                    { id: 'ind3_1_3', label: 'Accidentes/traumas recurrentes', type: 'boolean' },
-                    { id: 'ind3_1_4', label: 'Estado nutricional', type: 'radio', options: ['Malnutrición', 'Inadecuado', 'Adecuado'] },
+                    { id: 'ind3_1_3', label: 'Accidentes/traumas recurrentes', type: 'boolean', description: 'Historial de caídas, golpes o accidentes frecuentes reciente.' },
+                    { id: 'ind3_1_4', label: 'Estado nutricional', type: 'radio', options: ['Malnutrición', 'Inadecuado', 'Adecuado'], description: 'Valoración general de la alimentación y peso corporal.' },
                     // Inseguridad alimentaria solo si hay malnutrición
                     {
                         id: 'ind3_1_4b', label: 'Inseguridad alimentaria', type: 'select', options: ['Severa', 'Moderada', 'Leve'],
                         dependsOn: { indicatorId: 'ind3_1_4', condition: 'notEquals', value: 'Adecuado' }
                     },
-                    { id: 'ind3_1_5', label: 'Calidad de sueño', type: 'radio', options: ['Problemas severos', 'Problemas moderados', 'Normal'] },
+                    { id: 'ind3_1_5', label: 'Calidad de sueño', type: 'radio', options: ['Problemas severos', 'Problemas moderados', 'Normal'], description: 'Valoración del descanso nocturno, insomnio o sueño no reparador.' },
                     // Medicación para dormir solo si hay problemas
                     {
                         id: 'ind3_1_5b', label: 'Uso de medicación para dormir', type: 'boolean',
                         dependsOn: { indicatorId: 'ind3_1_5', condition: 'notEquals', value: 'Normal' }
                     },
-                    { id: 'ind3_1_6', label: 'Actividad física', type: 'select', options: ['Muy baja (sedentarismo)', 'Moderada', 'Adecuada'] },
-                    { id: 'ind3_1_7', label: 'Higiene personal', type: 'select', options: ['Deficiente', 'Adecuada'] },
+                    { id: 'ind3_1_6', label: 'Actividad física', type: 'select', options: ['Muy baja (sedentarismo)', 'Moderada', 'Adecuada'], description: 'Nivel de ejercicio o actividad física regular.' },
+                    { id: 'ind3_1_7', label: 'Higiene personal', type: 'select', options: ['Deficiente', 'Adecuada'], description: 'Estado visible de aseo personal y vestimenta.' },
                     // Causa higiene deficiente
                     {
                         id: 'ind3_1_7b', label: 'Causa higiene deficiente', type: 'select', options: ['Falta recursos', 'Salud mental', 'Discapacidad', 'Sinhogarismo', 'Otro'],
                         dependsOn: { indicatorId: 'ind3_1_7', condition: 'equals', value: 'Deficiente' }
                     },
-                    { id: 'ind3_1_8', label: 'Problemas de visión', type: 'boolean' },
+                    { id: 'ind3_1_8', label: 'Problemas de visión', type: 'boolean', description: 'Dificultades visuales no corregidas que limitan la autonomía.' },
                     // Corrección visual solo si hay problemas
                     {
                         id: 'ind3_1_8b', label: 'Acceso a corrección visual', type: 'select', options: ['Sin acceso', 'Parcial', 'Completo'],
                         dependsOn: { indicatorId: 'ind3_1_8', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind3_1_9', label: 'Problemas auditivos', type: 'boolean' },
+                    { id: 'ind3_1_9', label: 'Problemas auditivos', type: 'boolean', description: 'Hipoacusia o sordera que dificulta la comunicación.' },
                     // Corrección auditiva solo si hay problemas
                     {
                         id: 'ind3_1_9b', label: 'Acceso a audífonos/adaptación', type: 'select', options: ['Sin acceso', 'Parcial', 'Completo'],
                         dependsOn: { indicatorId: 'ind3_1_9', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind3_1_10', label: 'Problemas dentales', type: 'select', options: ['Severos', 'Moderados', 'Controlados'] },
+                    { id: 'ind3_1_10', label: 'Problemas dentales', type: 'select', options: ['Severos', 'Moderados', 'Controlados'], description: 'Salud bucondental, dolor, falta de piezas que afecten la alimentación.' },
                     // Acceso tratamiento dental solo si hay problemas
                     {
                         id: 'ind3_1_10b', label: 'Acceso a tratamiento dental', type: 'select', options: ['Sin acceso', 'Parcial', 'Completo'],
@@ -405,24 +407,25 @@ export const DIMENSIONS = {
                 title: 'Acceso a Servicios Sanitarios',
                 description: 'Valore el acceso efectivo a atención médica: inscripción, tiempos de espera, medicamentos, prevención y barreras de acceso.',
                 indicators: [
-                    { id: 'ind3_2_1', label: 'Inscripción centro salud', type: 'boolean' },
-                    { id: 'ind3_2_2', label: 'Acceso atención primaria', type: 'select', options: ['Imposible', 'Retrasado', 'Inmediato'] },
-                    { id: 'ind3_2_3', label: 'Acceso atención especializada', type: 'select', options: ['Denegado', 'Lista espera prolongada', 'Acceso'] },
-                    { id: 'ind3_2_4', label: 'Acceso a medicamentos', type: 'select', options: ['Nulo', 'Parcial', '100%'] },
-                    { id: 'ind3_2_5', label: 'Automedicación por coste', type: 'boolean' },
-                    { id: 'ind3_2_6', label: 'Prevención sanitaria', type: 'select', options: ['Nula', 'Parcial', 'Completa'] },
+                    { id: 'ind3_2_1', label: 'Inscripción centro salud', type: 'boolean', description: '¿Tiene asignado un médico de cabecera y centro de salud?' },
+                    { id: 'ind3_2_2', label: 'Acceso atención primaria', type: 'select', options: ['Imposible', 'Retrasado', 'Inmediato'], description: 'Facilidad para conseguir cita médica en tiempo razonable.' },
+                    { id: 'ind3_2_3', label: 'Acceso atención especializada', type: 'select', options: ['Denegado', 'Lista espera prolongada', 'Acceso'], description: 'Acceso a especialistas cuando ha sido derivado.' },
+                    { id: 'ind3_2_4', label: 'Acceso a medicamentos', type: 'select', options: ['Nulo', 'Parcial', '100%'], description: 'Capacidad para adquirir la medicación prescrita.' },
+                    { id: 'ind3_2_5', label: 'Automedicación por coste', type: 'boolean', description: '¿Evita ir al médico o comprar medicinas por motivos económicos?' },
+                    { id: 'ind3_2_6', label: 'Prevención sanitaria', type: 'select', options: ['Nula', 'Parcial', 'Completa'], description: 'Participación en compañas de vacunación, cribados, revisiones.' },
                     {
                         id: 'ind3_2_7', label: 'Seguimiento enfermedades crónicas', type: 'select', options: ['Nulo', 'Esporádico', 'Regular'],
+                        description: 'Regularidad de los controles médicos para patologías crónicas.',
                         dependsOn: { indicatorId: 'ind3_1_1', condition: 'notEquals', value: 'Ninguna' }
                     },
-                    { id: 'ind3_2_8', label: 'Barreras económicas (copagos)', type: 'boolean' },
-                    { id: 'ind3_2_9', label: 'Barreras culturales/idioma', type: 'boolean' },
+                    { id: 'ind3_2_8', label: 'Barreras económicas (copagos)', type: 'boolean', description: '¿El copago farmacéutico o de servicios impide el acceso?' },
+                    { id: 'ind3_2_9', label: 'Barreras culturales/idioma', type: 'boolean', description: 'Dificultades de comunicación o entendimiento con personal sanitario.' },
                     // Idioma principal si hay barrera de idioma
                     {
                         id: 'ind3_2_9b', label: 'Idioma principal', type: 'text',
                         dependsOn: { indicatorId: 'ind3_2_9', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind3_2_10', label: 'Barreras de movilidad', type: 'boolean' },
+                    { id: 'ind3_2_10', label: 'Barreras de movilidad', type: 'boolean', description: 'Dificultades físicas para llegar al centro de salud.' },
                     // Tipo de barrera movilidad
                     {
                         id: 'ind3_2_10b', label: 'Tipo barrera movilidad', type: 'select', options: ['Discapacidad', 'Transporte', 'Distancia', 'Económica'],
@@ -435,14 +438,14 @@ export const DIMENSIONS = {
                 title: 'Factores de Riesgo para la Salud',
                 description: 'Identifique hábitos y exposiciones que afectan a la salud: consumo de sustancias, violencia, estrés e higiene ambiental.',
                 indicators: [
-                    { id: 'ind3_3_1', label: 'Tabaquismo', type: 'select', options: ['Intenso', 'Moderado', 'Nulo'] },
-                    { id: 'ind3_3_2', label: 'Consumo de alcohol', type: 'select', options: ['Riesgo alto', 'Moderado', 'Bajo'] },
+                    { id: 'ind3_3_1', label: 'Tabaquismo', type: 'select', options: ['Intenso', 'Moderado', 'Nulo'], description: 'Hábito tabáquico diario.' },
+                    { id: 'ind3_3_2', label: 'Consumo de alcohol', type: 'select', options: ['Riesgo alto', 'Moderado', 'Bajo'], description: 'Consumo de alcohol que pueda suponer riesgo para la salud o problemas sociales.' },
                     // Tratamiento alcoholismo solo si riesgo alto
                     {
                         id: 'ind3_3_2b', label: 'En tratamiento alcoholismo', type: 'boolean',
                         dependsOn: { indicatorId: 'ind3_3_2', condition: 'equals', value: 'Riesgo alto' }
                     },
-                    { id: 'ind3_3_3', label: 'Consumo de sustancias', type: 'select', options: ['Activo', 'Pasado', 'Nulo'] },
+                    { id: 'ind3_3_3', label: 'Consumo de sustancias', type: 'select', options: ['Activo', 'Pasado', 'Nulo'], description: 'Consumo de drogas ilegales o uso indebido de psicofármacos.' },
                     // Tipo de sustancia solo si consume
                     {
                         id: 'ind3_3_3b', label: 'Sustancias principales', type: 'text',
@@ -453,15 +456,15 @@ export const DIMENSIONS = {
                         id: 'ind3_3_3c', label: 'En tratamiento adicciones', type: 'boolean',
                         dependsOn: { indicatorId: 'ind3_3_3', condition: 'equals', value: 'Activo' }
                     },
-                    { id: 'ind3_3_4', label: 'Violencia sufrida', type: 'select', options: ['Actual', 'Pasada', 'Nunca'] },
+                    { id: 'ind3_3_4', label: 'Violencia sufrida', type: 'select', options: ['Actual', 'Pasada', 'Nunca'], description: 'Víctima de violencia física, psicológica o sexual reciente o histórica.' },
                     // Tipo de violencia solo si la ha sufrido
                     {
                         id: 'ind3_3_4b', label: 'Tipo de violencia', type: 'select', options: ['Física', 'Psicológica', 'Sexual', 'Económica', 'Múltiple'],
                         dependsOn: { indicatorId: 'ind3_3_4', condition: 'notEquals', value: 'Nunca' }
                     },
-                    { id: 'ind3_3_5', label: 'Estrés crónico', type: 'select', options: ['Severo', 'Moderado', 'Leve'] },
-                    { id: 'ind3_3_6', label: 'Exposición contaminación/tóxicos', type: 'select', options: ['Alta', 'Moderada', 'Baja'] },
-                    { id: 'ind3_3_7', label: 'Higiene ambiental hogar', type: 'select', options: ['Deficiente', 'Aceptable', 'Buena'] }
+                    { id: 'ind3_3_5', label: 'Estrés crónico', type: 'select', options: ['Severo', 'Moderado', 'Leve'], description: 'Nivel de estrés percibido sostenido en el tiempo.' },
+                    { id: 'ind3_3_6', label: 'Exposición contaminación/tóxicos', type: 'select', options: ['Alta', 'Moderada', 'Baja'], description: 'Exposición en hogar o trabajo a agentes nocivos.' },
+                    { id: 'ind3_3_7', label: 'Higiene ambiental hogar', type: 'select', options: ['Deficiente', 'Aceptable', 'Buena'], description: 'Limpieza y salubridad del entorno doméstico.' }
                 ]
             }
         ],
@@ -496,41 +499,41 @@ export const DIMENSIONS = {
                 title: 'Estado de Salud Mental',
                 description: 'Evalúe sintomatología: depresión, ansiedad, riesgo suicida, trastornos graves. URGENTE si hay ideación suicida activa.',
                 indicators: [
-                    { id: 'ind4_1_1', label: 'Síntomas depresivos', type: 'radio', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
-                    { id: 'ind4_1_2', label: 'Síntomas ansiosos', type: 'radio', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'] },
-                    { id: 'ind4_1_3', label: 'Baja autoestima', type: 'radio', options: ['Severa', 'Moderada', 'Leve', 'Normal'] },
-                    { id: 'ind4_1_4', label: 'Ideación suicida', type: 'radio', options: ['Activa', 'Pasada', 'Nunca'] },
+                    { id: 'ind4_1_1', label: 'Síntomas depresivos', type: 'radio', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'], description: 'Presencia e intensidad de tristeza patológica, apatía o anhedonia.' },
+                    { id: 'ind4_1_2', label: 'Síntomas ansiosos', type: 'radio', options: ['Severos', 'Moderados', 'Leves', 'Ausentes'], description: 'Nivel de ansiedad, nerviosismo o tensión excesiva que interfiere en la vida diaria.' },
+                    { id: 'ind4_1_3', label: 'Baja autoestima', type: 'radio', options: ['Severa', 'Moderada', 'Leve', 'Normal'], description: 'Valoración negativa de la autopercepción y valía personal.' },
+                    { id: 'ind4_1_4', label: 'Ideación suicida', type: 'radio', options: ['Activa', 'Pasada', 'Nunca'], description: 'Pensamientos sobre el deseo de morir o quitarse la vida. URGENCIA.' },
                     // Plan suicida solo si hay ideación activa
                     {
                         id: 'ind4_1_4b', label: 'Plan suicida estructurado', type: 'boolean',
                         dependsOn: { indicatorId: 'ind4_1_4', condition: 'equals', value: 'Activa' }
                     },
-                    { id: 'ind4_1_5', label: 'Intentos de suicidio', type: 'radio', options: ['Reciente', 'Pasado', 'Nunca'] },
+                    { id: 'ind4_1_5', label: 'Intentos de suicidio', type: 'radio', options: ['Reciente', 'Pasado', 'Nunca'], description: 'Antecedentes de conductas suicidas previas.' },
                     // Método de intento solo si hubo intento
                     {
                         id: 'ind4_1_5b', label: 'Letalidad del método', type: 'select', options: ['Alta', 'Media', 'Baja'],
                         dependsOn: { indicatorId: 'ind4_1_5', condition: 'notEquals', value: 'Nunca' }
                     },
-                    { id: 'ind4_1_6', label: 'Autolesiones', type: 'radio', options: ['Activas', 'Pasadas', 'Nunca'] },
+                    { id: 'ind4_1_6', label: 'Autolesiones', type: 'radio', options: ['Activas', 'Pasadas', 'Nunca'], description: 'Conductas de daño físico intencional sin intención suicida.' },
                     // Frecuencia autolesiones solo si las hay
                     {
                         id: 'ind4_1_6b', label: 'Frecuencia autolesiones', type: 'select', options: ['Diaria', 'Semanal', 'Mensual', 'Esporádica'],
                         dependsOn: { indicatorId: 'ind4_1_6', condition: 'notEquals', value: 'Nunca' }
                     },
-                    { id: 'ind4_1_7', label: 'Trastornos de personalidad', type: 'boolean' },
-                    { id: 'ind4_1_8', label: 'Síntomas psicóticos', type: 'boolean' },
+                    { id: 'ind4_1_7', label: 'Trastornos de personalidad', type: 'boolean', description: 'Diagnóstico o sospecha de patrones de comportamiento rígidos y desadaptativos.' },
+                    { id: 'ind4_1_8', label: 'Síntomas psicóticos', type: 'boolean', description: 'Pérdida de contacto con la realidad (alucinaciones, delirios).' },
                     // Tipo de síntomas psicóticos solo si los tiene
                     {
                         id: 'ind4_1_8b', label: 'Tipo síntomas psicóticos', type: 'select', options: ['Alucinaciones', 'Delirios', 'Ambos'],
                         dependsOn: { indicatorId: 'ind4_1_8', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind4_1_9', label: 'TEPT (estrés postraumático)', type: 'boolean' },
+                    { id: 'ind4_1_9', label: 'TEPT (estrés postraumático)', type: 'boolean', description: 'Síntomas derivados de experiencias traumáticas no resueltas.' },
                     // Evento traumático solo si tiene TEPT
                     {
                         id: 'ind4_1_9b', label: 'Tipo de trauma', type: 'select', options: ['Violencia', 'Accidente', 'Abuso', 'Guerra/conflicto', 'Otro'],
                         dependsOn: { indicatorId: 'ind4_1_9', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind4_1_10', label: 'Problemas cognitivos', type: 'boolean' }
+                    { id: 'ind4_1_10', label: 'Problemas cognitivos', type: 'boolean', description: 'Dificultades en atención, memoria o razonamiento.' }
                 ]
             },
             {
@@ -538,34 +541,35 @@ export const DIMENSIONS = {
                 title: 'Acceso a Servicios de Salud Mental',
                 description: 'Valore diagnóstico formal, tratamiento, adherencia y barreras de acceso a salud mental.',
                 indicators: [
-                    { id: 'ind4_2_1', label: 'Diagnóstico formal', type: 'select', options: ['Nunca', 'Pendiente', 'Realizado'] },
+                    { id: 'ind4_2_1', label: 'Diagnóstico formal', type: 'select', options: ['Nunca', 'Pendiente', 'Realizado'], description: '¿Existe un diagnóstico clínico emitido por un facultativo?' },
                     // Diagnóstico específico solo si está realizado
                     {
                         id: 'ind4_2_1b', label: 'Diagnóstico principal', type: 'text',
                         dependsOn: { indicatorId: 'ind4_2_1', condition: 'equals', value: 'Realizado' }
                     },
-                    { id: 'ind4_2_2', label: 'Atención psicológica', type: 'select', options: ['Nunca', 'Completada', 'En tratamiento'] },
-                    { id: 'ind4_2_3', label: 'Atención psiquiátrica', type: 'select', options: ['Nunca', 'Completada', 'En tratamiento'] },
+                    { id: 'ind4_2_2', label: 'Atención psicológica', type: 'select', options: ['Nunca', 'Completada', 'En tratamiento'], description: 'Acceso o historial de terapia psicológica.' },
+                    { id: 'ind4_2_3', label: 'Atención psiquiátrica', type: 'select', options: ['Nunca', 'Completada', 'En tratamiento'], description: 'Acceso o historial de seguimiento médico psiquiátrico.' },
                     {
                         id: 'ind4_2_4', label: 'Adherencia medicación', type: 'select', options: ['Nula', 'Parcial', 'Buena', 'No aplica'],
+                        description: 'Cumplimiento adecuado de la pauta farmacológica prescrita.',
                         dependsOn: { indicatorId: 'ind4_2_3', condition: 'notEquals', value: 'Nunca' }
                     },
-                    { id: 'ind4_2_5', label: 'Acceso sin barreras económicas', type: 'boolean' },
-                    { id: 'ind4_2_6', label: 'Continuidad asistencial', type: 'boolean' },
-                    { id: 'ind4_2_7', label: 'Tratamiento adaptado', type: 'boolean' }
+                    { id: 'ind4_2_5', label: 'Acceso sin barreras económicas', type: 'boolean', description: '¿Puede costearse el tratamiento o acceder a servicios públicos sin coste?' },
+                    { id: 'ind4_2_6', label: 'Continuidad asistencial', type: 'boolean', description: 'Estabilidad en el seguimiento, sin interrupciones bruscas.' },
+                    { id: 'ind4_2_7', label: 'Tratamiento adaptado', type: 'boolean', description: '¿El tratamiento actual responde a sus necesidades reales?' }
                 ]
             },
             {
                 id: 'sub4_3',
                 title: 'Factores de Resiliencia y Protección',
                 indicators: [
-                    { id: 'ind4_3_1', label: 'Estrategias de afrontamiento', type: 'radio', options: ['Desadaptativas', 'Mixtas', 'Adaptativas'] },
-                    { id: 'ind4_3_2', label: 'Apoyo social percibido', type: 'radio', options: ['Nulo', 'Débil', 'Fuerte'] },
-                    { id: 'ind4_3_3', label: 'Sentido de vida y metas', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'] },
-                    { id: 'ind4_3_4', label: 'Esperanza en el futuro', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'] },
-                    { id: 'ind4_3_5', label: 'Autonomía (toma decisiones)', type: 'radio', options: ['Baja', 'Media', 'Alta'] },
-                    { id: 'ind4_3_6', label: 'Sentimiento de pertenencia', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'] },
-                    { id: 'ind4_3_7', label: 'Creencias espirituales', type: 'radio', options: ['Limitantes', 'Neutras', 'Fortalecedoras'] }
+                    { id: 'ind4_3_1', label: 'Estrategias de afrontamiento', type: 'radio', options: ['Desadaptativas', 'Mixtas', 'Adaptativas'], description: 'Mecanismos utilizados para gestionar el estrés y problemas.' },
+                    { id: 'ind4_3_2', label: 'Apoyo social percibido', type: 'radio', options: ['Nulo', 'Débil', 'Fuerte'], description: 'Percepción subjetiva de contar con personas de confianza.' },
+                    { id: 'ind4_3_3', label: 'Sentido de vida y metas', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'], description: 'Existencia de proyectos vitales o motivaciones para el futuro.' },
+                    { id: 'ind4_3_4', label: 'Esperanza en el futuro', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'], description: 'Expectativas positivas sobre el porvenir.' },
+                    { id: 'ind4_3_5', label: 'Autonomía (toma decisiones)', type: 'radio', options: ['Baja', 'Media', 'Alta'], description: 'Capacidad para tomar decisiones propias y ejecutarlas independientemente.' },
+                    { id: 'ind4_3_6', label: 'Sentimiento de pertenencia', type: 'radio', options: ['Ausente', 'Parcial', 'Presente'], description: 'Sensación de ser parte de un grupo, familia o comunidad.' },
+                    { id: 'ind4_3_7', label: 'Creencias espirituales', type: 'radio', options: ['Limitantes', 'Neutras', 'Fortalecedoras'], description: 'Sistema de valores o creencias que aportan paz o resiliencia.' }
                 ]
             }
         ],
@@ -600,45 +604,46 @@ export const DIMENSIONS = {
                 id: 'sub5_1',
                 title: 'Niveles Educativos',
                 indicators: [
-                    { id: 'ind5_1_1', label: 'Nivel máximo alcanzado', type: 'select', options: ['Sin escolarizar', 'Primaria incompleta', 'Primaria', 'ESO', 'Bachillerato/FP', 'Universidad'] },
-                    { id: 'ind5_1_2', label: 'Certificaciones oficiales', type: 'boolean' },
-                    { id: 'ind5_1_3', label: 'Alfabetización lectura/escritura', type: 'radio', options: ['Analfabeto', 'Alfabetización funcional', 'Alfabetizado'] },
+                    { id: 'ind5_1_1', label: 'Nivel máximo alcanzado', type: 'select', options: ['Sin escolarizar', 'Primaria incompleta', 'Primaria', 'ESO', 'Bachillerato/FP', 'Universidad'], description: 'Nivel educativo formal más alto completado.' },
+                    { id: 'ind5_1_2', label: 'Certificaciones oficiales', type: 'boolean', description: 'Posesión de títulos oficiales que acrediten la formación.' },
+                    { id: 'ind5_1_3', label: 'Alfabetización lectura/escritura', type: 'radio', options: ['Analfabeto', 'Alfabetización funcional', 'Alfabetizado'], description: 'Capacidad funcional para leer, escribir y comprender textos cotidianos.' },
                     // Programa alfabetización solo si analfabeto o funcional
                     {
                         id: 'ind5_1_3b', label: 'Participando en programa alfabetización', type: 'boolean',
                         dependsOn: { indicatorId: 'ind5_1_3', condition: 'notEquals', value: 'Alfabetizado' }
                     },
-                    { id: 'ind5_1_4', label: 'Competencias digitales', type: 'radio', options: ['Nulas', 'Básicas', 'Intermedias', 'Avanzadas'] },
+                    { id: 'ind5_1_4', label: 'Competencias digitales', type: 'radio', options: ['Nulas', 'Básicas', 'Intermedias', 'Avanzadas'], description: 'Habilidad para manejar dispositivos tecnológicos e internet.' },
                     // Formación digital si competencias nulas
                     {
                         id: 'ind5_1_4b', label: 'Acceso a formación digital', type: 'boolean',
                         dependsOn: { indicatorId: 'ind5_1_4', condition: 'equals', value: 'Nulas' }
                     },
-                    { id: 'ind5_1_5', label: 'Acreditación competencias informales', type: 'boolean' },
-                    { id: 'ind5_1_6', label: 'Cualificación profesional', type: 'boolean' },
-                    { id: 'ind5_1_7', label: 'Idiomas adicionales', type: 'radio', options: ['Ninguno', 'Básico', 'Fluido'] }
+                    { id: 'ind5_1_5', label: 'Acreditación competencias informales', type: 'boolean', description: 'Reconocimiento oficial de competencias adquiridas por experiencia laboral.' },
+                    { id: 'ind5_1_6', label: 'Cualificación profesional', type: 'boolean', description: 'Dispone de conocimientos técnicos para ejercer una profesión específica.' },
+                    { id: 'ind5_1_7', label: 'Idiomas adicionales', type: 'radio', options: ['Ninguno', 'Básico', 'Fluido'], description: 'Conocimiento de otros idiomas relevantes para la integración laboral.' }
                 ]
             },
             {
                 id: 'sub5_2',
                 title: 'Acceso a Educación',
                 indicators: [
-                    { id: 'ind5_2_1', label: 'Escolarización menores', type: 'select', options: ['Nunca escolarizado', 'Abandonado', 'Escolarizado', 'No aplica'] },
-                    { id: 'ind5_2_2', label: 'Educación obligatoria completa', type: 'boolean' },
+                    { id: 'ind5_2_1', label: 'Escolarización menores', type: 'select', options: ['Nunca escolarizado', 'Abandonado', 'Escolarizado', 'No aplica'], description: 'Situación escolar de los menores a cargo.' },
+                    { id: 'ind5_2_2', label: 'Educación obligatoria completa', type: 'boolean', description: '¿Ha finalizado la Educación Secundaria Obligatoria (ESO)?' },
                     {
                         id: 'ind5_2_3', label: 'Absentismo escolar', type: 'select', options: ['Severo', 'Moderado', 'Bajo', 'No aplica'],
+                        description: 'Faltas de asistencia injustificadas y reiteradas al centro educativo.',
                         dependsOn: { indicatorId: 'ind5_2_1', condition: 'equals', value: 'Escolarizado' }
                     },
-                    { id: 'ind5_2_4', label: 'Educación postobligatoria', type: 'select', options: ['Rechazado', 'En curso', 'Completado', 'No aplica'] },
-                    { id: 'ind5_2_5', label: 'Educación permanente adulto', type: 'boolean' },
-                    { id: 'ind5_2_6', label: 'Barreras económicas educación', type: 'boolean' },
-                    { id: 'ind5_2_7', label: 'Discriminación educativa', type: 'boolean' },
+                    { id: 'ind5_2_4', label: 'Educación postobligatoria', type: 'select', options: ['Rechazado', 'En curso', 'Completado', 'No aplica'], description: 'Participación en estudios superiores o FP tras la ESO.' },
+                    { id: 'ind5_2_5', label: 'Educación permanente adulto', type: 'boolean', description: 'Participación actual en formación para adultos o reciclaje.' },
+                    { id: 'ind5_2_6', label: 'Barreras económicas educación', type: 'boolean', description: '¿Los costes directos o indirectos impiden el acceso a la educación?' },
+                    { id: 'ind5_2_7', label: 'Discriminación educativa', type: 'boolean', description: 'Trato desigual o exclusión en el entorno educativo.' },
                     // Motivo discriminación educativa
                     {
                         id: 'ind5_2_7b', label: 'Motivo discriminación educativa', type: 'select', options: ['Etnia', 'Discapacidad', 'Género', 'Origen', 'Económico', 'Otro'],
                         dependsOn: { indicatorId: 'ind5_2_7', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind5_2_8', label: 'Acceso educación inclusiva', type: 'boolean' },
+                    { id: 'ind5_2_8', label: 'Acceso educación inclusiva', type: 'boolean', description: '¿El entorno educativo adapta recursos a sus necesidades especiales?' },
                     // Tipo adaptaciones inclusivas
                     {
                         id: 'ind5_2_8b', label: 'Tipo de adaptaciones', type: 'select', options: ['Currículo', 'Acceso', 'Apoyo personal', 'Recursos', 'Múltiple'],
@@ -650,12 +655,12 @@ export const DIMENSIONS = {
                 id: 'sub5_3',
                 title: 'Competencias y Habilidades',
                 indicators: [
-                    { id: 'ind5_3_1', label: 'Competencia comunicación', type: 'radio', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'] },
-                    { id: 'ind5_3_2', label: 'Competencia matemática', type: 'radio', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'] },
-                    { id: 'ind5_3_3', label: 'Competencia digital', type: 'radio', options: ['Nula', 'Básica', 'Intermedia', 'Avanzada'] },
-                    { id: 'ind5_3_4', label: 'Competencias empleabilidad', type: 'radio', options: ['Severa carencia', 'Deficitarias', 'Adecuadas', 'Excelentes'] },
-                    { id: 'ind5_3_5', label: 'Habilidades sociales', type: 'radio', options: ['Severa dificultad', 'Deficiencias', 'Adecuadas', 'Excelentes'] },
-                    { id: 'ind5_3_6', label: 'Capacidad de aprendizaje', type: 'radio', options: ['Muy limitada', 'Limitada', 'Buena', 'Muy buena'] }
+                    { id: 'ind5_3_1', label: 'Competencia comunicación', type: 'radio', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'], description: 'Capacidad para expresarse y comprender mensajes orales y escritos.' },
+                    { id: 'ind5_3_2', label: 'Competencia matemática', type: 'radio', options: ['Severa dificultad', 'Dificultad', 'Adecuada', 'Buena'], description: 'Capacidad para utilizar números y resolver problemas matemáticos básicos.' },
+                    { id: 'ind5_3_3', label: 'Competencia digital', type: 'radio', options: ['Nula', 'Básica', 'Intermedia', 'Avanzada'], description: 'Destreza en el uso de herramientas informáticas y seguridad digital.' },
+                    { id: 'ind5_3_4', label: 'Competencias empleabilidad', type: 'radio', options: ['Severa carencia', 'Deficitarias', 'Adecuadas', 'Excelentes'], description: 'Conjunto de habilidades transversales valoradas para conseguir empleo.' },
+                    { id: 'ind5_3_5', label: 'Habilidades sociales', type: 'radio', options: ['Severa dificultad', 'Deficiencias', 'Adecuadas', 'Excelentes'], description: 'Capacidad para relacionarse adecuadamente con otras personas.' },
+                    { id: 'ind5_3_6', label: 'Capacidad de aprendizaje', type: 'radio', options: ['Muy limitada', 'Limitada', 'Buena', 'Muy buena'], description: 'Facilidad para adquirir nuevos conocimientos y habilidades.' }
                 ]
             }
         ],
@@ -690,41 +695,41 @@ export const DIMENSIONS = {
                 id: 'sub6_1',
                 title: 'Estructura y Funcionamiento Familiar',
                 indicators: [
-                    { id: 'ind6_1_1', label: 'Composición familiar', type: 'select', options: ['Ninguna', 'Unipersonal', 'Monoparental', 'Nuclear biparental', 'Extensa'] },
+                    { id: 'ind6_1_1', label: 'Composición familiar', type: 'select', options: ['Ninguna', 'Unipersonal', 'Monoparental', 'Nuclear biparental', 'Extensa'], description: 'Estructura de convivencia y número de personas en el hogar.' },
                     {
-                        id: 'ind6_1_2', label: 'Relaciones parentales', type: 'select', options: ['Ausentes', 'Rotas', 'Conflictivas', 'Positivas'],
+                        id: 'ind6_1_2', label: 'Relaciones parentales', type: 'select', options: ['Ausentes', 'Rotas', 'Conflictivas', 'Positivas'], description: 'Calidad del vínculo afectivo y comunicación con progenitores o figuras parentales.',
                         dependsOn: { indicatorId: 'ind6_1_1', condition: 'notEquals', value: 'Unipersonal' }
                     },
                     {
-                        id: 'ind6_1_3', label: 'Comunicación familiar', type: 'select', options: ['Deficiente', 'Parcial', 'Efectiva'],
+                        id: 'ind6_1_3', label: 'Comunicación familiar', type: 'select', options: ['Deficiente', 'Parcial', 'Efectiva'], description: 'Fluidez y respeto en el intercambio de información y sentimientos entre miembros.',
                         dependsOn: { indicatorId: 'ind6_1_1', condition: 'notEquals', value: 'Unipersonal' }
                     },
-                    { id: 'ind6_1_4', label: 'Cohabitación', type: 'select', options: ['Ausente', 'Intermitente', 'Regular'] },
-                    { id: 'ind6_1_5', label: 'Responsabilidades de cuidado', type: 'boolean' },
+                    { id: 'ind6_1_4', label: 'Cohabitación', type: 'select', options: ['Ausente', 'Intermitente', 'Regular'], description: 'Estabilidad en la convivencia con la pareja.' },
+                    { id: 'ind6_1_5', label: 'Responsabilidades de cuidado', type: 'boolean', description: '¿Tiene a su cargo personas dependientes (menores, mayores, discapacidad)?' },
                     {
-                        id: 'ind6_1_6', label: 'Carga de cuidado', type: 'select', options: ['Severa', 'Moderada', 'Leve', 'Nula'],
+                        id: 'ind6_1_6', label: 'Carga de cuidado', type: 'select', options: ['Severa', 'Moderada', 'Leve', 'Nula'], description: 'Intensidad y sobrecarga derivada de las tareas de cuidado.',
                         dependsOn: { indicatorId: 'ind6_1_5', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind6_1_7', label: 'Apoyo intrafamiliar', type: 'boolean' },
-                    { id: 'ind6_1_8', label: 'Violencia familiar', type: 'select', options: ['Activa', 'Pasada', 'Nunca'] },
-                    { id: 'ind6_1_9', label: 'Separación/divorcio', type: 'select', options: ['Conflictiva', 'Pendiente', 'Amigable', 'No aplica'] }
+                    { id: 'ind6_1_7', label: 'Apoyo intrafamiliar', type: 'boolean', description: 'Existencia de ayuda mutua y solidaridad dentro del núcleo familiar.' },
+                    { id: 'ind6_1_8', label: 'Violencia familiar', type: 'select', options: ['Activa', 'Pasada', 'Nunca'], description: 'Presencia de dinámicas violentas o agresivas en el entorno familiar.' },
+                    { id: 'ind6_1_9', label: 'Separación/divorcio', type: 'select', options: ['Conflictiva', 'Pendiente', 'Amigable', 'No aplica'], description: 'Situación de ruptura de pareja y nivel de conflicto asociado.' }
                 ]
             },
             {
                 id: 'sub6_2',
                 title: 'Redes de Apoyo Social',
                 indicators: [
-                    { id: 'ind6_2_1', label: 'Amistades significativas', type: 'radio', options: ['Ninguna', 'Algunas', 'Múltiples'] },
-                    { id: 'ind6_2_2', label: 'Contacto social regular', type: 'radio', options: ['Nulo', 'Ocasional', 'Mensual', 'Semanal'] },
-                    { id: 'ind6_2_3', label: 'Apoyo emocional disponible', type: 'boolean' },
-                    { id: 'ind6_2_4', label: 'Apoyo económico disponible', type: 'boolean' },
-                    { id: 'ind6_2_5', label: 'Apoyo material disponible', type: 'boolean' },
+                    { id: 'ind6_2_1', label: 'Amistades significativas', type: 'radio', options: ['Ninguna', 'Algunas', 'Múltiples'], description: 'Existencia de amigos íntimos con quienes compartir confidencias y problemas.' },
+                    { id: 'ind6_2_2', label: 'Contacto social regular', type: 'radio', options: ['Nulo', 'Ocasional', 'Mensual', 'Semanal'], description: 'Frecuencia de interacciones sociales fuera del hogar.' },
+                    { id: 'ind6_2_3', label: 'Apoyo emocional disponible', type: 'boolean', description: 'Disponibilidad de personas que ofrezcan consuelo y escucha activa.' },
+                    { id: 'ind6_2_4', label: 'Apoyo económico disponible', type: 'boolean', description: 'Posibilidad de pedir préstamos o ayuda financiera a conocidos en caso de necesidad.' },
+                    { id: 'ind6_2_5', label: 'Apoyo material disponible', type: 'boolean', description: 'Disponibilidad de ayuda práctica (coche, herramientas, alojamiento temporal).' },
                     {
-                        id: 'ind6_2_6', label: 'Reciprocidad en relaciones', type: 'select', options: ['Asimétrica', 'Equilibrada'],
+                        id: 'ind6_2_6', label: 'Reciprocidad en relaciones', type: 'select', options: ['Asimétrica', 'Equilibrada'], description: 'Equilibrio entre lo que se da y se recibe en las relaciones personales.',
                         dependsOn: { indicatorId: 'ind6_2_1', condition: 'notEquals', value: 'Ninguna' }
                     },
-                    { id: 'ind6_2_7', label: 'Sentimiento de soledad', type: 'radio', options: ['Severo', 'Moderado', 'Leve', 'Inexistente'] },
-                    { id: 'ind6_2_8', label: 'Aislamiento social', type: 'boolean' },
+                    { id: 'ind6_2_7', label: 'Sentimiento de soledad', type: 'radio', options: ['Severo', 'Moderado', 'Leve', 'Inexistente'], description: 'Percepción subjetiva de aislamiento o falta de compañía deseada.' },
+                    { id: 'ind6_2_8', label: 'Aislamiento social', type: 'boolean', description: 'Falta objetiva de contactos sociales o red de apoyo.' },
                     // Causas del aislamiento solo si hay aislamiento
                     {
                         id: 'ind6_2_8b', label: 'Causa principal aislamiento', type: 'select', options: ['Enfermedad', 'Movilidad', 'Discriminación', 'Voluntario', 'Ubicación geográfica'],
@@ -736,46 +741,46 @@ export const DIMENSIONS = {
                 id: 'sub6_3',
                 title: 'Integración Comunitaria',
                 indicators: [
-                    { id: 'ind6_3_1', label: 'Participación en asociaciones', type: 'radio', options: ['Nula', 'Pasiva', 'Activa'] },
-                    { id: 'ind6_3_2', label: 'Actividades comunitarias', type: 'radio', options: ['Nula', 'Pasiva', 'Activa'] },
-                    { id: 'ind6_3_3', label: 'Sentimiento de pertenencia', type: 'radio', options: ['Ausente', 'Débil', 'Fuerte'] },
-                    { id: 'ind6_3_4', label: 'Confianza en comunidad', type: 'radio', options: ['Baja', 'Media', 'Alta'] },
-                    { id: 'ind6_3_5', label: 'Conflictividad comunitaria', type: 'boolean' },
-                    { id: 'ind6_3_6', label: 'Participación política local', type: 'boolean' },
-                    { id: 'ind6_3_7', label: 'Espacios de encuentro', type: 'select', options: ['Ninguno', 'Limitados', 'Disponibles'] },
-                    { id: 'ind6_3_8', label: 'Integración multicultural', type: 'select', options: ['Conflictiva', 'Tensa', 'Armónica'] }
+                    { id: 'ind6_3_1', label: 'Participación en asociaciones', type: 'radio', options: ['Nula', 'Pasiva', 'Activa'], description: 'Membresía o colaboración con entidades sociales, culturales o deportivas.' },
+                    { id: 'ind6_3_2', label: 'Actividades comunitarias', type: 'radio', options: ['Nula', 'Pasiva', 'Activa'], description: 'Asistencia a eventos o fiestas locales y actividades grupales.' },
+                    { id: 'ind6_3_3', label: 'Sentimiento de pertenencia', type: 'radio', options: ['Ausente', 'Débil', 'Fuerte'], description: 'Grado de identificación y apego al barrio o municipio.' },
+                    { id: 'ind6_3_4', label: 'Confianza en comunidad', type: 'radio', options: ['Baja', 'Media', 'Alta'], description: 'Percepción de honestidad y colaboración entre los vecinos.' },
+                    { id: 'ind6_3_5', label: 'Conflictividad comunitaria', type: 'boolean', description: 'Presencia de tensiones, disputas o violencia en el entorno comunitario.' },
+                    { id: 'ind6_3_6', label: 'Participación política local', type: 'boolean', description: 'Implicación en decisiones públicas locales (voto, plenos, quejas).' },
+                    { id: 'ind6_3_7', label: 'Espacios de encuentro', type: 'select', options: ['Ninguno', 'Limitados', 'Disponibles'], description: 'Disponibilidad de lugares para reunirse y socializar gratuitamente.' },
+                    { id: 'ind6_3_8', label: 'Integración multicultural', type: 'select', options: ['Conflictiva', 'Tensa', 'Armónica'], description: 'Calidad de la convivencia entre personas de diferentes orígenes culturales.' }
                 ]
             },
             {
                 id: 'sub6_4',
                 title: 'Situaciones de Riesgo en Relaciones',
                 indicators: [
-                    { id: 'ind6_4_1', label: 'Violencia de género', type: 'select', options: ['Activa', 'Pasada', 'Nunca'] },
+                    { id: 'ind6_4_1', label: 'Violencia de género', type: 'select', options: ['Activa', 'Pasada', 'Nunca'], description: 'Mujer víctima de violencia por parte de pareja o expareja.' },
                     // Orden de protección solo si violencia activa
                     {
                         id: 'ind6_4_1b', label: 'Orden de protección', type: 'select', options: ['Solicitada', 'Vigente', 'No solicitada'],
                         dependsOn: { indicatorId: 'ind6_4_1', condition: 'equals', value: 'Activa' }
                     },
-                    { id: 'ind6_4_2', label: 'Abuso de menores', type: 'select', options: ['Activo', 'Pasado', 'Nunca'] },
+                    { id: 'ind6_4_2', label: 'Abuso de menores', type: 'select', options: ['Activo', 'Pasado', 'Nunca'], description: 'Menores de edad víctimas de maltrato, abuso o negligencia.' },
                     // Intervención protección menores
                     {
                         id: 'ind6_4_2b', label: 'Intervención protección menores', type: 'boolean',
                         dependsOn: { indicatorId: 'ind6_4_2', condition: 'notEquals', value: 'Nunca' }
                     },
-                    { id: 'ind6_4_3', label: 'Explotación laboral', type: 'boolean' },
-                    { id: 'ind6_4_4', label: 'Situación de trata', type: 'boolean' },
+                    { id: 'ind6_4_3', label: 'Explotación laboral', type: 'boolean', description: 'Sometimiento a condiciones laborales abusivas o ilegales.' },
+                    { id: 'ind6_4_4', label: 'Situación de trata', type: 'boolean', description: 'Víctima de captación y explotación con fines sexuales, laborales, etc.' },
                     // Tipo de trata
                     {
                         id: 'ind6_4_4b', label: 'Tipo de trata', type: 'select', options: ['Sexual', 'Laboral', 'Mendicidad', 'Otra'],
                         dependsOn: { indicatorId: 'ind6_4_4', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind6_4_5', label: 'Acoso (escolar, laboral, callejero)', type: 'boolean' },
+                    { id: 'ind6_4_5', label: 'Acoso (escolar, laboral, callejero)', type: 'boolean', description: 'Víctima de persecución y hostigamiento reiterado.' },
                     // Tipo de acoso
                     {
                         id: 'ind6_4_5b', label: 'Tipo de acoso', type: 'select', options: ['Escolar', 'Laboral', 'Callejero', 'Digital', 'Múltiple'],
                         dependsOn: { indicatorId: 'ind6_4_5', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind6_4_6', label: 'Abandono/negligencia', type: 'boolean' }
+                    { id: 'ind6_4_6', label: 'Abandono/negligencia', type: 'boolean', description: 'Falta de atención a necesidades básicas de personas dependientes.' }
                 ]
             }
         ],
@@ -809,20 +814,20 @@ export const DIMENSIONS = {
                 id: 'sub7_1',
                 title: 'Derechos Políticos Formales',
                 indicators: [
-                    { id: 'ind7_1_1', label: 'Registro electoral', type: 'boolean' },
-                    { id: 'ind7_1_2', label: 'Derecho de voto', type: 'select', options: ['Impedido', 'No ejercido', 'Ejercido'] },
+                    { id: 'ind7_1_1', label: 'Registro electoral', type: 'boolean', description: '¿Está inscrito correctamente en el censo electoral?' },
+                    { id: 'ind7_1_2', label: 'Derecho de voto', type: 'select', options: ['Impedido', 'No ejercido', 'Ejercido'], description: '¿Puede ejercer su derecho al voto o existe algún impedimento legal/administrativo?' },
                     // Motivo impedimento voto
                     {
                         id: 'ind7_1_2b', label: 'Motivo impedimento voto', type: 'select', options: ['Nacionalidad', 'Incapacitación', 'Condena', 'Documentación'],
                         dependsOn: { indicatorId: 'ind7_1_2', condition: 'equals', value: 'Impedido' }
                     },
-                    { id: 'ind7_1_3', label: 'Acceso a documentación', type: 'select', options: ['Ausente', 'Parcial', 'Presente'] },
+                    { id: 'ind7_1_3', label: 'Acceso a documentación', type: 'select', options: ['Ausente', 'Parcial', 'Presente'], description: 'Disponibilidad de documentos básicos (DNI, partida nacimiento, certificado empadronamiento).' },
                     // Documentos que faltan
                     {
                         id: 'ind7_1_3b', label: 'Documentos que faltan', type: 'text',
                         dependsOn: { indicatorId: 'ind7_1_3', condition: 'notEquals', value: 'Presente' }
                     },
-                    { id: 'ind7_1_4', label: 'Nacionalidad/estatus', type: 'select', options: ['Irregular', 'Solicitante', 'Residente', 'Ciudadano'] },
+                    { id: 'ind7_1_4', label: 'Nacionalidad/estatus', type: 'select', options: ['Irregular', 'Solicitante', 'Residente', 'Ciudadano'], description: 'Situación administrativa respecto a la residencia y ciudadanía en el país.' },
                     // Tiempo en situación irregular
                     {
                         id: 'ind7_1_4b', label: 'Tiempo en situación irregular (años)', type: 'number',
@@ -833,25 +838,25 @@ export const DIMENSIONS = {
                         id: 'ind7_1_4c', label: 'Tipo de solicitud', type: 'select', options: ['Asilo', 'Protección subsidiaria', 'Arraigo', 'Residencia', 'Otro'],
                         dependsOn: { indicatorId: 'ind7_1_4', condition: 'equals', value: 'Solicitante' }
                     },
-                    { id: 'ind7_1_5', label: 'Impedimentos legales', type: 'boolean' },
+                    { id: 'ind7_1_5', label: 'Impedimentos legales', type: 'boolean', description: 'Existencia de sentencias o trabas legales que limiten derechos civiles o políticos.' },
                     // Tipo de impedimento legal
                     {
                         id: 'ind7_1_5b', label: 'Tipo de impedimento', type: 'select', options: ['Penal', 'Civil', 'Administrativo', 'Múltiple'],
                         dependsOn: { indicatorId: 'ind7_1_5', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind7_1_6', label: 'Acceso a justicia', type: 'select', options: ['Barreras idioma', 'Barreras económicas', 'Acceso'] }
+                    { id: 'ind7_1_6', label: 'Acceso a justicia', type: 'select', options: ['Barreras idioma', 'Barreras económicas', 'Acceso'], description: 'Capacidad para acceder a tribunales y defender derechos legítimos.' }
                 ]
             },
             {
                 id: 'sub7_2',
                 title: 'Acceso a Información y Derechos',
                 indicators: [
-                    { id: 'ind7_2_1', label: 'Conocimiento de derechos', type: 'select', options: ['Nulo', 'Parcial', 'Completo'] },
-                    { id: 'ind7_2_2', label: 'Acceso información sobre derechos', type: 'select', options: ['Nula', 'Limitada', 'Accesible'] },
-                    { id: 'ind7_2_3', label: 'Asesoramiento legal', type: 'select', options: ['Inaccesible', 'Gratuito disponible'] },
-                    { id: 'ind7_2_4', label: 'Capacidad de denuncia', type: 'boolean' },
-                    { id: 'ind7_2_5', label: 'Barreras de idioma', type: 'select', options: ['Severa', 'Moderada', 'Nula'] },
-                    { id: 'ind7_2_6', label: 'Accesibilidad para discapacidad', type: 'boolean' }
+                    { id: 'ind7_2_1', label: 'Conocimiento de derechos', type: 'select', options: ['Nulo', 'Parcial', 'Completo'], description: 'Grado de información que la persona tiene sobre sus derechos fundamentales.' },
+                    { id: 'ind7_2_2', label: 'Acceso información sobre derechos', type: 'select', options: ['Nula', 'Limitada', 'Accesible'], description: 'Facilidad para encontrar y comprender información sobre procedimientos administrativos.' },
+                    { id: 'ind7_2_3', label: 'Asesoramiento legal', type: 'select', options: ['Inaccesible', 'Gratuito disponible'], description: 'Posibilidad de consultar con abogados o servicios jurídicos especializados.' },
+                    { id: 'ind7_2_4', label: 'Capacidad de denuncia', type: 'boolean', description: 'Capacidad y autonomía para interponer reclamaciones o denuncias.' },
+                    { id: 'ind7_2_5', label: 'Barreras de idioma', type: 'select', options: ['Severa', 'Moderada', 'Nula'], description: 'Dificultades de comprensión del idioma oficial que impiden el ejercicio de derechos.' },
+                    { id: 'ind7_2_6', label: 'Accesibilidad para discapacidad', type: 'boolean', description: '¿Los servicios públicos están adaptados a sus necesidades de accesibilidad física/sensorial?' }
                 ]
             },
             {
@@ -860,25 +865,26 @@ export const DIMENSIONS = {
                 indicators: [
                     {
                         id: 'ind7_3_1', label: 'Participación electoral', type: 'select', options: ['Nunca', 'Ocasional', 'Regular'],
+                        description: 'Hábito de votar en elecciones locales, regionales o nacionales.',
                         dependsOn: { indicatorId: 'ind7_1_2', condition: 'notEquals', value: 'Impedido' }
                     },
-                    { id: 'ind7_3_2', label: 'Participación en organizaciones', type: 'select', options: ['Nula', 'Pasiva', 'Activa'] },
-                    { id: 'ind7_3_3', label: 'Participación comunitaria', type: 'select', options: ['Nula', 'Pasiva', 'Activa'] },
-                    { id: 'ind7_3_4', label: 'Voz en decisiones que afectan', type: 'select', options: ['Nula', 'Limitada', 'Efectiva'] },
-                    { id: 'ind7_3_5', label: 'Movilización social', type: 'boolean' },
-                    { id: 'ind7_3_6', label: 'Liderazgo comunitario', type: 'boolean' }
+                    { id: 'ind7_3_2', label: 'Participación en organizaciones', type: 'select', options: ['Nula', 'Pasiva', 'Activa'], description: 'Vinculación activa con ONGs, sindicatos, partidos o asociaciones vecinales.' },
+                    { id: 'ind7_3_3', label: 'Participación comunitaria', type: 'select', options: ['Nula', 'Pasiva', 'Activa'], description: 'Participación en iniciativas informales de mejora del barrio o comunidad.' },
+                    { id: 'ind7_3_4', label: 'Voz en decisiones que afectan', type: 'select', options: ['Nula', 'Limitada', 'Efectiva'], description: 'Percepción de ser escuchado/a en los procesos de toma de decisiones locales.' },
+                    { id: 'ind7_3_5', label: 'Movilización social', type: 'boolean', description: 'Asistencia a manifestaciones, concentraciones o actos reivindicativos.' },
+                    { id: 'ind7_3_6', label: 'Liderazgo comunitario', type: 'boolean', description: 'Asunción de roles de representación o portavocía en su comunidad.' }
                 ]
             },
             {
                 id: 'sub7_4',
                 title: 'Conflictividad Social y Exclusión Política',
                 indicators: [
-                    { id: 'ind7_4_1', label: 'Discriminación política', type: 'boolean' },
-                    { id: 'ind7_4_2', label: 'Estigmatización', type: 'boolean' },
-                    { id: 'ind7_4_3', label: 'Exclusión comunitaria', type: 'boolean' },
-                    { id: 'ind7_4_4', label: 'Conflictividad con instituciones', type: 'boolean' },
-                    { id: 'ind7_4_5', label: 'Desconfianza institucional', type: 'select', options: ['Severa', 'Moderada', 'Baja'] },
-                    { id: 'ind7_4_6', label: 'Experiencia de injusticia', type: 'boolean' }
+                    { id: 'ind7_4_1', label: 'Discriminación política', type: 'boolean', description: 'Trato desfavorable por motivos ideológicos o de afiliación política.' },
+                    { id: 'ind7_4_2', label: 'Estigmatización', type: 'boolean', description: 'Atribución de características negativas por pertenecer a un colectivo específico.' },
+                    { id: 'ind7_4_3', label: 'Exclusión comunitaria', type: 'boolean', description: 'Rechazo directo o marginación por parte de la comunidad de residencia.' },
+                    { id: 'ind7_4_4', label: 'Conflictividad con instituciones', type: 'boolean', description: 'Relaciones tensas o problemáticas con servicios sociales, policía u oficinas públicas.' },
+                    { id: 'ind7_4_5', label: 'Desconfianza institucional', type: 'select', options: ['Severa', 'Moderada', 'Baja'], description: 'Cree que las instituciones no ayudan o actúan en su contra.' },
+                    { id: 'ind7_4_6', label: 'Experiencia de injusticia', type: 'boolean', description: 'Sentimiento subjetivo de haber sido tratado injustamente por el sistema.' }
                 ]
             }
         ],
@@ -1147,23 +1153,23 @@ export const DIMENSIONS = {
                         id: 'ind8_3_1b', label: 'Tipo de grupo', type: 'select', options: ['Banda juvenil', 'Organización criminal', 'Secta', 'Otro'],
                         dependsOn: { indicatorId: 'ind8_3_1', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind8_3_2', label: 'Red contactos de riesgo', type: 'select', options: ['Nula', 'Limitada', 'Significativa'] },
-                    { id: 'ind8_3_3', label: 'Implicación narcotráfico', type: 'select', options: ['Nunca', 'Pasada', 'Activa'] },
+                    { id: 'ind8_3_2', label: 'Red contactos de riesgo', type: 'select', options: ['Nula', 'Limitada', 'Significativa'], description: 'Relación con personas involucradas en actividades delictivas o marginales.' },
+                    { id: 'ind8_3_3', label: 'Implicación narcotráfico', type: 'select', options: ['Nunca', 'Pasada', 'Activa'], description: 'Participación en venta, transporte o almacenamiento de drogas.' },
                     // Rol en narcotráfico
                     {
                         id: 'ind8_3_3b', label: 'Rol en narcotráfico', type: 'select', options: ['Consumidor', 'Menudeo', 'Distribución', 'Producción'],
                         dependsOn: { indicatorId: 'ind8_3_3', condition: 'notEquals', value: 'Nunca' }
                     },
-                    { id: 'ind8_3_4', label: 'Violencia interpersonal', type: 'select', options: ['Nunca', 'Ocasional', 'Frecuente'] },
-                    { id: 'ind8_3_5', label: 'Posesión de armas', type: 'boolean' },
+                    { id: 'ind8_3_4', label: 'Violencia interpersonal', type: 'select', options: ['Nunca', 'Ocasional', 'Frecuente'], description: 'Participación en peleas, agresiones físicas o amenazas.' },
+                    { id: 'ind8_3_5', label: 'Posesión de armas', type: 'boolean', description: 'Tenencia de armas blancas o de fuego (legales o ilegales).' },
                     // Tipo de armas
                     {
                         id: 'ind8_3_5b', label: 'Tipo de armas', type: 'select', options: ['Blancas', 'Fuego', 'Ambas'],
                         dependsOn: { indicatorId: 'ind8_3_5', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind8_3_6', label: 'Conflictividad familiar', type: 'boolean' },
-                    { id: 'ind8_3_7', label: 'Conflictividad vecinal', type: 'boolean' },
-                    { id: 'ind8_3_8', label: 'Problemas de conducta', type: 'select', options: ['Ninguno', 'Leves', 'Moderados', 'Severos'] }
+                    { id: 'ind8_3_6', label: 'Conflictividad familiar', type: 'boolean', description: 'Frecuencia de discusiones graves o agresiones entre miembros de la familia.' },
+                    { id: 'ind8_3_7', label: 'Conflictividad vecinal', type: 'boolean', description: 'Problemas de convivencia graves con vecinos (ruidos, amenazas, denuncias).' },
+                    { id: 'ind8_3_8', label: 'Problemas de conducta', type: 'select', options: ['Ninguno', 'Leves', 'Moderados', 'Severos'], description: 'Comportamientos antisociales, disruptivos o contrarios a las normas.' }
                 ]
             },
             {
@@ -1177,15 +1183,16 @@ export const DIMENSIONS = {
                         type: 'boolean',
                         description: '¿Tiene acceso a servicios de orientación jurídica gratuitos o puede costear abogado?'
                     },
-                    { id: 'ind8_4_2', label: 'Acceso a abogado', type: 'select', options: ['Inaccesible', 'Disponible'] },
-                    { id: 'ind8_4_3', label: 'Conocimiento derechos procesales', type: 'select', options: ['Nulo', 'Parcial', 'Completo'] },
-                    { id: 'ind8_4_4', label: 'Garantías procesales', type: 'select', options: ['Vulneradas', 'Presentes'] },
-                    { id: 'ind8_4_5', label: 'Discriminación en justicia', type: 'boolean' },
+                    { id: 'ind8_4_2', label: 'Acceso a abogado', type: 'select', options: ['Inaccesible', 'Disponible'], description: 'Posibilidad real de contactar y ser atendido por un abogado.' },
+                    { id: 'ind8_4_3', label: 'Conocimiento derechos procesales', type: 'select', options: ['Nulo', 'Parcial', 'Completo'], description: '¿Entiende qué está pasando en su proceso judicial y qué derechos tiene?' },
+                    { id: 'ind8_4_4', label: 'Garantías procesales', type: 'select', options: ['Vulneradas', 'Presentes'], description: '¿Se respetan sus derechos a la defensa, traductor y proceso justo?' },
+                    { id: 'ind8_4_5', label: 'Discriminación en justicia', type: 'boolean', description: 'Trato desigual en juzgados por apariencia, origen o situación económica.' },
                     {
                         id: 'ind8_4_6', label: 'Duración procesos', type: 'select', options: ['Estancada', 'Lenta', 'Normal', 'Rápida'],
+                        description: 'Percepción sobre si la lentitud de la justicia afecta a su situación.',
                         dependsOn: { indicatorId: 'ind8_1_3', condition: 'equals', value: 'yes' }
                     },
-                    { id: 'ind8_4_7', label: 'Ejecución sentencias', type: 'select', options: ['Nula', 'Parcial', 'Completa', 'No aplica'] }
+                    { id: 'ind8_4_7', label: 'Ejecución sentencias', type: 'select', options: ['Nula', 'Parcial', 'Completa', 'No aplica'], description: '¿Se cumplen las sentencias a su favor (ej: cobro indemnizaciones, alejamiento)?' }
                 ]
             }
         ],

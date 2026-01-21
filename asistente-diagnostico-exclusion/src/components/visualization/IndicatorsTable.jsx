@@ -188,7 +188,8 @@ export function IndicatorsTable({ filters }) {
         ]);
 
         const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        // Add BOM for Excel utf-8 compatibility
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -347,12 +348,12 @@ export function IndicatorsTable({ filters }) {
                                         <td colSpan="6" className="px-4 py-4">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 {/* Description */}
-                                                {item.description && (
-                                                    <div className="bg-white rounded-lg p-3 border border-slate-200">
-                                                        <p className="text-xs font-bold text-slate-500 uppercase mb-1">Descripción</p>
-                                                        <p className="text-sm text-slate-700">{item.description}</p>
-                                                    </div>
-                                                )}
+                                                <div className="bg-white rounded-lg p-3 border border-slate-200">
+                                                    <p className="text-xs font-bold text-slate-500 uppercase mb-1">Descripción</p>
+                                                    <p className="text-sm text-slate-700">
+                                                        {item.description || <span className="text-slate-400 italic">No hay descripción disponible para este indicador.</span>}
+                                                    </p>
+                                                </div>
 
                                                 {/* Options */}
                                                 {item.options && item.options.length > 0 && (
@@ -443,8 +444,8 @@ export function IndicatorsTable({ filters }) {
                                     key={page}
                                     onClick={() => setCurrentPage(page)}
                                     className={`min-w-[36px] py-1.5 rounded-lg text-sm font-medium transition-colors ${currentPage === page
-                                            ? 'bg-teal-600 text-white'
-                                            : 'text-slate-600 hover:bg-slate-200'
+                                        ? 'bg-teal-600 text-white'
+                                        : 'text-slate-600 hover:bg-slate-200'
                                         }`}
                                 >
                                     {page}
