@@ -200,7 +200,7 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
             </h3>
             <p className="text-sm text-slate-500 mb-4 ml-6">{description}</p>
             <div className="h-[350px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={200} minHeight={200}>
                     <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
                         <PolarGrid stroke="#e2e8f0" />
                         <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 11, fontWeight: 600 }} />
