@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { ScoringService } from '../services/ScoringService';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { AlertCircle, TrendingUp, Shield, AlertTriangle, Wrench, User, Eye, BarChart3, ChevronDown, ChevronRight, Sparkles, Check } from 'lucide-react';
+import { AlertCircle, TrendingUp, Shield, AlertTriangle, Wrench, User, Eye, BarChart3, ChevronDown, ChevronRight, Sparkles, Check, Download, Loader2 } from 'lucide-react';
+import { toPng } from 'html-to-image';
+import { jsPDF } from 'jspdf';
 import { getToolById } from '../data/toolsService';
 
 // Mapeo de etiquetas cortas para los gráficos radar (más identificables)
@@ -18,6 +20,69 @@ const DIMENSION_SHORT_LABELS = {
 
 export function DiagnosisReport({ dimensions, answers, currentCase }) {
     const [showRisksDetail, setShowRisksDetail] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
+
+    const handleDownloadPDF = async () => {
+        setIsExporting(true);
+        const element = document.getElementById('diagnosis-report-content');
+
+        // Guardar estilo original
+        const originalWidth = element.style.width;
+        const originalPadding = element.style.padding;
+
+        // Configurar ancho fijo para consistencia y evitar responsive issues
+        element.style.width = '1200px';
+        element.style.padding = '40px'; // Un poco de padding extra para la captura
+
+        try {
+            // Pausa obligatoria para que los gráficos responsive se ajusten al nuevo ancho
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            // Filtro para excluir botones de la impresión
+            const filter = (node) => {
+                const exclusionClasses = ['print:hidden'];
+                if (node.classList) {
+                    return !exclusionClasses.some(classname => node.classList.contains(classname));
+                }
+                return true;
+            };
+
+            const dataUrl = await toPng(element, {
+                quality: 0.95,
+                backgroundColor: '#ffffff',
+                cacheBust: true,
+                filter: filter,
+                pixelRatio: 2 // Mejor calidad
+            });
+
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+
+            const imgProps = pdf.getImageProperties(dataUrl);
+            const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            // Lógica de paginación simple y robusta
+            const totalPages = Math.ceil(imgHeight / pdfHeight);
+
+            for (let i = 0; i < totalPages; i++) {
+                if (i > 0) pdf.addPage();
+                // Dibujamos la imagen completa desplazada hacia arriba en cada página
+                // Esto crea el efecto de continuidad
+                pdf.addImage(dataUrl, 'PNG', 0, -(i * pdfHeight), pdfWidth, imgHeight);
+            }
+
+            pdf.save(`Diagnostico_${currentCase?.title || 'Reporte'}_${new Date().toISOString().slice(0, 10)}.pdf`);
+        } catch (error) {
+            console.error("Error generando PDF:", error);
+            alert("Hubo un error al generar el PDF. Revisa la consola para más detalles.");
+        } finally {
+            // Restaurar estilo original
+            element.style.width = originalWidth;
+            element.style.padding = originalPadding;
+            setIsExporting(false);
+        }
+    };
 
     const isesScore = ScoringService.calculateISES(answers, dimensions);
     const isesLevel = ScoringService.getISESLevel(isesScore);
@@ -164,7 +229,18 @@ export function DiagnosisReport({ dimensions, answers, currentCase }) {
     );
 
     return (
-        <div className="animate-fade-in pb-12">
+        <div id="diagnosis-report-content" className="animate-fade-in pb-12 print:p-0">
+            {/* Download Button - Floating or Top Right */}
+            <div className="flex justify-end mb-4 print:hidden">
+                <button
+                    onClick={handleDownloadPDF}
+                    disabled={isExporting}
+                    className="flex items-center gap-2 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-lg disabled:opacity-70 disabled:cursor-wait"
+                >
+                    {isExporting ? <Loader2 size={18} className="animate-spin" /> : <Download size={18} />}
+                    {isExporting ? 'Generando PDF...' : 'Descargar PDF'}
+                </button>
+            </div>
             {/* Header */}
             <header className="mb-10 text-center">
                 {/* Tool Badge */}
